@@ -14,7 +14,7 @@ namespace GE
 		GameObject();
 		~GameObject();
 	private:
-
+		float xSpeed;
 	};
 }
 

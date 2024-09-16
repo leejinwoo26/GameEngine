@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "GameObject.h"
-
+#include "Input.h"
 
 namespace GE
 {
@@ -19,6 +19,9 @@ namespace GE
 	{
 		mHwnd = hwnd;
 		mHdc = GetDC(hwnd);
+		mGameObj = new GameObject;
+		mGameObj->Initilize();
+		Input::Initialize();
 	}
 
 	void Application::Run()
@@ -30,6 +33,7 @@ namespace GE
 
 	void Application::Update()
 	{
+		Input::Update();
 		mGameObj->Update();
 	}
 	void Application::LateUpdate()
