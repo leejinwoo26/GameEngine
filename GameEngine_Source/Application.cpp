@@ -1,11 +1,14 @@
 #include "Application.h"
+#include "GameObject.h"
+
+
 namespace GE
 {
 	Application::Application():
 		mHwnd(nullptr),
 		mHdc(nullptr)
 	{
-
+		mGameObj = nullptr;
 	}
 	Application::~Application()
 	{
@@ -27,15 +30,14 @@ namespace GE
 
 	void Application::Update()
 	{
-
+		mGameObj->Update();
 	}
 	void Application::LateUpdate()
 	{
-
+		mGameObj->Render(mHdc);
 	}
 	void Application::Render()
 	{
-
-		Rectangle(mHdc, 100, 100, 200, 200);
+		mGameObj->Render(mHdc);
 	}
 }

@@ -18,6 +18,7 @@ namespace GE
 	private:
 		HWND mHwnd;
 		HDC mHdc;
+		class GameObject* mGameObj;
 	};
 }
 
