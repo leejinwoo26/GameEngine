@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngine", "GameEngine\GameEngine.vcxproj", "{C0BE4A15-EF86-4CEF-8D70-B2C9EDC6589B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngine_Lib", "GameEngine_Lib\GameEngine_Lib.vcxproj", "{D99E3B4A-CA73-49B9-AB98-C3ABDE9FBE17}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngine_Source", "GameEngine_Source\GameEngine_Source.vcxitems", "{7D7D1670-B248-4D75-BE4F-B7F92987EC02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0BE4A15-EF86-4CEF-8D70-B2C9EDC6589B}.Debug|x64.ActiveCfg = Debug|x64
+		{C0BE4A15-EF86-4CEF-8D70-B2C9EDC6589B}.Debug|x64.Build.0 = Debug|x64
+		{C0BE4A15-EF86-4CEF-8D70-B2C9EDC6589B}.Debug|x86.ActiveCfg = Debug|Win32
+		{C0BE4A15-EF86-4CEF-8D70-B2C9EDC6589B}.Debug|x86.Build.0 = Debug|Win32
+		{C0BE4A15-EF86-4CEF-8D70-B2C9EDC6589B}.Release|x64.ActiveCfg = Release|x64
+		{C0BE4A15-EF86-4CEF-8D70-B2C9EDC6589B}.Release|x64.Build.0 = Release|x64
+		{C0BE4A15-EF86-4CEF-8D70-B2C9EDC6589B}.Release|x86.ActiveCfg = Release|Win32
+		{C0BE4A15-EF86-4CEF-8D70-B2C9EDC6589B}.Release|x86.Build.0 = Release|Win32
+		{D99E3B4A-CA73-49B9-AB98-C3ABDE9FBE17}.Debug|x64.ActiveCfg = Debug|x64
+		{D99E3B4A-CA73-49B9-AB98-C3ABDE9FBE17}.Debug|x64.Build.0 = Debug|x64
+		{D99E3B4A-CA73-49B9-AB98-C3ABDE9FBE17}.Debug|x86.ActiveCfg = Debug|Win32
+		{D99E3B4A-CA73-49B9-AB98-C3ABDE9FBE17}.Debug|x86.Build.0 = Debug|Win32
+		{D99E3B4A-CA73-49B9-AB98-C3ABDE9FBE17}.Release|x64.ActiveCfg = Release|x64
+		{D99E3B4A-CA73-49B9-AB98-C3ABDE9FBE17}.Release|x64.Build.0 = Release|x64
+		{D99E3B4A-CA73-49B9-AB98-C3ABDE9FBE17}.Release|x86.ActiveCfg = Release|Win32
+		{D99E3B4A-CA73-49B9-AB98-C3ABDE9FBE17}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C68582CB-6FC7-4B7E-94D4-2357CB586793}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		GameEngine_Source\GameEngine_Source.vcxitems*{7d7d1670-b248-4d75-be4f-b7f92987ec02}*SharedItemsImports = 9
+		GameEngine_Source\GameEngine_Source.vcxitems*{d99e3b4a-ca73-49b9-ab98-c3abde9fbe17}*SharedItemsImports = 4
+	EndGlobalSection
+EndGlobal
