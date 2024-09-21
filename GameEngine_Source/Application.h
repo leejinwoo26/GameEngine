@@ -6,7 +6,7 @@ namespace GE
 	class Application
 	{
 	public:
-		void Initilize(HWND hwnd);
+		void Initilize(HWND hwnd,UINT width,UINT height);
 		void Run();
 
 		void Update();
@@ -18,6 +18,13 @@ namespace GE
 	private:
 		HWND mHwnd;
 		HDC mHdc;
+
+		HBITMAP mBackBuffer;
+		HDC mBackHdc;
+
+		UINT mWidth;
+		UINT mHeight;
+
 		class GameObject* mGameObj;
 	};
 }
