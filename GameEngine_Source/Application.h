@@ -6,7 +6,7 @@ namespace GE
 	class Application
 	{
 	public:
-		void Initilize(HWND hwnd,UINT width,UINT height);
+		void Initialize(HWND hwnd,UINT width,UINT height);
 		void Run();
 
 		void Update();
@@ -14,7 +14,10 @@ namespace GE
 		void Render();
 		Application();
 		~Application();
-
+	private:
+		void ClearBitmap();
+		void CopyHighSpeed();
+		void CreateBackBuffer(HWND hwnd,UINT width, UINT height);
 	private:
 		HWND mHwnd;
 		HDC mHdc;

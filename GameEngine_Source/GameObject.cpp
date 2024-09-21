@@ -1,34 +1,50 @@
 #include "GameObject.h"
 #include "Input.h"
 
-
-GE::GameObject::GameObject() 
+namespace GE
 {
-}
-
-GE::GameObject::~GameObject()
-{
-}
-void GE::GameObject::Initilize()
-{
-	xSpeed = 0;
-}
-
-void GE::GameObject::Update()
-{
-	if (Input::GetKey(eKeyCode::D))
+	GameObject::GameObject()
 	{
-		xSpeed  += 0.1;
+	}
+
+	GameObject::~GameObject()
+	{
+		for (Component* comp : mComponents)
+		{
+			delete comp;
+			comp = nullptr;
+		}
+	}
+
+	void GameObject::Initialize()
+	{
+		for (Component* comp : mComponents)
+		{
+			comp->Initialize();
+		}
+	}
+
+	void GameObject::Update()
+	{
+		for (Component* comp : mComponents)
+		{
+			comp->Update();
+		}
+	}
+
+	void GameObject::LateUpdate()
+	{
+		for (Component* comp : mComponents)
+		{
+			comp->LateUpdate();
+		}
+	}
+
+	void GameObject::Render(HDC hdc)
+	{
+		for (Component* comp : mComponents)
+		{
+			comp->Render(hdc);
+		}
 	}
 }
-
-void GE::GameObject::LateUpdate()
-{
-}
-
-void GE::GameObject::Render(HDC hdc)
-{
-	Rectangle(hdc, 300+ xSpeed, 300, 400+ xSpeed, 400);
-}
-
-
