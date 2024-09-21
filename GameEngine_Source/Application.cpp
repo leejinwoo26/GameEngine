@@ -14,7 +14,6 @@ namespace GE
 		mBackBuffer(NULL),
 		mBackHdc(NULL)
 	{
-		mGameObj = nullptr;
 	}
 	Application::~Application()
 	{
@@ -24,9 +23,6 @@ namespace GE
 	void Application::Initialize(HWND hwnd, UINT width, UINT height)
 	{
 		CreateBackBuffer(hwnd,width, height);
-
-		mGameObj = new GameObject;
-		mGameObj->Initialize();
 
 		Input::Initialize();
 		Time::Initialize();
@@ -66,21 +62,21 @@ namespace GE
 	{
 		Input::Update();
 		Time::Update();
-		mGameObj->Update();
 		SceneManager::Update();
 	}
 
 	void Application::LateUpdate()
 	{
-		mGameObj->Render(mBackHdc);
+		SceneManager::LateUpdate();
 	}
 
 	void Application::Render()
 	{
 		ClearBitmap();
 
-		mGameObj->Render(mBackHdc);
+		SceneManager::Render(mBackHdc);
 		Time::Render(mBackHdc);
+
 		CopyHighSpeed();
 	}
 	void Application::ClearBitmap()

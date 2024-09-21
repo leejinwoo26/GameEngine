@@ -8,7 +8,7 @@ namespace GE
 	public:
 		PlayScene();
 		~PlayScene();
-		void Initialize() override;
+		void Initialize() override;	
 		void Update() override;
 		void LateUpdate() override;
 		void Render(HDC hdc) override;

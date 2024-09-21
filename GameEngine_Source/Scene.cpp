@@ -41,5 +41,6 @@ void GE::Scene::Render(HDC hdc)
 }
 void GE::Scene::AddGameObject(GameObject* gameObj)
 {
+	mGameObjs.push_back(gameObj);
 }
 

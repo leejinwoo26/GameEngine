@@ -27,8 +27,6 @@ namespace GE
 
 		UINT mWidth;
 		UINT mHeight;
-
-		class GameObject* mGameObj;
 	};
 }
 

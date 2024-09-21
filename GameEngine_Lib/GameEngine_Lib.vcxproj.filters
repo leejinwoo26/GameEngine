@@ -3,8 +3,10 @@
   <ItemGroup>
     <ClInclude Include="LoadScene.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
 </Project>
