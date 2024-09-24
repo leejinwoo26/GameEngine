@@ -5,6 +5,7 @@
 #include "GameEngine.h"
 #include "..\\GameEngine_Source\\Application.h"
 #include "..\\GameEngine_Lib\\LoadScene.h"
+#include "..\\GameEngine_Lib\\ResourcesLoad.h"
 
 #define MAX_LOADSTRING 100
 
@@ -132,8 +133,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    UpdateWindow(hWnd);
 
    Gdiplus::GdiplusStartup(&gpToken, &gpsi, NULL);
-
-   GE::LoadScenes(L"PlayScene");
+   
+   GE::LoadResources();
+   GE::LoadScenes();
 
    return TRUE;
 }

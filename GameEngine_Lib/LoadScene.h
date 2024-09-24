@@ -4,7 +4,7 @@
 
 namespace GE
 {
-	void LoadScenes(const std::wstring& name)
+	void LoadScenes()
 	{
 		SceneManager::CreateScene<PlayScene>(L"PlayScene");
 

@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 #include <map>
+#include <assert.h>
 
 #include "GEMath.h"
 #include "GEEnums.h"

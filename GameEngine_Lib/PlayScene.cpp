@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "GameObject.h"
 #include "Object.h"
+#include "Resources.h"
 
 namespace GE
 {
@@ -20,7 +21,9 @@ namespace GE
 		SpriteRenderer* sr
 			= bg->AddComponent<SpriteRenderer>();
 		sr->SetName(L"SR");
-		sr->ImageLoad(L"..\\Resource\\CloudOcean.png");
+
+		Texture* bg = Resources::Find<Texture>(L"BG");
+		sr->SetTexture(bg);
 	}
 	void PlayScene::Update()
 	{

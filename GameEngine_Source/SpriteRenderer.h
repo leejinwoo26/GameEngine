@@ -1,5 +1,7 @@
 #pragma once
 #include "Component.h"
+#include "Texture.h"
+
 
 namespace GE
 {
@@ -14,9 +16,13 @@ namespace GE
 		void Render(HDC hdc) override;
 
 		void ImageLoad(const std::wstring& path);
+
+		void SetTexture(Texture* texture) { mTexture = texture; }
+		void SetSize(Vector2 size) { mSize = size; }
+		Texture* GetTexture() { return mTexture; }
+
 	private:
-		Gdiplus::Image* mImgae;
-		UINT mWidth;
-		UINT mHeight;
+		Texture* mTexture;
+		Vector2 mSize;
 	};
 }

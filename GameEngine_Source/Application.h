@@ -14,6 +14,9 @@ namespace GE
 		void Render();
 		Application();
 		~Application();
+
+		HDC GetHdc() { return mHdc; }
+
 	private:
 		void ClearBitmap();
 		void CopyHighSpeed();

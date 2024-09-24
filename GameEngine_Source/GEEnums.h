@@ -8,5 +8,10 @@ namespace GE
 		PLAYER,
 		MAX = 16
 	};
+
+	enum class eResourceType
+	{
+		TEXTURE
+	};
 }
 

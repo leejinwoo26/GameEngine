@@ -5,6 +5,9 @@
 namespace GE
 {
 	SpriteRenderer::SpriteRenderer()
+		: mSize(Vector2(1.f,1.f))
+		, mTexture(nullptr)
+		, Component()
 	{
 	}
 	SpriteRenderer::~SpriteRenderer()
@@ -21,16 +24,25 @@ namespace GE
 	}
 	void SpriteRenderer::Render(HDC hdc)
 	{
+		if (mTexture == nullptr)
+			assert(false);
+
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
 
-		Gdiplus::Graphics graphcis(hdc);
-		graphcis.DrawImage(mImgae, Gdiplus::Rect(pos.x, pos.y, mWidth, mHeight));
-	}
-	void SpriteRenderer::ImageLoad(const std::wstring& path)
-	{
-		mImgae = Gdiplus::Image::FromFile(path.c_str());
-		mWidth = mImgae->GetWidth();
-		mHeight = mImgae->GetHeight();
+		if (mTexture->GetTextureType() == Texture::eTextureType::BMP)
+		{
+			TransparentBlt(hdc, pos.x, pos.y
+				, mTexture->GetWidth() * mSize.x, mTexture->GetHeight() * mSize.y
+				, mTexture->GetHdc(), 0, 0, mTexture->GetWidth(), mTexture->GetHeight()
+				, RGB(255, 0, 255));
+		}
+		else if (mTexture->GetTextureType() == Texture::eTextureType::PNG)
+		{
+			Gdiplus::Graphics graphcis(hdc);
+			graphcis.DrawImage(mTexture->GetImage()
+				, Gdiplus::Rect(pos.x, pos.y
+					, mTexture->GetWidth() * mSize.x, mTexture->GetHeight() * mSize.y));
+		}
 	}
 }
