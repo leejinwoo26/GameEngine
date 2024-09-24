@@ -14,8 +14,8 @@ namespace GE
 		{
 			T* scene = new T;
 			scene->SetName(name);
-			scene->Initialize();
 			mActiveScene = scene;
+			scene->Initialize();
 
 			mScenes.insert(std::make_pair(name, scene));
 
@@ -33,6 +33,8 @@ namespace GE
 			mActiveScene->OnEnter();
 			return iter->second;
 		}
+
+		static Scene* GetActiveScene() { return mActiveScene; }
 
 		static void Initialize();
 		static void Update();

@@ -21,6 +21,8 @@ namespace GE
 
 		void AddGameObject(GameObject* gameObj,eLayerType type);
 
+		Layer* GetLayer(eLayerType type) { return mLayers[(UINT)type]; }
+
 	private:
 		std::vector<Layer*> mLayers;
 	};

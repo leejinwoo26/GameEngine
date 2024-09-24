@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "..\\GameEngine_Source\\GameObject.h"
 
 namespace GE
 {

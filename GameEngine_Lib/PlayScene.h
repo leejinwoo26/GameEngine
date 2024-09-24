@@ -1,5 +1,6 @@
 #pragma once
 #include "..\\GameEngine_Source\\Scene.h"
+#include "Player.h"
 
 namespace GE
 {
@@ -16,6 +17,6 @@ namespace GE
 		void OnEnter() override;
 		void OnExit() override;
 	private:
-
+		Player* bg;
 	};
 }

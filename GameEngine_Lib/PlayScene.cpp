@@ -3,6 +3,7 @@
 #include "SpriteRenderer.h"
 #include "Transform.h"
 #include "GameObject.h"
+#include "Object.h"
 
 namespace GE
 {
@@ -14,19 +15,12 @@ namespace GE
 	}
 	void PlayScene::Initialize()
 	{
-		Player* bg = new Player();
-		Transform* tr
-			= bg->AddComponent<Transform>();
-		tr->SetPos(Vector2(0, 0));
-
-		tr->SetName(L"TR");
+		bg = Instantiate<Player>(eLayerType::PLAYER, Vector2(100.f, 100.f));
 
 		SpriteRenderer* sr
 			= bg->AddComponent<SpriteRenderer>();
 		sr->SetName(L"SR");
 		sr->ImageLoad(L"..\\Resource\\CloudOcean.png");
-
-		AddGameObject(bg,eLayerType::BACKGROUND);
 	}
 	void PlayScene::Update()
 	{

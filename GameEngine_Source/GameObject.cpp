@@ -1,10 +1,12 @@
 #include "GameObject.h"
 #include "Input.h"
+#include "Transform.h"
 
 namespace GE
 {
 	GameObject::GameObject()
 	{
+		AddComponent<Transform>();
 	}
 
 	GameObject::~GameObject()

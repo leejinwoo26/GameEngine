@@ -19,7 +19,6 @@ namespace GE
 
 	private:
 		std::vector<GameObject*> mGameObjs;
-		eLayerType mType;
 	};
 }
 

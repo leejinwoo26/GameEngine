@@ -9,3 +9,4 @@ namespace GE
 		MAX = 16
 	};
 }
+
