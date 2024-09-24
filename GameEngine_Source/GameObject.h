@@ -7,10 +7,10 @@ namespace GE
 	class GameObject
 	{
 	public:
-		void Initialize();
-		void Update();
-		void LateUpdate();
-		void Render(HDC hdc);
+		virtual void Initialize();
+		virtual void Update();
+		virtual void LateUpdate();
+		virtual void Render(HDC hdc);
 
 		GameObject();
 		~GameObject();
@@ -20,6 +20,7 @@ namespace GE
 		{
 			T* component = new T;
 			component->SetOwner(this);
+			component->Initialize();
 			mComponents.push_back(component);
 			return component;
 		}

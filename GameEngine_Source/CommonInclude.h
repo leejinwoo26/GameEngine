@@ -6,6 +6,7 @@
 #include <map>
 
 #include "GEMath.h"
+#include "GEEnums.h"
 #include <mmsystem.h>
 #include <dinput.h>
 #pragma comment(lib, "Msimg32.lib");

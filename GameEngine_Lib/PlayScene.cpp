@@ -26,7 +26,7 @@ namespace GE
 		sr->SetName(L"SR");
 		sr->ImageLoad(L"..\\Resource\\CloudOcean.png");
 
-		AddGameObject(bg);
+		AddGameObject(bg,eLayerType::BACKGROUND);
 	}
 	void PlayScene::Update()
 	{
@@ -39,5 +39,11 @@ namespace GE
 	void PlayScene::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
+	}
+	void PlayScene::OnEnter()
+	{
+	}
+	void PlayScene::OnExit()
+	{
 	}
 }

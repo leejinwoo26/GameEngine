@@ -19,5 +19,6 @@ namespace GE
 	}
 	void Component::Render(HDC hdc)
 	{
+
 	}
 }

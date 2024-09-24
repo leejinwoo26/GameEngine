@@ -1,7 +1,12 @@
 #include "Scene.h"
 
-GE::Scene::Scene()
+GE::Scene::Scene() : mLayers{}
 {
+	mLayers.resize((UINT)eLayerType::MAX);
+	for (size_t i = 0; i < mLayers.size(); i++)
+	{
+		mLayers[i] = new Layer();
+	}
 }
 
 GE::Scene::~Scene()
@@ -10,37 +15,55 @@ GE::Scene::~Scene()
 
 void GE::Scene::Initialize()
 {
-	for (GameObject* gameObj : mGameObjs)
+	for (Layer* layers : mLayers)
 	{
-		gameObj->Initialize();
+		if (layers == nullptr)
+			continue;
+		layers->Initialize();
 	}
 }
 
 void GE::Scene::Update()
 {
-	for (GameObject* gameObj : mGameObjs)
+	for (Layer* layers : mLayers)
 	{
-		gameObj->Update();
+		if (layers == nullptr)
+			continue;
+		layers->Update();
 	}
 }
 
 void GE::Scene::LateUpdate()
 {
-	for (GameObject* gameObj : mGameObjs)
+	for (Layer* layers : mLayers)
 	{
-		gameObj->LateUpdate();
+		if (layers == nullptr)
+			continue;
+		layers->LateUpdate();
 	}
 }
 
 void GE::Scene::Render(HDC hdc)
 {
-	for (GameObject* gameObj : mGameObjs)
+	for (Layer* layers : mLayers)
 	{
-		gameObj->Render(hdc);
+		if (layers == nullptr)
+			continue;
+		layers->Render(hdc);
 	}
 }
-void GE::Scene::AddGameObject(GameObject* gameObj)
+
+void GE::Scene::AddGameObject(GameObject* gameObj,eLayerType type)
 {
-	mGameObjs.push_back(gameObj);
+	mLayers[(UINT)type]->AddGameObject(gameObj); 
+}
+
+void GE::Scene::OnEnter()
+{
+
+}
+void GE::Scene::OnExit()
+{
+
 }
 

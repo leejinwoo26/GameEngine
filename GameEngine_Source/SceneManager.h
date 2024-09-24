@@ -24,10 +24,13 @@ namespace GE
 
 		static Scene* LoadScene(const std::wstring& name)
 		{
+			if (mActiveScene)
+				mActiveScene->OnExit();
 			auto iter = mScenes.find(name);
 			if (iter == mScenes.end())
 				return nullptr;
 			mActiveScene = iter->second;
+			mActiveScene->OnEnter();
 			return iter->second;
 		}
 
