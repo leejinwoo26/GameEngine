@@ -8,7 +8,7 @@
 #include "PlayerScript.h"
 #include "Camera.h"
 #include "Renderer.h"
-
+#include "Animator.h"
 
 namespace GE
 {
@@ -24,7 +24,7 @@ namespace GE
 		Camera* cameraComp  = camera->AddComponent<Camera>();
 		mainCamera = cameraComp;
 
-		camera->AddComponent<PlayerScript>();
+		//camera->AddComponent<PlayerScript>();
 
 		bg = Instantiate<Player>(eLayerType::PLAYER);
 
@@ -34,8 +34,14 @@ namespace GE
 
 		//PlayerScript* ps = bg->AddComponent<PlayerScript>();
 
-		Texture* bg = Resources::Find<Texture>(L"BG");
-		sr->SetTexture(bg);
+		Texture* bgTex = Resources::Find<Texture>(L"BG");
+		sr->SetTexture(bgTex);
+
+		Animator* animator = bg->AddComponent<Animator>();
+
+
+		animator->CreateAnimation(L"CatWalk", bgTex,
+			Vector2(0.f, 0.f), Vector2(30.f, 30.f), Vector2(0.f, 0.f), 4, 0.1f);
 
 	}
 	void PlayScene::Update()

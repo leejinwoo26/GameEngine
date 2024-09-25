@@ -5,6 +5,7 @@ namespace GE
 	{
 		TRANSFORM,
 		SPRITERENDERER,
+		ANIMATOR,
 		SCRIPT,
 		CAMERA,
 		END
@@ -22,6 +23,7 @@ namespace GE
 	{
 		TEXTURE,
 		AUDIOCLIP,
+		ANIMATION,
 		PREFAB,
 		END
 	};

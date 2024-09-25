@@ -114,6 +114,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Renderer.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Animator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Animation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
@@ -170,5 +172,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Renderer.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Animator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Animation.cpp" />
   </ItemGroup>
 </Project>
