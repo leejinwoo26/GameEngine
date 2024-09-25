@@ -1,13 +1,14 @@
 #include "SpriteRenderer.h"
 #include "Transform.h"
 #include "GameObject.h"
+#include "Renderer.h"
 
 namespace GE
 {
 	SpriteRenderer::SpriteRenderer()
 		: mSize(Vector2(1.f,1.f))
 		, mTexture(nullptr)
-		, Component()
+		, Component(eComponentType::SPRITERENDERER)
 	{
 	}
 	SpriteRenderer::~SpriteRenderer()
@@ -29,6 +30,8 @@ namespace GE
 
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
+		pos = mainCamera->CalculatePosition(pos);
+
 
 		if (mTexture->GetTextureType() == Texture::eTextureType::BMP)
 		{

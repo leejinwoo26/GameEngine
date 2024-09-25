@@ -6,6 +6,7 @@ namespace GE
 {
 	GameObject::GameObject()
 	{
+		mComponents.resize((UINT)eComponentType::END);
 		AddComponent<Transform>();
 	}
 
@@ -22,6 +23,8 @@ namespace GE
 	{
 		for (Component* comp : mComponents)
 		{
+			if (comp == nullptr)
+				continue;
 			comp->Initialize();
 		}
 	}
@@ -30,6 +33,8 @@ namespace GE
 	{
 		for (Component* comp : mComponents)
 		{
+			if (comp == nullptr)
+				continue;
 			comp->Update();
 		}
 	}
@@ -38,6 +43,8 @@ namespace GE
 	{
 		for (Component* comp : mComponents)
 		{
+			if (comp == nullptr)
+				continue;
 			comp->LateUpdate();
 		}
 	}
@@ -46,6 +53,8 @@ namespace GE
 	{
 		for (Component* comp : mComponents)
 		{
+			if (comp == nullptr)
+				continue;
 			comp->Render(hdc);
 		}
 	}

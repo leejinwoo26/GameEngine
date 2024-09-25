@@ -5,6 +5,10 @@
 #include "GameObject.h"
 #include "Object.h"
 #include "Resources.h"
+#include "PlayerScript.h"
+#include "Camera.h"
+#include "Renderer.h"
+
 
 namespace GE
 {
@@ -16,14 +20,23 @@ namespace GE
 	}
 	void PlayScene::Initialize()
 	{
-		bg = Instantiate<Player>(eLayerType::PLAYER, Vector2(100.f, 100.f));
+		GameObject* camera = Instantiate<GameObject>(eLayerType::NONE);
+		Camera* cameraComp  = camera->AddComponent<Camera>();
+		mainCamera = cameraComp;
+
+		camera->AddComponent<PlayerScript>();
+
+		bg = Instantiate<Player>(eLayerType::PLAYER);
 
 		SpriteRenderer* sr
 			= bg->AddComponent<SpriteRenderer>();
 		sr->SetName(L"SR");
 
+		//PlayerScript* ps = bg->AddComponent<PlayerScript>();
+
 		Texture* bg = Resources::Find<Texture>(L"BG");
 		sr->SetTexture(bg);
+
 	}
 	void PlayScene::Update()
 	{

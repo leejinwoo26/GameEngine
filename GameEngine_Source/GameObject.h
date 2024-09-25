@@ -21,7 +21,8 @@ namespace GE
 			T* component = new T;
 			component->SetOwner(this);
 			component->Initialize();
-			mComponents.push_back(component);
+
+			mComponents[(UINT)component->GetComponentType()] = component;
 			return component;
 		}
 

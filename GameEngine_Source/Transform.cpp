@@ -1,7 +1,8 @@
 #include "Transform.h"
 namespace GE
 {
-	Transform::Transform()
+	Transform::Transform() :
+		Component(eComponentType::TRANSFORM)
 	{
 	}
 	Transform::~Transform()

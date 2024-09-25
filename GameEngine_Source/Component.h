@@ -8,7 +8,7 @@ namespace GE
 	class Component : public Entity
 	{
 	public:
-		Component();
+		Component(eComponentType type);
 		~Component();
 
 		virtual void Initialize();
@@ -18,8 +18,11 @@ namespace GE
 
 		void SetOwner(GameObject* owner) { mOwner = owner; };
 		GameObject* GetOwner() { return mOwner; }
+		eComponentType GetComponentType() { return mType; }
 
 	private:
 		GameObject* mOwner;
+		eComponentType mType;
 	};
+
 }

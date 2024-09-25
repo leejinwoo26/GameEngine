@@ -16,7 +16,8 @@ namespace GE
 		~Application();
 
 		HDC GetHdc() { return mHdc; }
-
+		UINT GetWidth() { return mWidth; }
+		UINT GetHeight() { return mHeight; }
 	private:
 		void ClearBitmap();
 		void CopyHighSpeed();

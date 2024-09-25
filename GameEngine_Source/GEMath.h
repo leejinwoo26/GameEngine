@@ -20,5 +20,21 @@ struct Vector2
 	{
 		x = pos.x;
 		y = pos.y;
+		return Vector2(x, y);
+	}
+
+	Vector2 operator+(Vector2 other)
+	{
+		return Vector2(x + other.x, y + other.y);
+	}
+
+	Vector2 operator-(Vector2 other)
+	{
+		return Vector2(x - other.x, y - other.y);
+	}
+
+	Vector2 operator/(float other)
+	{
+		return Vector2(x / other, y / other);
 	}
 };

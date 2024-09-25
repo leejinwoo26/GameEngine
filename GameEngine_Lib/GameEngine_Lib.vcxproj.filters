@@ -5,9 +5,11 @@
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourcesLoad.h" />
+    <ClInclude Include="PlayerScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerScript.cpp" />
   </ItemGroup>
 </Project>

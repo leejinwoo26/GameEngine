@@ -2,7 +2,8 @@
 
 namespace GE
 {
-	Component::Component()
+	Component::Component(eComponentType type):
+		mType(type)
 	{
 	}
 	Component::~Component()

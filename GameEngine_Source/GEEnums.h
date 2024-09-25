@@ -1,6 +1,15 @@
 #pragma once
 namespace GE
 {
+	enum class eComponentType
+	{
+		TRANSFORM,
+		SPRITERENDERER,
+		SCRIPT,
+		CAMERA,
+		END
+	};
+
 	enum class eLayerType
 	{
 		NONE,
@@ -11,7 +20,10 @@ namespace GE
 
 	enum class eResourceType
 	{
-		TEXTURE
+		TEXTURE,
+		AUDIOCLIP,
+		PREFAB,
+		END
 	};
 }
 
