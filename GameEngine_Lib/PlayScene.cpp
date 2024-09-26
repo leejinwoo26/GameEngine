@@ -28,20 +28,22 @@ namespace GE
 
 		bg = Instantiate<Player>(eLayerType::PLAYER);
 
-		SpriteRenderer* sr
+		/*SpriteRenderer* sr
 			= bg->AddComponent<SpriteRenderer>();
-		sr->SetName(L"SR");
+		sr->SetName(L"SR");*/
 
 		//PlayerScript* ps = bg->AddComponent<PlayerScript>();
 
-		Texture* bgTex = Resources::Find<Texture>(L"BG");
-		sr->SetTexture(bgTex);
+		Texture* bgTex = Resources::Find<Texture>(L"Cat");
+
+		//sr->SetTexture(bgTex);
 
 		Animator* animator = bg->AddComponent<Animator>();
-
-
 		animator->CreateAnimation(L"CatWalk", bgTex,
-			Vector2(0.f, 0.f), Vector2(30.f, 30.f), Vector2(0.f, 0.f), 4, 0.1f);
+			Vector2(0.f, 0.f), Vector2(32.f, 32.f), Vector2(0.f, 0.f), 4, 0.1f);
+
+
+		animator->PlayAnimation(L"CatWalk",true);
 
 	}
 	void PlayScene::Update()

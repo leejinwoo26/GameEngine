@@ -22,8 +22,6 @@ namespace GE
 			Vector2 offset,
 			UINT spriteLeghth,
 			float duration);
-
-
 		Animation* FindAnimation(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop = true);
 

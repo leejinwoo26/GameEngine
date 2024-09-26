@@ -29,6 +29,7 @@ namespace GE
 	void Animation::CreateAnimation(const std::wstring& name, Texture* spriteSheet, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLeghth, float duration)
 	{
 		mTexture = spriteSheet;
+
 		for (size_t i = 0; i < spriteLeghth; i++)
 		{
 			Sprite sprite = {};
@@ -65,7 +66,7 @@ namespace GE
 	}
 	void Animation::Render(HDC hdc)
 	{
-		if (mTexture = nullptr)
+		if (mTexture == nullptr)
 			return;
 
 		GameObject* gameObj = mAnimator->GetOwner();
@@ -81,18 +82,18 @@ namespace GE
 		func.BlendOp = AC_SRC_OVER;
 		func.BlendFlags = 0;
 		func.AlphaFormat = AC_SRC_ALPHA;
-		func.SourceConstantAlpha = 125; // 0(transparent) ~ 255(Opaque)
+		func.SourceConstantAlpha = 255; // 0(transparent) ~ 255(Opaque)
 
 		Sprite sprite = mAnimationSheet[mIndex];
 		HDC imgHdc = mTexture->GetHdc();
 
 		AlphaBlend(hdc
 			, pos.x, pos.y
-			, sprite.Size.x
+			, sprite.Size.x 
 			, sprite.Size.y
 			, imgHdc
 			, sprite.leftTop.x
-			, sprite.leftTop.y
+			, sprite.leftTop.y	
 			, sprite.Size.x
 			, sprite.Size.y
 			, func);

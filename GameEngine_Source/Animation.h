@@ -20,10 +20,8 @@ namespace GE
 				Offset(Vector2(0.f, 0.f)),
 				duration(0.f)
 			{
-
 			}
 		};
-
 		Animation();
 		~Animation();
 		virtual HRESULT Load(const std::wstring& path) override;
