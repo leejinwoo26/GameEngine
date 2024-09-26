@@ -15,6 +15,7 @@ namespace GE
 		Application();
 		~Application();
 
+		HWND GetHwnd() { return mHwnd; }
 		HDC GetHdc() { return mHdc; }
 		UINT GetWidth() { return mWidth; }
 		UINT GetHeight() { return mHeight; }

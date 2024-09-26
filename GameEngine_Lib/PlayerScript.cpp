@@ -51,6 +51,13 @@ namespace GE
 	}
 	void PlayerScript::sitDown()
 	{
+		if (Input::GetKeyDown(eKeyCode::LBUTTON))
+		{
+			Vector2 a = Input::GetMousePosition();
+			int b = 0;
+		}
+
+
 		if (Input::GetKey(eKeyCode::D))
 		{
 			mState = PlayerScript::eState::Walk;

@@ -1,14 +1,20 @@
 #include "Input.h"
+#include "Application.h"
+
+extern GE::Application app;
 
 namespace GE
 {
     std::vector<Input::Key> Input::mKeys = {};
+    Vector2 Input::mMousePosition = Vector2(0.f,0.f);
 
     int ASCII[(UINT)eKeyCode::End] =
     {
         'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
         'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
         'Z', 'X', 'C', 'V', 'B', 'N', 'M',
+        VK_LEFT,VK_RIGHT,VK_DOWN,VK_UP,
+        VK_LBUTTON,VK_MBUTTON,VK_RBUTTON
     };
 
     GE::Input::Input()
@@ -48,13 +54,21 @@ namespace GE
     }
     void Input::updateKey(Input::Key& key)
     {
-        if (isKeyDown(key.keyCode))
+        if (GetFocus())
         {
-            updateKeyDown(key);
+            if (isKeyDown(key.keyCode))
+            {
+                updateKeyDown(key);
+            }
+            else
+            {
+                updateKeyUp(key);
+            }
+            updateMousePos();
         }
         else
         {
-            updateKeyUp(key);
+            //키 초기화 필요
         }
     }
     bool Input::isKeyDown(eKeyCode code)
@@ -78,5 +92,13 @@ namespace GE
             key.state = eKeyState::NONE;
 
         key.bPressed = false;
+    }
+    void Input::updateMousePos()
+    {
+        POINT mousePos = {};
+        GetCursorPos(&mousePos);
+        ScreenToClient(app.GetHwnd(), &mousePos);
+        mMousePosition.x = mousePos.x;
+        mMousePosition.y = mousePos.y;
     }
 }
