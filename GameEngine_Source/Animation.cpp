@@ -72,31 +72,66 @@ namespace GE
 		GameObject* gameObj = mAnimator->GetOwner();
 		Transform* tr = gameObj->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
+		float rot = tr->GetRotation();
+		Vector2 scale = tr->GetScale();
 
 		if (mainCamera)
-		{
 			pos = mainCamera->CalculatePosition(pos);
-		}
 
-		BLENDFUNCTION func = {};
-		func.BlendOp = AC_SRC_OVER;
-		func.BlendFlags = 0;
-		func.AlphaFormat = AC_SRC_ALPHA;
-		func.SourceConstantAlpha = 255; // 0(transparent) ~ 255(Opaque)
+
 
 		Sprite sprite = mAnimationSheet[mIndex];
-		HDC imgHdc = mTexture->GetHdc();
+		Texture::eTextureType textureType = mTexture->GetTextureType();
 
-		AlphaBlend(hdc
-			, pos.x, pos.y
-			, sprite.Size.x 
-			, sprite.Size.y
-			, imgHdc
-			, sprite.leftTop.x
-			, sprite.leftTop.y	
-			, sprite.Size.x
-			, sprite.Size.y
-			, func);
+		if (textureType == Texture::eTextureType::BMP)
+		{
+			BLENDFUNCTION func = {};
+			func.BlendOp = AC_SRC_OVER;
+			func.BlendFlags = 0;
+			func.AlphaFormat = AC_SRC_ALPHA;
+			func.SourceConstantAlpha = 255; // 0(transparent) ~ 255(Opaque)
+
+			HDC imgHdc = mTexture->GetHdc();
+
+			float a = pos.x - (sprite.Size.x / 2.0f);
+
+			AlphaBlend(hdc
+				, pos.x - ((sprite.Size.x * scale.x) / 2.0f), pos.y - ((sprite.Size.y * scale.y) / 2.0f)
+				, sprite.Size.x * scale.x
+				, sprite.Size.y * scale.y
+				, imgHdc
+				, sprite.leftTop.x
+				, sprite.leftTop.y
+				, sprite.Size.x
+				, sprite.Size.y
+				, func);
+		}
+		else if (textureType == Texture::eTextureType::PNG)
+		{
+			Gdiplus::ImageAttributes imgAtt = {};
+			// 투명화 시킬 픽셀의 색 범위
+			imgAtt.SetColorKey(Gdiplus::Color(230, 230, 230), Gdiplus::Color(255, 255, 255));
+			Gdiplus::Graphics graphics(hdc);
+
+			graphics.RotateTransform(rot);
+
+			graphics.DrawImage(mTexture->GetImage()
+				, Gdiplus::Rect
+				(
+					pos.x - ((sprite.Size.x * scale.x) / 2.0f)
+					, pos.y - ((sprite.Size.y * scale.y) / 2.0f)
+					, sprite.Size.x * scale.x
+					, sprite.Size.y * scale.y
+				)
+				, sprite.leftTop.x
+				, sprite.leftTop.y
+				, sprite.Size.x
+				, sprite.Size.y
+				, Gdiplus::UnitPixel
+				, /*&imgAtt*/nullptr
+			);
+		}
+		
 	}
 
 	void Animation::Reset()

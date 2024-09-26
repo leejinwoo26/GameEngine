@@ -16,6 +16,7 @@ namespace GE
 		NONE,
 		BACKGROUND,
 		PLAYER,
+		PARTICLE,
 		MAX = 16
 	};
 

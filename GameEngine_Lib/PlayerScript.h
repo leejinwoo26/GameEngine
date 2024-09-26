@@ -6,6 +6,13 @@ namespace GE
 	class PlayerScript : public Script
 	{
 	public:
+		enum class eState
+		{
+			SitDown,
+			Walk,
+			Sleep,
+			Attack,
+		};
 		PlayerScript();
 		~PlayerScript();
 
@@ -13,10 +20,13 @@ namespace GE
 		void Update();
 		void LateUpdate();
 		void Render(HDC hdc);
+	private:
+		void sitDown();
+		void move();
 
 	private:
-
-
+		eState mState;
+		class Animator* mAnimator;
 	};
 
 }

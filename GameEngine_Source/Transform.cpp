@@ -2,7 +2,9 @@
 namespace GE
 {
 	Transform::Transform() :
-		Component(eComponentType::TRANSFORM)
+		Component(eComponentType::TRANSFORM),
+		mScale(Vector2(1.f,1.f)),
+		mRotation(0.f)	
 	{
 	}
 	Transform::~Transform()
