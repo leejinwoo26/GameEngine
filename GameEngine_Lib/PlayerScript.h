@@ -20,6 +20,8 @@ namespace GE
 		void Update();
 		void LateUpdate();
 		void Render(HDC hdc);
+
+		void Attack();
 	private:
 		void sitDown();
 		void move();

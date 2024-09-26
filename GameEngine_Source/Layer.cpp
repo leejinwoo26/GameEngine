@@ -7,7 +7,11 @@ namespace GE
 	}
 	Layer::~Layer()
 	{
-
+		for (auto& iter : mGameObjs)
+		{
+			delete iter;
+			iter = nullptr;
+		}
 	}
 	void Layer::Initialize()
 	{

@@ -1,4 +1,5 @@
 #include "Animator.h"
+
 namespace GE
 {
 	Animator::Animator():
@@ -11,6 +12,19 @@ namespace GE
 
 	Animator::~Animator()
 	{
+		for (auto& iter : mAnimations)
+		{
+			delete iter.second;
+			iter.second = nullptr;
+		}
+
+		for (auto& iter : mEvents)
+		{
+			delete iter.second;
+			iter.second = nullptr;
+		}
+
+		mActiveAnimation = nullptr;
 	}
 
 	void Animator::Initialize()
@@ -22,10 +36,16 @@ namespace GE
 		if (mActiveAnimation)
 		{
 			mActiveAnimation->Update();
-			if (mActiveAnimation->IsComplete() == true 
-				&& mbLoop == true)
+
+			mActiveAnimation->GetName();
+			Events* events = FindEvent(mActiveAnimation->GetName());
+
+			if (mActiveAnimation->IsComplete())
 			{
-				mActiveAnimation->Reset();
+				if (events)
+					events->completeEvent();
+				if(mbLoop ==true)
+					mActiveAnimation->Reset();
 			}
 		}
 	}
@@ -53,8 +73,11 @@ namespace GE
 		animation->CreateAnimation(name, spriteSheet,
 			leftTop, size, offset, spriteLeghth, duration);
 		animation->SetAnimator(this);
-		mAnimations.insert(std::make_pair(name, animation));
+		animation->SetName(name);
 
+		Events* events = new Events();
+		mEvents.insert(std::make_pair(name, events));
+		mAnimations.insert(std::make_pair(name, animation));
 	}
 
 	Animation* Animator::FindAnimation(const std::wstring& name)
@@ -70,8 +93,43 @@ namespace GE
 		Animation* animation = FindAnimation(name);
 		if (animation == nullptr)
 			return;
+		
+		if (mActiveAnimation)
+		{
+			Events* currentEvents = FindEvent(mActiveAnimation->GetName());
+			if (currentEvents)
+				currentEvents->EndEvent();
+		}
+
+		Events* nextEvent = FindEvent(animation->GetName());
+		if (nextEvent)
+			nextEvent->startEvent();
+
 		mActiveAnimation = animation;
 		mActiveAnimation->Reset();
 		mbLoop = loop;
+	}
+	Animator::Events* Animator::FindEvent(const std::wstring& name)
+	{
+		auto iter = mEvents.find(name);
+		if (iter == mEvents.end())
+			return nullptr;
+
+		return iter->second;
+	}
+	std::function<void()>& Animator::GetStartEvent(const std::wstring& name)
+	{
+		Events* events = FindEvent(name);
+		return events->startEvent.mEvent;
+	}
+	std::function<void()>& Animator::GetCompleteEvent(const std::wstring& name)
+	{
+		Events* events = FindEvent(name);
+		return events->completeEvent.mEvent;
+	}
+	std::function<void()>& Animator::GetEndEvent(const std::wstring& name)
+	{
+		Events* events = FindEvent(name);
+		return events->EndEvent.mEvent;
 	}
 }

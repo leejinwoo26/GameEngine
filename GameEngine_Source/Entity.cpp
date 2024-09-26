@@ -9,5 +9,4 @@ namespace GE
 	Entity::~Entity()
 	{
 	}
-
 }

@@ -25,4 +25,13 @@ namespace GE
 	{
 		mActiveScene->Render(hdc);
 	}
+	void SceneManager::Release()
+	{
+		for (auto& iter : mScenes)
+		{
+			delete iter.second;
+			iter.second = nullptr;
+		}
+	}
+
 }

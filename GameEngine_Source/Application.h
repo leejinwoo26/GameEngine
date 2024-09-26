@@ -12,6 +12,7 @@ namespace GE
 		void Update();
 		void LateUpdate();
 		void Render();
+		void Release();
 		Application();
 		~Application();
 

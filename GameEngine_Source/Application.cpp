@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "Time.h"
 #include "SceneManager.h"
+#include "Resources.h"
 
 namespace GE
 {
@@ -19,7 +20,11 @@ namespace GE
 	{
 
 	}
-
+	void Application::Release()
+	{
+		SceneManager::Release();
+		Resources::Release();
+	}
 	void Application::Initialize(HWND hwnd, UINT width, UINT height)
 	{
 		CreateBackBuffer(hwnd,width, height);

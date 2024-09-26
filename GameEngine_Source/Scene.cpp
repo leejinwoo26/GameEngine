@@ -11,6 +11,11 @@ GE::Scene::Scene() : mLayers{}
 
 GE::Scene::~Scene()
 {
+	for (auto& iter : mLayers)
+	{
+		delete iter;
+		iter = nullptr;
+	}
 }
 
 void GE::Scene::Initialize()

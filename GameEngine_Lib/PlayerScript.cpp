@@ -36,6 +36,7 @@ namespace GE
 		case PlayerScript::eState::Sleep:
 			break;
 		case PlayerScript::eState::Attack:
+			Attack();
 			break;
 		default:
 			break;
@@ -49,6 +50,12 @@ namespace GE
 	void PlayerScript::Render(HDC hdc)
 	{
 	}
+
+	void PlayerScript::Attack()
+	{
+		int a = 0;
+	}
+
 	void PlayerScript::sitDown()
 	{
 		if (Input::GetKeyDown(eKeyCode::LBUTTON))
