@@ -13,6 +13,8 @@ namespace GE
 		void LateUpdate();
 		void Render();
 		void Release();
+		void Destroy();
+
 		Application();
 		~Application();
 

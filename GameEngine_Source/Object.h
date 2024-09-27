@@ -30,4 +30,10 @@ namespace GE
 
 		return gameObj;
 	}
+
+	static void ObjectDeath(GameObject* gameObj)
+	{
+		gameObj->Death();
+	}
+
 }

@@ -25,6 +25,11 @@ namespace GE
 		SceneManager::Release();
 		Resources::Release();
 	}
+	void Application::Destroy()
+	{
+		SceneManager::Destroy();
+	}
+
 	void Application::Initialize(HWND hwnd, UINT width, UINT height)
 	{
 		CreateBackBuffer(hwnd,width, height);
@@ -61,6 +66,8 @@ namespace GE
 		Update();
 		LateUpdate();
 		Render();
+
+		Destroy();
 	}
 
 	void Application::Update()

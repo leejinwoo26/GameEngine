@@ -17,7 +17,7 @@ namespace GE
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 		virtual void Render(HDC hdc) override;
-		void SetTarget(GameObject* target) { mTarget = target; }
+		void SetTarget(GameObject* target) { mTarget = target;}
 
 	private:
 		//std::vector<GameObject*> mGameObj;

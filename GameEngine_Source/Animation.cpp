@@ -95,7 +95,7 @@ namespace GE
 
 			float a = pos.x - (sprite.Size.x / 2.0f);
 
-			AlphaBlend(hdc
+			TransparentBlt(hdc
 				, pos.x - ((sprite.Size.x * scale.x) / 2.0f), pos.y - ((sprite.Size.y * scale.y) / 2.0f)
 				, sprite.Size.x * scale.x
 				, sprite.Size.y * scale.y
@@ -104,7 +104,9 @@ namespace GE
 				, sprite.leftTop.y
 				, sprite.Size.x
 				, sprite.Size.y
-				, func);
+				, RGB(255,0,255));
+
+			BYTE
 		}
 		else if (textureType == Texture::eTextureType::PNG)
 		{

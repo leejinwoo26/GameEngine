@@ -4,12 +4,14 @@
 #include "..\\GameEngine_Source\\Time.h"
 #include "..\\GameEngine_Source\\GameObject.h"
 #include "..\\GameEngine_Source\\Animator.h"
+#include "..\\GameEngine_Source\\Object.h"
 
 namespace GE
 {
 	PlayerScript::PlayerScript():
 		mState(PlayerScript::eState::SitDown), 
-		mAnimator(nullptr)
+		mAnimator(nullptr),
+		mDeathTime(0)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -23,6 +25,13 @@ namespace GE
 		if (mAnimator == nullptr)
 		{
 			mAnimator = GetOwner()->GetComponent<Animator>();
+		}
+
+		mDeathTime += Time::DeltaTime();
+
+		if (mDeathTime > 1.f)
+		{
+			ObjectDeath(this->GetOwner());
 		}
 
 		switch (mState)

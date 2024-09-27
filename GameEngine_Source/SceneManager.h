@@ -41,6 +41,7 @@ namespace GE
 		static void LateUpdate();
 		static void Render(HDC hdc);
 		static void Release();
+		static void Destroy();
 
 	private:
 		static std::map<std::wstring, Scene*> mScenes;

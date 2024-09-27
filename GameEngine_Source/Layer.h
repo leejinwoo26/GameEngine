@@ -14,11 +14,13 @@ namespace GE
 		void Update();
 		void LateUpdate();
 		void Render(HDC hdc);
+		void Destroy();
 
 		void AddGameObject(GameObject* gameObj);
 
 	private:
 		std::vector<GameObject*> mGameObjs;
+		std::vector<GameObject*> mDestroyObjs;
 	};
 }
 

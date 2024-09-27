@@ -61,9 +61,8 @@ namespace GE
 
 		animator->PlayAnimation(L"SitDown", false);
 
-		animator->GetCompleteEvent(L"SitDown") = std::bind(&PlayerScript::Attack, ps);
 
-
+		//animator->GetCompleteEvent(L"SitDown") = std::bind(&PlayerScript::Attack, ps);
 		Scene::Initialize();
 	}
 	void PlayScene::Update()

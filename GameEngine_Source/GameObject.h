@@ -7,6 +7,14 @@ namespace GE
 	class GameObject
 	{
 	public:
+		enum class eState
+		{
+			ACTIVE,
+			PAUSE,
+			DEAD,
+			END
+		};
+
 		virtual void Initialize();
 		virtual void Update();
 		virtual void LateUpdate();
@@ -39,7 +47,16 @@ namespace GE
 			return component;
 		}
 
+		void SetActive(bool active)
+		{
+			if (active == true) mState = eState::ACTIVE;
+			else if (active == false) mState = eState::PAUSE;
+		}
+		void Death() { mState = eState::DEAD; }
+		eState GetState() { return mState; }
+
 	private:
+		eState mState;
 		std::vector<Component*> mComponents;
 	};
 }

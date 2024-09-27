@@ -33,5 +33,8 @@ namespace GE
 			iter.second = nullptr;
 		}
 	}
-
+	void SceneManager::Destroy()
+	{
+		mActiveScene->Destroy();
+	}
 }

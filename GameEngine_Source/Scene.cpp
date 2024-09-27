@@ -47,7 +47,15 @@ void GE::Scene::LateUpdate()
 		layers->LateUpdate();
 	}
 }
-
+void GE::Scene::Destroy()
+{
+	for (Layer* layers : mLayers)
+	{
+		if (layers == nullptr)
+			continue;
+		layers->Destroy();
+	}
+}
 void GE::Scene::Render(HDC hdc)
 {
 	for (Layer* layers : mLayers)

@@ -17,6 +17,7 @@ namespace GE
 	}
 	Camera::~Camera()
 	{
+
 	}
 	void Camera::Initialize()
 	{
@@ -27,8 +28,12 @@ namespace GE
 	{
 		if (mTarget)
 		{
-			Transform* tr = mTarget->GetComponent<Transform>();
-			mLookPosition = tr->GetPosition();
+			if (mTarget->GetState() == GameObject::eState::ACTIVE 
+				|| mTarget->GetState() == GameObject::eState::PAUSE)
+			{
+				Transform* tr = mTarget->GetComponent<Transform>();
+				mLookPosition = tr->GetPosition();
+			}
 		}
 		else
 		{

@@ -29,6 +29,7 @@ namespace GE
 	private:
 		eState mState;
 		class Animator* mAnimator;
+		float mDeathTime;
 	};
 
 }

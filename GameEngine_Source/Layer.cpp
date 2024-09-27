@@ -12,7 +12,11 @@ namespace GE
 			delete iter;
 			iter = nullptr;
 		}
+
+		
 	}
+
+
 	void Layer::Initialize()
 	{
 		for (GameObject* gameObj : mGameObjs)
@@ -28,6 +32,9 @@ namespace GE
 		{
 			if (gameObj == nullptr)
 				continue;
+			if (gameObj->GetState() == GameObject::eState::DEAD
+				|| gameObj->GetState() == GameObject::eState::PAUSE)
+				continue;
 			gameObj->Update();
 		}
 	}
@@ -36,6 +43,9 @@ namespace GE
 		for (GameObject* gameObj : mGameObjs)
 		{
 			if (gameObj == nullptr)
+				continue;
+			if (gameObj->GetState() == GameObject::eState::DEAD
+				|| gameObj->GetState() == GameObject::eState::PAUSE)
 				continue;
 			gameObj->LateUpdate();
 		}
@@ -46,15 +56,37 @@ namespace GE
 		{
 			if (gameObj == nullptr)
 				continue;
+			if (gameObj->GetState() == GameObject::eState::DEAD
+				|| gameObj->GetState() == GameObject::eState::PAUSE)
+				continue;
 			gameObj->Render(hdc);
 		}
 	}
+	void Layer::Destroy()
+	{
+		for (auto iter = mGameObjs.begin(); iter != mGameObjs.end();)
+		{
+			if ((*iter)->GetState() == GameObject::eState::DEAD)
+			{
+				GameObject* gameObj = (*iter);
+				iter = mGameObjs.erase(iter);
+				
+				mDestroyObjs.push_back(gameObj);
+				continue;
+			}
+			iter++;
+		}
 
+		for (auto& iter : mDestroyObjs)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}	
 	void Layer::AddGameObject(GameObject* gameObj)
 	{
 		if (gameObj == nullptr)
 			return;
 		mGameObjs.push_back(gameObj);
 	}
-
 }

@@ -14,6 +14,7 @@ namespace GE
 		virtual void Initialize();
 		virtual void Update();
 		virtual void LateUpdate();
+		virtual void Destroy();
 		virtual void Render(HDC hdc);
 
 		virtual void OnEnter();
