@@ -27,12 +27,12 @@ namespace GE
 			mAnimator = GetOwner()->GetComponent<Animator>();
 		}
 
-		mDeathTime += Time::DeltaTime();
+		/*mDeathTime += Time::DeltaTime();
 
 		if (mDeathTime > 1.f)
 		{
 			ObjectDeath(this->GetOwner());
-		}
+		}*/
 
 		switch (mState)
 		{

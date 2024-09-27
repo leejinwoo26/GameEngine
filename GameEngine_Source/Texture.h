@@ -23,6 +23,8 @@ namespace GE
 		eTextureType GetTextureType() { return mType; }
 		Gdiplus::Image* GetImage() { return mImage; }
 
+		bool GetAlpha() { return mbAlpha; }
+
 	private:
 		Gdiplus::Image* mImage;
 		HBITMAP mBitmap;
@@ -31,5 +33,6 @@ namespace GE
 
 		UINT mWidth;
 		UINT mHeight;
+		bool mbAlpha;
 	};
 }

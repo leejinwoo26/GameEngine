@@ -6,7 +6,8 @@ extern GE::Application app;
 namespace GE
 {
 	Texture::Texture() :
-		Resource(eResourceType::TEXTURE)
+		Resource(eResourceType::TEXTURE),
+		mbAlpha(false)
 	{
 	}
 	Texture::~Texture()
@@ -30,6 +31,12 @@ namespace GE
 
 			mWidth = info.bmWidth;
 			mHeight = info.bmHeight;
+
+			if (info.bmBitsPixel == 32)
+				mbAlpha = true;
+			else if (info.bmBitsPixel == 24)
+				mbAlpha = false;
+
 
 			HDC mainDC = app.GetHdc();
 			mHdc = CreateCompatibleDC(mainDC);

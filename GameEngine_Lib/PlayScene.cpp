@@ -10,6 +10,7 @@
 #include "Renderer.h"
 #include "Animator.h"
 
+
 namespace GE
 {
 	PlayScene::PlayScene()
@@ -34,7 +35,7 @@ namespace GE
 			= bg->AddComponent<SpriteRenderer>();
 		sr->SetName(L"SR");*/
 
-		cameraComp->SetTarget(bg);
+		//cameraComp->SetTarget(bg);
 
 		Transform* playerTr = bg->GetComponent<Transform>();
 		playerTr->SetScale(Vector2(6.f, 6.f));

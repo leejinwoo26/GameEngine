@@ -85,28 +85,41 @@ namespace GE
 
 		if (textureType == Texture::eTextureType::BMP)
 		{
-			BLENDFUNCTION func = {};
-			func.BlendOp = AC_SRC_OVER;
-			func.BlendFlags = 0;
-			func.AlphaFormat = AC_SRC_ALPHA;
-			func.SourceConstantAlpha = 255; // 0(transparent) ~ 255(Opaque)
-
 			HDC imgHdc = mTexture->GetHdc();
+			if (mTexture->GetAlpha())
+			{
+				BLENDFUNCTION func = {};
+				func.BlendOp = AC_SRC_OVER;
+				func.BlendFlags = 0;
+				func.AlphaFormat = AC_SRC_ALPHA;
+				func.SourceConstantAlpha = 255; // 0(transparent) ~ 255(Opaque)
 
-			float a = pos.x - (sprite.Size.x / 2.0f);
-
-			TransparentBlt(hdc
-				, pos.x - ((sprite.Size.x * scale.x) / 2.0f), pos.y - ((sprite.Size.y * scale.y) / 2.0f)
-				, sprite.Size.x * scale.x
-				, sprite.Size.y * scale.y
-				, imgHdc
-				, sprite.leftTop.x
-				, sprite.leftTop.y
-				, sprite.Size.x
-				, sprite.Size.y
-				, RGB(255,0,255));
-
-			BYTE
+				AlphaBlend(hdc
+					, pos.x - ((sprite.Size.x * scale.x) / 2.0f) + sprite.Offset.x
+					, pos.y - ((sprite.Size.y * scale.y) / 2.0f) + sprite.Offset.y
+					, sprite.Size.x * scale.x
+					, sprite.Size.y * scale.y
+					, imgHdc
+					, sprite.leftTop.x
+					, sprite.leftTop.y
+					, sprite.Size.x
+					, sprite.Size.y
+					, func);
+			}
+			else
+			{
+				TransparentBlt(hdc
+					, pos.x - ((sprite.Size.x * scale.x) / 2.0f) + sprite.Offset.x
+					, pos.y - ((sprite.Size.y * scale.y) / 2.0f) + sprite.Offset.y
+					, sprite.Size.x * scale.x
+					, sprite.Size.y * scale.y
+					, imgHdc
+					, sprite.leftTop.x
+					, sprite.leftTop.y
+					, sprite.Size.x
+					, sprite.Size.y
+					, RGB(255, 0, 255));
+			}
 		}
 		else if (textureType == Texture::eTextureType::PNG)
 		{

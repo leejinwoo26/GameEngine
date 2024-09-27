@@ -37,4 +37,20 @@ struct Vector2
 	{
 		return Vector2(x / other, y / other);
 	}
+
+	float Length()
+	{
+		return sqrtf(x * x + y * y);
+	}
+
+	Vector2 Normalize()
+	{
+		float length = Length();
+		x /= length;
+		y /= length;
+
+		return *this;
+	}
+
+
 };
