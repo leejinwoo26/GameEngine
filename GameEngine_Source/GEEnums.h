@@ -4,6 +4,7 @@ namespace GE
 	enum class eComponentType
 	{
 		TRANSFORM,
+		COLLIDER,
 		SPRITERENDERER,
 		ANIMATOR,
 		SCRIPT,

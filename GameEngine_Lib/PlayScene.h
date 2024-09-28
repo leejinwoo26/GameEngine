@@ -2,6 +2,7 @@
 #include "..\\GameEngine_Source\\Scene.h"
 #include "Player.h"
 
+
 namespace GE
 {
 	class PlayScene : public Scene
@@ -18,5 +19,8 @@ namespace GE
 		void OnExit() override;
 	private:
 		Player* bg;
+		class Texture* bgTex;
+		class Transform* playerTr;
+		float rot;
 	};
 }

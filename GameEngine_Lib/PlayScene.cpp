@@ -9,11 +9,15 @@
 #include "Camera.h"
 #include "Renderer.h"
 #include "Animator.h"
+#include "Texture.h"
+#include "BoxCollider2D.h"
+//#include "Collider.h"
 
 
 namespace GE
 {
-	PlayScene::PlayScene()
+	
+	PlayScene::PlayScene() : bgTex(nullptr) , rot(0.f)
 	{
 	}
 	PlayScene::~PlayScene()
@@ -23,13 +27,12 @@ namespace GE
 	{
 		GameObject* camera = Instantiate<GameObject>(eLayerType::NONE);
 		Camera* cameraComp  = camera->AddComponent<Camera>();
-		mainCamera = cameraComp;
-
+		//mainCamera = cameraComp;
 
 
 		//camera->AddComponent<PlayerScript>();
 
-		bg = Instantiate<Player>(eLayerType::PLAYER);
+		bg = Instantiate<Player>(eLayerType::PLAYER,Vector2(800,500));
 
 		/*SpriteRenderer* sr
 			= bg->AddComponent<SpriteRenderer>();
@@ -37,13 +40,15 @@ namespace GE
 
 		//cameraComp->SetTarget(bg);
 
-		Transform* playerTr = bg->GetComponent<Transform>();
-		playerTr->SetScale(Vector2(6.f, 6.f));
+		playerTr = bg->GetComponent<Transform>();
+		playerTr->SetScale(Vector2(2.f, 2.f));
+
+		BoxCollider2D* boxCol = bg->AddComponent<BoxCollider2D>();
+		boxCol->SetOffset(Vector2(-20.f, -7.5f));
 
 		PlayerScript* ps = bg->AddComponent<PlayerScript>();
-
-		Texture* bgTex = Resources::Find<Texture>(L"Cat");
-
+		
+		bgTex = Resources::Find<Texture>(L"Cat");
 		//sr->SetTexture(bgTex);
 
 		Animator* animator = bg->AddComponent<Animator>();

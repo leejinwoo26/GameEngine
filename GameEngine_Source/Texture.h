@@ -22,7 +22,7 @@ namespace GE
 		HDC GetHdc() { return mHdc; }
 		eTextureType GetTextureType() { return mType; }
 		Gdiplus::Image* GetImage() { return mImage; }
-
+		HBITMAP GetBitMap() { return mBitmap; }
 		bool GetAlpha() { return mbAlpha; }
 
 	private:

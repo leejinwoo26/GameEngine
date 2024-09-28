@@ -34,7 +34,7 @@ namespace GE
 			return iter->second;
 		}
 
-		static Scene* GetActiveScene() { return mActiveScene; }
+		__forceinline static Scene* GetActiveScene() { return mActiveScene; }
 
 		static void Initialize();
 		static void Update();

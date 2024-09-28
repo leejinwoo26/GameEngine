@@ -15,8 +15,8 @@ namespace GE
 		void LateUpdate() override;
 		void Render(HDC hdc) override;
 
-		void SetTexture(Texture* texture) { mTexture = texture; }
-		void SetSize(Vector2 size) { mSize = size; }
+		__forceinline void SetTexture(Texture* texture) { mTexture = texture; }
+		__forceinline void SetSize(Vector2 size) { mSize = size; }
 		Texture* GetTexture() { return mTexture; }
 
 	private:

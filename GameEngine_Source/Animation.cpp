@@ -82,7 +82,6 @@ namespace GE
 
 		Sprite sprite = mAnimationSheet[mIndex];
 		Texture::eTextureType textureType = mTexture->GetTextureType();
-
 		if (textureType == Texture::eTextureType::BMP)
 		{
 			HDC imgHdc = mTexture->GetHdc();
@@ -120,6 +119,7 @@ namespace GE
 					, sprite.Size.y
 					, RGB(255, 0, 255));
 			}
+			Rectangle(hdc, pos.x, pos.y, pos.x + 10, pos.y + 10);
 		}
 		else if (textureType == Texture::eTextureType::PNG)
 		{

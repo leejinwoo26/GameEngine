@@ -33,6 +33,8 @@ namespace GE
 		float rot = tr->GetRotation();
 		Vector2 scale = tr->GetScale();
 
+		HDC texHdc = mTexture->GetHdc();
+
 		if (mainCamera)
 		{
 			pos = mainCamera->CalculatePosition(pos);
@@ -41,10 +43,42 @@ namespace GE
 
 		if (mTexture->GetTextureType() == Texture::eTextureType::BMP)
 		{
-			TransparentBlt(hdc, pos.x - ((mTexture->GetWidth() * mSize.x) / 2), pos.y - ((mTexture->GetHeight() * mSize.y) / 2)
+			if (mTexture->GetAlpha())
+			{
+				BLENDFUNCTION func = {};
+				func.BlendOp = AC_SRC_OVER;
+				func.BlendFlags = 0;
+				func.AlphaFormat = AC_SRC_ALPHA;
+				func.SourceConstantAlpha = 255; // 0(transparent) ~ 255(Opaque)
+
+				AlphaBlend(hdc
+					, pos.x
+					, pos.y
+					, mTexture->GetWidth() * mSize.x * scale.x
+					, mTexture->GetHeight() * mSize.y * scale.y
+					, mTexture->GetHdc()
+					, 0, 0
+					, mTexture->GetWidth()
+					, mTexture->GetHeight()
+					, func);
+			}
+			else
+			{
+				//https://blog.naver.com/power2845/50147965306
+				TransparentBlt(hdc
+					, pos.x, pos.y
+					, mTexture->GetWidth() * mSize.x * scale.x
+					, mTexture->GetHeight() * mSize.y * scale.y
+					, mTexture->GetHdc()
+					, 0, 0
+					, mTexture->GetWidth()
+					, mTexture->GetHeight()
+					, RGB(255, 0, 255));
+			}
+			/*TransparentBlt(hdc, pos.x - ((mTexture->GetWidth() * mSize.x) / 2), pos.y - ((mTexture->GetHeight() * mSize.y) / 2)
 				, mTexture->GetWidth() * mSize.x * scale.x, mTexture->GetHeight() * mSize.y * scale.y
 				, mTexture->GetHdc(), 0, 0, mTexture->GetWidth(), mTexture->GetHeight()
-				, RGB(255, 0, 255));
+				, RGB(255, 0, 255));*/
 		}
 		else if (mTexture->GetTextureType() == Texture::eTextureType::PNG)
 		{
@@ -58,9 +92,10 @@ namespace GE
 			graphcis.DrawImage(mTexture->GetImage()
 				, Gdiplus::Rect
 				(
-					pos.x - ((mTexture->GetWidth() * mSize.x) / 2), pos.y - ((mTexture->GetHeight() * mSize.y) / 2)
-					, mTexture->GetWidth() * mSize.x 
-					, mTexture->GetHeight() * mSize.y 
+					pos.x - ((mTexture->GetWidth() * mSize.x )/2),
+					pos.y - ((mTexture->GetHeight() * mSize.y )/2)
+					, mTexture->GetWidth() * mSize.x * scale.x
+					, mTexture->GetHeight() * mSize.y * scale.y
 				)
 				, 0, 0
 				, mTexture->GetWidth(), mTexture->GetHeight()
