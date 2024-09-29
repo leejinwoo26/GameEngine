@@ -22,6 +22,11 @@ namespace GE
 		void Render(HDC hdc);
 
 		void Attack();
+
+		void OnCollisionEnter(class Collider* other) override;
+		void OnCollisionStay(class Collider* other) override;
+		void OnCollisionExit(class Collider* other) override;
+
 	private:
 		void sitDown();
 		void move();

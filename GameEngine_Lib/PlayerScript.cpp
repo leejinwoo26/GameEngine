@@ -5,6 +5,7 @@
 #include "..\\GameEngine_Source\\GameObject.h"
 #include "..\\GameEngine_Source\\Animator.h"
 #include "..\\GameEngine_Source\\Object.h"
+#include "..\\GameEngine_Source\\Renderer.h"
 
 namespace GE
 {
@@ -65,6 +66,18 @@ namespace GE
 		int a = 0;
 	}
 
+	void PlayerScript::OnCollisionEnter(Collider* other)
+	{
+	}
+
+	void PlayerScript::OnCollisionStay(Collider* other)
+	{
+	}
+
+	void PlayerScript::OnCollisionExit(Collider* other)
+	{
+	}
+
 	void PlayerScript::sitDown()
 	{
 		if (Input::GetKeyDown(eKeyCode::LBUTTON))
@@ -93,6 +106,15 @@ namespace GE
 		{
 			mState = PlayerScript::eState::Walk;
 			mAnimator->PlayAnimation(L"DownWalk");
+		}
+
+		if (Input::GetKeyDown(eKeyCode::E))
+		{
+			mainCamera->SetTarget(nullptr);
+		}
+		if (Input::GetKeyDown(eKeyCode::Q))
+		{
+			mainCamera->SetTarget(this->GetOwner());
 		}
 	}
 

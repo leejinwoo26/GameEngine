@@ -35,7 +35,7 @@ namespace GE
 
 		HDC texHdc = mTexture->GetHdc();
 
-		if (mainCamera)
+		if (mainCamera->GetTarget())
 		{
 			pos = mainCamera->CalculatePosition(pos);
 		}

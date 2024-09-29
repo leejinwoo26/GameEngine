@@ -55,6 +55,9 @@ namespace GE
 		void Death() { mState = eState::DEAD; }
 		eState GetState() { return mState; }
 
+		bool IsActive() { return mState == eState::ACTIVE; }
+		bool IsDead() { return mState == eState::DEAD; }
+
 	private:
 		eState mState;
 		std::vector<Component*> mComponents;

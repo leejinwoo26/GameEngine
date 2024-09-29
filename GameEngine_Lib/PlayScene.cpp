@@ -12,6 +12,7 @@
 #include "Texture.h"
 #include "BoxCollider2D.h"
 //#include "Collider.h"
+#include "CollisionManager.h"
 
 
 namespace GE
@@ -25,10 +26,18 @@ namespace GE
 	}
 	void PlayScene::Initialize()
 	{
+		CollisionManager::CollisionLayerCheck(eLayerType::PLAYER, eLayerType::BACKGROUND,true);
+
 		GameObject* camera = Instantiate<GameObject>(eLayerType::NONE);
 		Camera* cameraComp  = camera->AddComponent<Camera>();
-		//mainCamera = cameraComp;
+		mainCamera = cameraComp;
 
+		GameObject* otherCat = Instantiate<GameObject>(eLayerType::BACKGROUND,Vector2(600, 500));
+		BoxCollider2D* otherCatCol = otherCat->AddComponent<BoxCollider2D>();
+		Transform* otherCatTr = otherCat->GetComponent<Transform>();
+		otherCatTr->SetScale(Vector2(2, 2));
+		otherCatCol->SetOffset(Vector2(17.5f, 27.5));
+		otherCatCol->SetBoxCollsionSize(Vector2(35, 40));
 
 		//camera->AddComponent<PlayerScript>();
 
@@ -38,13 +47,14 @@ namespace GE
 			= bg->AddComponent<SpriteRenderer>();
 		sr->SetName(L"SR");*/
 
-		//cameraComp->SetTarget(bg);
+		cameraComp->SetTarget(bg);
 
 		playerTr = bg->GetComponent<Transform>();
 		playerTr->SetScale(Vector2(2.f, 2.f));
 
 		BoxCollider2D* boxCol = bg->AddComponent<BoxCollider2D>();
-		boxCol->SetOffset(Vector2(-20.f, -7.5f));
+		boxCol->SetOffset(Vector2(17.5, 27.5));
+		boxCol->SetBoxCollsionSize(Vector2(160, 40));
 
 		PlayerScript* ps = bg->AddComponent<PlayerScript>();
 		
@@ -67,6 +77,22 @@ namespace GE
 
 		animator->PlayAnimation(L"SitDown", false);
 
+
+		Animator* otheranimator = otherCat->AddComponent<Animator>();
+		otheranimator->CreateAnimation(L"DownWalk", bgTex
+			, Vector2(0.0f, 0.0f), Vector2(32.0f, 32.0f), Vector2(0.f, 0.f), 4, 0.1f);
+		otheranimator->CreateAnimation(L"RightWalk", bgTex
+			, Vector2(0.0f, 32.0f), Vector2(32.0f, 32.0f), Vector2(0.f, 0.f), 4, 0.1f);
+		otheranimator->CreateAnimation(L"UpWalk", bgTex
+			, Vector2(0.0f, 64.0f), Vector2(32.0f, 32.0f), Vector2(0.f, 0.f), 4, 0.1f);
+		otheranimator->CreateAnimation(L"LeftWalk", bgTex
+			, Vector2(0.0f, 96.0f), Vector2(32.0f, 32.0f), Vector2(0.f, 0.f), 4, 0.1f);
+		otheranimator->CreateAnimation(L"SitDown", bgTex
+			, Vector2(0.0f, 128.0f), Vector2(32.0f, 32.0f), Vector2(0.f, 0.f), 4, 0.1f);
+		otheranimator->CreateAnimation(L"Grooming", bgTex
+			, Vector2(0.0f, 160.0f), Vector2(32.0f, 32.0f), Vector2(0.f, 0.f), 4, 0.1f);
+		
+		otheranimator->PlayAnimation(L"SitDown", false);
 
 		//animator->GetCompleteEvent(L"SitDown") = std::bind(&PlayerScript::Attack, ps);
 		Scene::Initialize();

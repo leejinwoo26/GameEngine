@@ -9,6 +9,8 @@
 #include "GEMath.h"
 #include "GEEnums.h"
 #include <mmsystem.h>
+#include <bitset>
+#include <unordered_map>
 #include <dinput.h>
 #pragma comment(lib, "Msimg32.lib")
 #pragma comment(lib, "winmm.lib")

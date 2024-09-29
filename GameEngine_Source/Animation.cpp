@@ -75,7 +75,7 @@ namespace GE
 		float rot = tr->GetRotation();
 		Vector2 scale = tr->GetScale();
 
-		if (mainCamera)
+		if (mainCamera->GetTarget())
 			pos = mainCamera->CalculatePosition(pos);
 
 
@@ -94,8 +94,8 @@ namespace GE
 				func.SourceConstantAlpha = 255; // 0(transparent) ~ 255(Opaque)
 
 				AlphaBlend(hdc
-					, pos.x - ((sprite.Size.x * scale.x) / 2.0f) + sprite.Offset.x
-					, pos.y - ((sprite.Size.y * scale.y) / 2.0f) + sprite.Offset.y
+					, pos.x - ((sprite.Size.x /** scale.x*/) / 2.0f) + sprite.Offset.x
+					, pos.y - ((sprite.Size.y /** scale.y*/) / 2.0f) + sprite.Offset.y
 					, sprite.Size.x * scale.x
 					, sprite.Size.y * scale.y
 					, imgHdc
@@ -108,8 +108,8 @@ namespace GE
 			else
 			{
 				TransparentBlt(hdc
-					, pos.x - ((sprite.Size.x * scale.x) / 2.0f) + sprite.Offset.x
-					, pos.y - ((sprite.Size.y * scale.y) / 2.0f) + sprite.Offset.y
+					, pos.x - ((sprite.Size.x /** scale.x*/) / 2.0f) + sprite.Offset.x
+					, pos.y - ((sprite.Size.y /** scale.y*/) / 2.0f) + sprite.Offset.y
 					, sprite.Size.x * scale.x
 					, sprite.Size.y * scale.y
 					, imgHdc
@@ -119,7 +119,7 @@ namespace GE
 					, sprite.Size.y
 					, RGB(255, 0, 255));
 			}
-			Rectangle(hdc, pos.x, pos.y, pos.x + 10, pos.y + 10);
+			//Rectangle(hdc, pos.x, pos.y, pos.x + 10, pos.y + 10);
 		}
 		else if (textureType == Texture::eTextureType::PNG)
 		{
@@ -133,8 +133,8 @@ namespace GE
 			graphics.DrawImage(mTexture->GetImage()
 				, Gdiplus::Rect
 				(
-					pos.x - ((sprite.Size.x * scale.x) / 2.0f)
-					, pos.y - ((sprite.Size.y * scale.y) / 2.0f)
+					pos.x - ((sprite.Size.x /** scale.x*/) / 2.0f)
+					, pos.y - ((sprite.Size.y /** scale.y*/) / 2.0f)
 					, sprite.Size.x * scale.x
 					, sprite.Size.y * scale.y
 				)

@@ -17,7 +17,7 @@ namespace GE
 		void Destroy();
 
 		void AddGameObject(GameObject* gameObj);
-
+		std::vector<GameObject*>& GetGameObjects() { return mGameObjs; }
 	private:
 		std::vector<GameObject*> mGameObjs;
 		std::vector<GameObject*> mDestroyObjs;

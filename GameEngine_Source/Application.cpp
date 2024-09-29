@@ -4,6 +4,7 @@
 #include "Time.h"
 #include "SceneManager.h"
 #include "Resources.h"
+#include "CollisionManager.h"
 
 namespace GE
 {
@@ -37,6 +38,7 @@ namespace GE
 		Input::Initialize();
 		Time::Initialize();
 		SceneManager::Initialize();
+		CollisionManager::Initialize();
 	}
 	void Application::CreateBackBuffer(HWND hwnd,UINT width, UINT height)
 	{
@@ -75,11 +77,13 @@ namespace GE
 		Input::Update();
 		Time::Update();
 		SceneManager::Update();
+		CollisionManager::Update();
 	}
 
 	void Application::LateUpdate()
 	{
 		SceneManager::LateUpdate();
+		CollisionManager::LateUpdate();
 	}
 
 	void Application::Render()
@@ -87,6 +91,7 @@ namespace GE
 		ClearBitmap();
 
 		SceneManager::Render(mBackHdc);
+		CollisionManager::Render(mBackHdc);
 		Time::Render(mBackHdc);
 
 		CopyHighSpeed();

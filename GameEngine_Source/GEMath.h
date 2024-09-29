@@ -82,6 +82,13 @@ struct Vector2
 		return Vector2(x * v.x, y * v.y);
 	}
 
+	Vector2 operator=(Vector2 v)
+	{
+		x = v.x;
+		y = v.y;
+		return *this;
+	}
+
 	void clear()
 	{
 		x = 0.0f;
