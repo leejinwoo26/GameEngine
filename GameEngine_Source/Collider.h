@@ -9,8 +9,8 @@ namespace GE
 		enum class eCollisionState
 		{
 			NONE,
-			BOX,
-			CIRCLE
+			BOX2D,
+			CIRCLE2D
 		};
 
 		Collider();

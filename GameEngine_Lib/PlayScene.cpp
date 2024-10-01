@@ -11,6 +11,7 @@
 #include "Animator.h"
 #include "Texture.h"
 #include "BoxCollider2D.h"
+#include "CircleCollider2D.h"
 //#include "Collider.h"
 #include "CollisionManager.h"
 
@@ -34,9 +35,11 @@ namespace GE
 
 		GameObject* otherCat = Instantiate<GameObject>(eLayerType::BACKGROUND,Vector2(600, 500));
 		BoxCollider2D* otherCatCol = otherCat->AddComponent<BoxCollider2D>();
+		//CircleCollider2D* otherCatCol = otherCat->AddComponent<CircleCollider2D>();
 		Transform* otherCatTr = otherCat->GetComponent<Transform>();
 		otherCatTr->SetScale(Vector2(2, 2));
 		otherCatCol->SetOffset(Vector2(17.5f, 27.5));
+		//otherCatCol->SetRadius(100);
 		otherCatCol->SetBoxCollsionSize(Vector2(35, 40));
 
 		//camera->AddComponent<PlayerScript>();
@@ -52,9 +55,11 @@ namespace GE
 		playerTr = bg->GetComponent<Transform>();
 		playerTr->SetScale(Vector2(2.f, 2.f));
 
-		BoxCollider2D* boxCol = bg->AddComponent<BoxCollider2D>();
+		//BoxCollider2D* boxCol = bg->AddComponent<BoxCollider2D>();
+		CircleCollider2D* boxCol = bg->AddComponent<CircleCollider2D>();
 		boxCol->SetOffset(Vector2(17.5, 27.5));
-		boxCol->SetBoxCollsionSize(Vector2(160, 40));
+		boxCol->SetRadius(100);
+		//boxCol->SetBoxCollsionSize(Vector2(160, 40));
 
 		PlayerScript* ps = bg->AddComponent<PlayerScript>();
 		

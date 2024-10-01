@@ -12,6 +12,9 @@ namespace GE
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 		virtual void Render(HDC hdc) override;
+
+		float GetRadius() { return mRadius; }
+		void SetRadius(float rad) { mRadius = rad; }
 	private:
 		float mRadius;
 	};

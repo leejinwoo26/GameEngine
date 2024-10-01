@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "GameObject.h"
 #include "BoxCollider2D.h"
+#include "CircleCollider2D.h"
 
 
 namespace GE
@@ -132,8 +133,8 @@ namespace GE
 		Transform* leftTr = left->GetOwner()->GetComponent<Transform>();
 		Transform* rightTr = right->GetOwner()->GetComponent<Transform>();
 		
-		if (left->GetState() == Collider::eCollisionState::BOX 
-			&& right->GetState() == Collider::eCollisionState::BOX)
+		if (left->GetState() == Collider::eCollisionState::BOX2D 
+			&& right->GetState() == Collider::eCollisionState::BOX2D)
 		{
 			BoxCollider2D* boxLeft = left->GetOwner()->GetComponent<BoxCollider2D>();
 			BoxCollider2D* boxRight = right->GetOwner()->GetComponent<BoxCollider2D>();
@@ -151,8 +152,60 @@ namespace GE
 				return true;
 			}
 		}
+		else if (left->GetState() == Collider::eCollisionState::CIRCLE2D
+			&& right->GetState() == Collider::eCollisionState::CIRCLE2D)
+		{
+			CircleCollider2D* boxLeft = left->GetOwner()->GetComponent<CircleCollider2D>();
+			CircleCollider2D* boxRight = right->GetOwner()->GetComponent<CircleCollider2D>();
 
+			float LeftCircleRad = boxLeft->GetRadius();
+			float RightCircleRad = boxRight->GetRadius();
+
+			Vector2 LeftCircleSize = Vector2(LeftCircleRad, LeftCircleRad);
+			Vector2 RightCircleSize = Vector2(RightCircleRad, RightCircleRad);
+
+			Vector2 leftPos = leftTr->GetPosition() + boxLeft->GetOffset() + LeftCircleSize;
+			Vector2 rightPos = rightTr->GetPosition() + boxRight->GetOffset()+ RightCircleSize;
+
+			float distance = (leftPos - rightPos).length();
+
+			if (distance <= ((LeftCircleRad / 2) + (RightCircleRad / 2)))
+			{
+				return true;
+			}
+		}
+		else if (left->GetState() == Collider::eCollisionState::BOX2D
+			&& right->GetState() == Collider::eCollisionState::CIRCLE2D)
+		{
+			BoxCollider2D* boxLeft = left->GetOwner()->GetComponent<BoxCollider2D>();
+			CircleCollider2D* boxRight = right->GetOwner()->GetComponent<CircleCollider2D>();
+
+			Vector2 LeftBoxSize = boxLeft->GetBoxCollsionSize();
+			float RightCircleRad = boxRight->GetRadius();
+			float RightCircleRad_Half = RightCircleRad / 2;
+			Vector2 RightCircleSize = Vector2(RightCircleRad, RightCircleRad);
+
+
+
+			Vector2 leftPos = leftTr->GetPosition() + boxLeft->GetOffset();//³×¸ð
+			Vector2 rightPos = rightTr->GetPosition() + boxRight->GetOffset(); //¿ø
+
+			float distance = (leftPos - rightPos).length();
+
+			if (((rightPos.x >= leftPos.x) && (rightPos.x <= leftPos.x + LeftBoxSize.x)))
+			{
+				if (((rightPos.y >= leftPos.y) && (rightPos.y <= leftPos.y + LeftBoxSize.y)))
+				{
+					int a = 0;
+				}
+				else
+				{
+					int a = 0;
+				}
+			}
+
+			
+		}
 		return false;
 	}
-	
 }

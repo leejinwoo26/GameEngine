@@ -15,7 +15,7 @@ namespace GE
 	}
 	void BoxCollider2D::Initialize()
 	{
-		Collider::SetState(Collider::eCollisionState::BOX);
+		Collider::SetState(Collider::eCollisionState::BOX2D);
 	}
 	void BoxCollider2D::Update()
 	{
