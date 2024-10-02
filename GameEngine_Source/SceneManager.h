@@ -35,6 +35,7 @@ namespace GE
 		}
 
 		__forceinline static Scene* GetActiveScene() { return mActiveScene; }
+		__forceinline static Scene* GetDontDestroyScene() { return mDontDestroyOnLoad; }
 
 		static void Initialize();
 		static void Update();
@@ -46,5 +47,6 @@ namespace GE
 	private:
 		static std::map<std::wstring, Scene*> mScenes;
 		static Scene* mActiveScene;
+		static Scene* mDontDestroyOnLoad;
 	};
 }

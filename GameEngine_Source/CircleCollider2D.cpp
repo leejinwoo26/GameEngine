@@ -40,10 +40,10 @@ namespace GE
 		HPEN greenPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
 		HPEN oldPen = (HPEN)SelectObject(hdc, greenPen);
 
-		Ellipse(hdc, pos.x + offset.x - (mRadius / 2),
-			pos.y + offset.y - (mRadius / 2),
-			pos.x + offset.x + (mRadius / 2),
-			pos.y + offset.y + (mRadius / 2));
+		Ellipse(hdc, pos.x + offset.x - mRadius ,
+			pos.y + offset.y - mRadius,
+			pos.x + offset.x + mRadius,
+			pos.y + offset.y + mRadius );
 
 		SelectObject(hdc, oldBrush);
 		SelectObject(hdc, oldPen);

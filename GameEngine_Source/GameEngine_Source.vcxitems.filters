@@ -127,6 +127,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BoxCollider2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CircleCollider2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
@@ -193,5 +194,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BoxCollider2D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CircleCollider2D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.cpp" />
   </ItemGroup>
 </Project>

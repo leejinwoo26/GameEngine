@@ -71,6 +71,12 @@ void GE::Scene::AddGameObject(GameObject* gameObj,eLayerType type)
 	mLayers[(UINT)type]->AddGameObject(gameObj); 
 }
 
+void GE::Scene::EraseGameObject(GameObject* gameObj)
+{
+	eLayerType layerType = gameObj->GetLayerType();
+	mLayers[(UINT)layerType]->EraseGameObject(gameObj);
+}
+
 void GE::Scene::OnEnter()
 {
 

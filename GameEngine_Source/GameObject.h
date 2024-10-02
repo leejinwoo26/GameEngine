@@ -57,10 +57,13 @@ namespace GE
 
 		bool IsActive() { return mState == eState::ACTIVE; }
 		bool IsDead() { return mState == eState::DEAD; }
+		void SetLayerType(eLayerType type) { mLayerType = type; }
+		eLayerType GetLayerType() { return mLayerType; }
 
 	private:
 		eState mState;
 		std::vector<Component*> mComponents;
+		eLayerType mLayerType;
 	};
 }
 

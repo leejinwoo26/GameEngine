@@ -87,4 +87,16 @@ namespace GE
 			return;
 		mGameObjs.push_back(gameObj);
 	}
+	void Layer::EraseGameObject(GameObject* gameObj)
+	{
+		for (auto iter = mGameObjs.begin(); iter!=mGameObjs.end();)
+		{
+			if (gameObj == *(iter))
+			{
+				iter = mGameObjs.erase(iter);
+				return;
+			}
+			iter++;
+		}
+	}
 }

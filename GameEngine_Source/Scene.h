@@ -21,6 +21,7 @@ namespace GE
 		virtual void OnExit();
 
 		void AddGameObject(GameObject* gameObj,eLayerType type);
+		void EraseGameObject(GameObject* gameObj);
 
 		Layer* GetLayer(eLayerType type) { return mLayers[(UINT)type]; }
 

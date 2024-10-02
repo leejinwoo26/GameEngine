@@ -155,21 +155,21 @@ namespace GE
 		else if (left->GetState() == Collider::eCollisionState::CIRCLE2D
 			&& right->GetState() == Collider::eCollisionState::CIRCLE2D)
 		{
-			CircleCollider2D* boxLeft = left->GetOwner()->GetComponent<CircleCollider2D>();
-			CircleCollider2D* boxRight = right->GetOwner()->GetComponent<CircleCollider2D>();
+			CircleCollider2D* circleLeft = left->GetOwner()->GetComponent<CircleCollider2D>();
+			CircleCollider2D* circleRight = right->GetOwner()->GetComponent<CircleCollider2D>();
 
-			float LeftCircleRad = boxLeft->GetRadius();
-			float RightCircleRad = boxRight->GetRadius();
+			float LeftCircleRad = circleLeft->GetRadius();
+			float RightCircleRad = circleRight->GetRadius();
 
 			Vector2 LeftCircleSize = Vector2(LeftCircleRad, LeftCircleRad);
 			Vector2 RightCircleSize = Vector2(RightCircleRad, RightCircleRad);
 
-			Vector2 leftPos = leftTr->GetPosition() + boxLeft->GetOffset() + LeftCircleSize;
-			Vector2 rightPos = rightTr->GetPosition() + boxRight->GetOffset()+ RightCircleSize;
+			Vector2 leftPos = leftTr->GetPosition() + circleLeft->GetOffset() + LeftCircleSize;
+			Vector2 rightPos = rightTr->GetPosition() + circleRight->GetOffset()+ RightCircleSize;
 
 			float distance = (leftPos - rightPos).length();
 
-			if (distance <= ((LeftCircleRad / 2) + (RightCircleRad / 2)))
+			if (distance <= LeftCircleRad + RightCircleRad)
 			{
 				return true;
 			}
@@ -203,8 +203,6 @@ namespace GE
 					int a = 0;
 				}
 			}
-
-			
 		}
 		return false;
 	}

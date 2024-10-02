@@ -5,7 +5,8 @@
 namespace GE
 {
 	GameObject::GameObject():
-		mState(eState::ACTIVE)
+		mState(eState::ACTIVE),
+		mLayerType(eLayerType::NONE)
 	{
 		mComponents.resize((UINT)eComponentType::END);
 		AddComponent<Transform>();

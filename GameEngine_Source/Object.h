@@ -11,6 +11,7 @@ namespace GE
 	static T* Instantiate(eLayerType type)
 	{
 		T* gameObj = new T();
+		gameObj->SetLayerType(type);
 		Scene* activeScene = SceneManager::GetActiveScene();
 		Layer* layer = activeScene->GetLayer(type);
 		layer->AddGameObject(gameObj);
@@ -21,6 +22,7 @@ namespace GE
 	static T* Instantiate(eLayerType type, Vector2 pos)
 	{
 		T* gameObj = new T();
+		gameObj->SetLayerType(type);
 		Scene* activeScene = SceneManager::GetActiveScene();
 		Layer* layer = activeScene->GetLayer(type);
 		layer->AddGameObject(gameObj);
@@ -36,4 +38,13 @@ namespace GE
 		gameObj->Death();
 	}
 
+
+	static void DontDestroyOnLoad(GameObject* gameObj)
+	{
+		Scene* activeScene = SceneManager::GetActiveScene();
+		activeScene->EraseGameObject(gameObj);
+
+		Scene* dontDestroyScene = SceneManager::GetDontDestroyScene();
+		dontDestroyScene->AddGameObject(gameObj,gameObj->GetLayerType());
+	}
 }

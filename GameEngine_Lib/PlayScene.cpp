@@ -34,18 +34,18 @@ namespace GE
 		mainCamera = cameraComp;
 
 		GameObject* otherCat = Instantiate<GameObject>(eLayerType::BACKGROUND,Vector2(600, 500));
-		BoxCollider2D* otherCatCol = otherCat->AddComponent<BoxCollider2D>();
-		//CircleCollider2D* otherCatCol = otherCat->AddComponent<CircleCollider2D>();
+		//BoxCollider2D* otherCatCol = otherCat->AddComponent<BoxCollider2D>();
+		CircleCollider2D* otherCatCol = otherCat->AddComponent<CircleCollider2D>();
 		Transform* otherCatTr = otherCat->GetComponent<Transform>();
 		otherCatTr->SetScale(Vector2(2, 2));
 		otherCatCol->SetOffset(Vector2(17.5f, 27.5));
-		//otherCatCol->SetRadius(100);
-		otherCatCol->SetBoxCollsionSize(Vector2(35, 40));
+		otherCatCol->SetRadius(50);
+		//otherCatCol->SetBoxCollsionSize(Vector2(35, 40));
 
 		//camera->AddComponent<PlayerScript>();
 
 		bg = Instantiate<Player>(eLayerType::PLAYER,Vector2(800,500));
-
+		//DontDestroyOnLoad(bg);
 		/*SpriteRenderer* sr
 			= bg->AddComponent<SpriteRenderer>();
 		sr->SetName(L"SR");*/
@@ -58,7 +58,7 @@ namespace GE
 		//BoxCollider2D* boxCol = bg->AddComponent<BoxCollider2D>();
 		CircleCollider2D* boxCol = bg->AddComponent<CircleCollider2D>();
 		boxCol->SetOffset(Vector2(17.5, 27.5));
-		boxCol->SetRadius(100);
+		boxCol->SetRadius(50);
 		//boxCol->SetBoxCollsionSize(Vector2(160, 40));
 
 		PlayerScript* ps = bg->AddComponent<PlayerScript>();
