@@ -13,6 +13,7 @@ namespace GE
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render(HDC hdc);
+		void SetPos(int x, int y);
 	private:
 
 	};

@@ -19,8 +19,10 @@ namespace GE
 		void SetTexture(Texture* texture) { mTexture = texture; }
 		void SetSize(Vector2 size) { mSize = size; }
 		Texture* GetTexture() { return mTexture; }
-
+		static Vector2 GetTileSize() { return TileSize; }
 	private:
+		static Vector2 TileSize;
+
 		Texture* mTexture;
 		Vector2 mSize;
 		Vector2 mIndex;

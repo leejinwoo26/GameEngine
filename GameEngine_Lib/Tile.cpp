@@ -1,6 +1,9 @@
 #include "Tile.h"
 #include "..\\GameEngine_Source\\GameObject.h"
 #include "..\\GameEngine_Source\\Transform.h"
+#include "..\\GameEngine_Source\\Component.h"
+#include "TileRenderer.h"
+
 
 namespace GE
 {
@@ -25,5 +28,10 @@ namespace GE
 	void Tile::Render(HDC hdc)
 	{
 		GameObject::Render(hdc);
+	}
+	void Tile::SetPos(int x, int y)
+	{
+		Transform* tr = GetComponent<Transform>();
+		tr->SetPos(Vector2(x * TileRenderer::GetTileSize().x, y * TileRenderer::GetTileSize().y));
 	}
 }

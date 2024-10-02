@@ -4,6 +4,8 @@
 #include "framework.h"
 #include "GameEngine.h"
 #include "..\\GameEngine_Source\\Application.h"
+#include "..\\GameEngine_Source\\Texture.h"
+#include "..\\GameEngine_Source\\Resources.h"
 #include "..\\GameEngine_Lib\\LoadScene.h"
 #include "..\\GameEngine_Lib\\ResourcesLoad.h"
 
@@ -142,13 +144,29 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
-   /*ShowWindow(ToolhWnd, nCmdShow);
-   UpdateWindow(ToolhWnd);*/
+   
 
    Gdiplus::GdiplusStartup(&gpToken, &gpsi, NULL);
    
    GE::LoadResources();
    GE::LoadScenes();
+
+
+   //타일 윈도우 크기
+   GE::Texture* texture = GE::Resources::Find<GE::Texture>(L"SpringFloor");
+
+   RECT rc = { 0, 0, texture->GetWidth(), texture->GetHeight()};
+
+   UINT mWidth = rc.right - rc.left;
+   UINT mHeight = rc.bottom - rc.top;
+
+   AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
+
+   SetWindowPos(ToolhWnd, nullptr, 0, 0, mWidth, mHeight, 0);
+   ShowWindow(ToolhWnd, nCmdShow);
+   UpdateWindow(ToolhWnd);
+
+
    return TRUE;
 }
 
@@ -226,6 +244,21 @@ LRESULT CALLBACK WndTileProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
         // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+
+        GE::Texture* mTexture = GE::Resources::Find<GE::Texture>(L"SpringFloor");
+
+
+        TransparentBlt(hdc
+            , 0, 0
+            , mTexture->GetWidth()
+            , mTexture->GetHeight()
+            , mTexture->GetHdc()
+            , 0, 0
+            , mTexture->GetWidth()
+            , mTexture->GetHeight()
+            , RGB(255, 0, 255));
+
+
         EndPaint(hWnd, &ps);
     }
     break;

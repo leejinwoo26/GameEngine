@@ -6,6 +6,8 @@
 
 namespace GE
 {
+	Vector2 TileRenderer::TileSize = Vector2(1,1);
+
 	TileRenderer::TileRenderer()
 		: mSize(Vector2(3.f, 3.f))
 		, mTexture(nullptr)
@@ -13,6 +15,7 @@ namespace GE
 		, mIndex(Vector2(8,7))
 		, mTileSize(Vector2(16,16))
 	{
+		TileSize = mTileSize * mSize;
 	}
 	TileRenderer::~TileRenderer()
 	{
