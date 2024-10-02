@@ -16,6 +16,7 @@ namespace GE
 	{
 		NONE,
 		BACKGROUND,
+		TILE,
 		PLAYER,
 		PARTICLE,
 		MAX = 16

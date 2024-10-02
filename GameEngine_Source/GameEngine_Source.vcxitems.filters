@@ -52,6 +52,9 @@
     <Filter Include="Animation">
       <UniqueIdentifier>{e744b65f-b589-414d-9b0f-621a60686123}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{53b359b8-4bef-4918-af0e-3927ed9f07b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h">
@@ -123,11 +126,20 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Animator.h">
       <Filter>Animation</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Collider.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)BoxCollider2D.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)CircleCollider2D.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BoxCollider2D.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CircleCollider2D.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Collider.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TileRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
@@ -190,10 +202,19 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Animator.cpp">
       <Filter>Animation</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Collider.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)BoxCollider2D.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)CircleCollider2D.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)BoxCollider2D.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CircleCollider2D.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Collider.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TileRenderer.cpp" />
   </ItemGroup>
 </Project>

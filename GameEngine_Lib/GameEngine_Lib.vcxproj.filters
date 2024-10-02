@@ -1,15 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="LoadScene.h" />
-    <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourcesLoad.h" />
-    <ClInclude Include="PlayerScript.h" />
+    <ClInclude Include="LoadScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerScript.cpp" />
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{b4302193-5084-41e9-817a-066ec1c286e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script">
+      <UniqueIdentifier>{28b09bf2-fe17-47e4-ace6-6a73c304893c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
