@@ -12,6 +12,17 @@ namespace GE
 	SceneManager::~SceneManager()
 	{
 	}
+	std::vector<GameObject*> SceneManager::GetGameObjects(eLayerType layer)
+	{
+		std::vector<GameObject*> activeGameObjs 
+			= mActiveScene->GetLayer(layer)->GetGameObjects();
+		std::vector<GameObject*> DontDestroyGameObjs 
+			= mDontDestroyOnLoad->GetLayer(layer)->GetGameObjects();
+		activeGameObjs.insert(activeGameObjs.end(), DontDestroyGameObjs.begin(), DontDestroyGameObjs.end());
+
+		return activeGameObjs;
+	}
+
 	void SceneManager::Initialize()
 	{
 		mDontDestroyOnLoad =  CreateScene<DontDestroyOnLoad>(L"DontDestroyOnLoad");

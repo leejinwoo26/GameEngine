@@ -27,13 +27,12 @@ namespace GE
 	}
 	void PlayScene::Initialize()
 	{
-		CollisionManager::CollisionLayerCheck(eLayerType::PLAYER, eLayerType::BACKGROUND,true);
 
 		GameObject* camera = Instantiate<GameObject>(eLayerType::NONE);
 		Camera* cameraComp  = camera->AddComponent<Camera>();
 		mainCamera = cameraComp;
 
-		GameObject* otherCat = Instantiate<GameObject>(eLayerType::BACKGROUND,Vector2(600, 500));
+		GameObject* otherCat = Instantiate<GameObject>(eLayerType::ANIMAL,Vector2(600, 500));
 		//BoxCollider2D* otherCatCol = otherCat->AddComponent<BoxCollider2D>();
 		CircleCollider2D* otherCatCol = otherCat->AddComponent<CircleCollider2D>();
 		Transform* otherCatTr = otherCat->GetComponent<Transform>();
@@ -45,10 +44,6 @@ namespace GE
 		//camera->AddComponent<PlayerScript>();
 
 		bg = Instantiate<Player>(eLayerType::PLAYER,Vector2(800,500));
-		//DontDestroyOnLoad(bg);
-		/*SpriteRenderer* sr
-			= bg->AddComponent<SpriteRenderer>();
-		sr->SetName(L"SR");*/
 
 		cameraComp->SetTarget(bg);
 
@@ -100,6 +95,8 @@ namespace GE
 		otheranimator->PlayAnimation(L"SitDown", false);
 
 		//animator->GetCompleteEvent(L"SitDown") = std::bind(&PlayerScript::Attack, ps);
+
+
 		Scene::Initialize();
 	}
 	void PlayScene::Update()
@@ -116,6 +113,7 @@ namespace GE
 	}
 	void PlayScene::OnEnter()
 	{
+		CollisionManager::CollisionLayerCheck(eLayerType::PLAYER, eLayerType::ANIMAL, true);
 	}
 	void PlayScene::OnExit()
 	{

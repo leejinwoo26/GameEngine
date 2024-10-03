@@ -11,7 +11,7 @@ namespace GE
 		SceneManager::CreateScene<ToolScene>(L"ToolScene");
 
 
-		SceneManager::LoadScene(L"ToolScene");
+		SceneManager::LoadScene(L"PlayScene");
 	}
 }
 

@@ -21,7 +21,6 @@ namespace GE
 
 			return scene;	
 		}
-
 		static Scene* LoadScene(const std::wstring& name)
 		{
 			if (mActiveScene)
@@ -34,8 +33,10 @@ namespace GE
 			return iter->second;
 		}
 
+
 		__forceinline static Scene* GetActiveScene() { return mActiveScene; }
 		__forceinline static Scene* GetDontDestroyScene() { return mDontDestroyOnLoad; }
+		static std::vector<GameObject*> GetGameObjects(eLayerType layer);
 
 		static void Initialize();
 		static void Update();

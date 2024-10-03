@@ -18,6 +18,7 @@ namespace GE
 		BACKGROUND,
 		TILE,
 		PLAYER,
+		ANIMAL,
 		PARTICLE,
 		MAX = 16
 	};

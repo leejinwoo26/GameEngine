@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "CollisionManager.h"
 
 GE::Scene::Scene() : mLayers{}
 {
@@ -83,6 +84,6 @@ void GE::Scene::OnEnter()
 }
 void GE::Scene::OnExit()
 {
-
+	CollisionManager::Clear();
 }
 

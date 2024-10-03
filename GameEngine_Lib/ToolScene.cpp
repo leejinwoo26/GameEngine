@@ -25,8 +25,7 @@ namespace GE
 		GameObject* camera = Instantiate<GameObject>(eLayerType::NONE,Vector2(800,450));
 		Camera* cameraComp = camera->AddComponent<Camera>();
 		camera->AddComponent<CameraScript>();
-
-		mainCamera = cameraComp;
+		//mainCamera = cameraComp;
 		
 		Scene::Initialize();
 	}
