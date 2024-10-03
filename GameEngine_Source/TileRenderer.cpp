@@ -7,15 +7,18 @@
 namespace GE
 {
 	Vector2 TileRenderer::TileSize = Vector2(1,1);
+	Vector2 TileRenderer::OriginTileSize = Vector2::One;
+	Vector2 TileRenderer::SelectedIndex = Vector2(-1.0f, -1.0f);
 
 	TileRenderer::TileRenderer()
 		: mSize(Vector2(3.f, 3.f))
 		, mTexture(nullptr)
 		, Component(eComponentType::SPRITERENDERER)
-		, mIndex(Vector2(8,7))
-		, mTileSize(Vector2(16,16))
+		, mIndex(Vector2(0,0))
+		, mTileSize(Vector2(16.f,16.f))
 	{
 		TileSize = mTileSize * mSize;
+		OriginTileSize = mTileSize;
 	}
 	TileRenderer::~TileRenderer()
 	{
@@ -41,10 +44,11 @@ namespace GE
 
 		HDC texHdc = mTexture->GetHdc();
 
-		if (mainCamera->GetTarget())
+		/*if (mainCamera->GetTarget())
 		{
 			pos = mainCamera->CalculatePosition(pos);
-		}
+		}*/
+		pos = mainCamera->CalculatePosition(pos);
 
 
 		if (mTexture->GetTextureType() == Texture::eTextureType::BMP)

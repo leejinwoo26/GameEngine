@@ -29,7 +29,7 @@ namespace GE
 	{
 		GameObject::Render(hdc);
 	}
-	void Tile::SetPos(int x, int y)
+	void Tile::SetIndexPos(int x, int y)
 	{
 		Transform* tr = GetComponent<Transform>();
 		tr->SetPos(Vector2(x * TileRenderer::GetTileSize().x, y * TileRenderer::GetTileSize().y));

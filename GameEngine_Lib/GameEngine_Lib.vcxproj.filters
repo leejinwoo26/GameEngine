@@ -16,6 +16,9 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="CameraScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp" />
@@ -29,6 +32,9 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="CameraScript.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">

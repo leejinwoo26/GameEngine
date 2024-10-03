@@ -98,7 +98,20 @@ namespace GE
         POINT mousePos = {};
         GetCursorPos(&mousePos);
         ScreenToClient(app.GetHwnd(), &mousePos);
-        mMousePosition.x = mousePos.x;
-        mMousePosition.y = mousePos.y;
+
+        UINT width = app.GetWidth();
+        UINT height = app.GetHeight();
+
+
+        mMousePosition = Vector2(-1.f, -1.f);
+
+        if (mousePos.x < width && mousePos.x > 0)
+        {
+            mMousePosition.x = mousePos.x;
+        }
+        if (mousePos.y < height && mousePos.y > 0)
+        {
+            mMousePosition.y = mousePos.y;
+        }
     }
 }

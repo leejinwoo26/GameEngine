@@ -1,6 +1,5 @@
 #pragma once
-#include "GameObject.h"
-
+#include "..\\GameEngine_Source\\GameObject.h"
 
 namespace GE
 {
@@ -13,8 +12,7 @@ namespace GE
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render(HDC hdc);
-		void SetPos(int x, int y);
+		void SetIndexPos(int x, int y);
 	private:
-
 	};
 }

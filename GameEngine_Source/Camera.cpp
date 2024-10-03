@@ -48,4 +48,10 @@ namespace GE
 	void Camera::Render(HDC hdc)
 	{
 	}
+	Vector2 Camera::GetCameraPosition()
+	{
+		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+		return pos;
+	}
 }

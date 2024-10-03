@@ -24,6 +24,7 @@ namespace GE
 				return nullptr;
 			return mTarget;
 		}
+		Vector2 GetCameraPosition();
 
 	private:
 		//std::vector<GameObject*> mGameObj;

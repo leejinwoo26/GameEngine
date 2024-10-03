@@ -1,5 +1,7 @@
 #pragma once
 #include "..\\GameEngine_Source\\Scene.h"	
+#include "..\\GameEngine_Lib\\Tile.h"
+
 namespace GE
 {
 	class ToolScene: public Scene
@@ -15,8 +17,10 @@ namespace GE
 
 		virtual void OnEnter() override;
 		virtual void OnExit() override;
-	private:
-		std::vector<class Tile*> tiles;
 
+		void Save();
+		void Load();
+	private:
+		std::vector<Tile*> mTiles;
 	};
 }

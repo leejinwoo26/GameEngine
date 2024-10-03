@@ -6,6 +6,7 @@
 #include "..\\GameEngine_Source\\Application.h"
 #include "..\\GameEngine_Source\\Texture.h"
 #include "..\\GameEngine_Source\\Resources.h"
+#include "..\\GameEngine_Source\\TileRenderer.h"
 #include "..\\GameEngine_Lib\\LoadScene.h"
 #include "..\\GameEngine_Lib\\ResourcesLoad.h"
 
@@ -162,7 +163,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
 
-   SetWindowPos(ToolhWnd, nullptr, 0, 0, mWidth, mHeight, 0);
+   SetWindowPos(ToolhWnd, nullptr, width, 0, mWidth, mHeight, 0);
    ShowWindow(ToolhWnd, nCmdShow);
    UpdateWindow(ToolhWnd);
 
@@ -174,7 +175,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
 //  용도: 주 창의 메시지를 처리합니다.
-//
+//      
 //  WM_COMMAND  - 애플리케이션 메뉴를 처리합니다.
 //  WM_PAINT    - 주 창을 그립니다.
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
@@ -222,21 +223,17 @@ LRESULT CALLBACK WndTileProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 {
     switch (message)
     {
-    case WM_COMMAND:
+    case WM_LBUTTONDOWN:
     {
-        int wmId = LOWORD(wParam);
-        // 메뉴 선택을 구문 분석합니다:
-        switch (wmId)
-        {
-        case IDM_ABOUT:
-            DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-            break;
-        case IDM_EXIT:
-            DestroyWindow(hWnd);
-            break;
-        default:
-            return DefWindowProc(hWnd, message, wParam, lParam);
-        }
+        POINT mousePos = { };
+        GetCursorPos(&mousePos);
+        ScreenToClient(hWnd, &mousePos);
+        Vector2 mousePosition;
+        mousePosition.x = mousePos.x;
+        mousePosition.y = mousePos.y;
+        int idxX = mousePosition.x /GE::TileRenderer::OriginTileSize.x;
+        int idxY = mousePosition.y / GE::TileRenderer::OriginTileSize.y;
+        GE::TileRenderer::SelectedIndex = Vector2(idxX, idxY);
     }
     break;
     case WM_PAINT:

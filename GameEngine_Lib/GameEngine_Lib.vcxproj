@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraScript.h" />
     <ClInclude Include="LoadScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerScript.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="ToolScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraScript.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
     <ClCompile Include="PlayScene.cpp" />
