@@ -6,6 +6,7 @@
 #include "..\\GameEngine_Source\\Animator.h"
 #include "..\\GameEngine_Source\\Object.h"
 #include "..\\GameEngine_Source\\Renderer.h"
+#include "..\\GameEngine_Source\\RigidBody.h"
 
 namespace GE
 {
@@ -27,13 +28,6 @@ namespace GE
 		{
 			mAnimator = GetOwner()->GetComponent<Animator>();
 		}
-
-		/*mDeathTime += Time::DeltaTime();
-
-		if (mDeathTime > 1.f)
-		{
-			ObjectDeath(this->GetOwner());
-		}*/
 
 		switch (mState)
 		{
@@ -63,7 +57,6 @@ namespace GE
 
 	void PlayerScript::Attack()
 	{
-		int a = 0;
 	}
 
 	void PlayerScript::OnCollisionEnter(Collider* other)
@@ -80,13 +73,6 @@ namespace GE
 
 	void PlayerScript::sitDown()
 	{
-		if (Input::GetKeyDown(eKeyCode::LBUTTON))
-		{
-			Vector2 a = Input::GetMousePosition();
-			int b = 0;
-		}
-
-
 		if (Input::GetKey(eKeyCode::D))
 		{
 			mState = PlayerScript::eState::Walk;
@@ -124,24 +110,33 @@ namespace GE
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
 
+		Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
+
 		if (Input::GetKey(eKeyCode::D))
 		{
-			pos.x += 100.0f * Time::DeltaTime();
+			//pos.x += 100.0f * Time::DeltaTime();
+			rb->AddForce(Vector2(200, 0));
 		}
 		if (Input::GetKey(eKeyCode::A))
 		{
-			pos.x -= 100.0f * Time::DeltaTime();
+			//pos.x -= 100.0f * Time::DeltaTime();
+			rb->AddForce(Vector2(-200, 0));
 		}
 		if (Input::GetKey(eKeyCode::W))
 		{
-			pos.y -= 100.0f * Time::DeltaTime();
+			//pos.y -= 100.0f * Time::DeltaTime();
+			Vector2 velocity = rb->GetVelocity();
+			velocity.y = -500;
+			rb->SetVelocity(velocity);
+			//rb->SetGround(true);
 		}
 		if (Input::GetKey(eKeyCode::S))
 		{
-			pos.y += 100.0f * Time::DeltaTime();
+			//pos.y += 100.0f * Time::DeltaTime();
+			rb->AddForce(Vector2(0, 200));
 		}
 
-		tr->SetPos(pos);
+		//tr->SetPos(pos);
 
 		if (Input::GetKeyUp(eKeyCode::D) || Input::GetKeyUp(eKeyCode::A)
 			|| Input::GetKeyUp(eKeyCode::W) || Input::GetKeyUp(eKeyCode::S))

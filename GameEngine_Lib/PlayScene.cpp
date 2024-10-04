@@ -14,6 +14,7 @@
 #include "CircleCollider2D.h"
 //#include "Collider.h"
 #include "CollisionManager.h"
+#include "RigidBody.h"
 
 
 namespace GE
@@ -44,7 +45,7 @@ namespace GE
 		//camera->AddComponent<PlayerScript>();
 
 		bg = Instantiate<Player>(eLayerType::PLAYER,Vector2(800,500));
-
+		Rigidbody* playerRigid = bg->AddComponent<Rigidbody>();
 		cameraComp->SetTarget(bg);
 
 		playerTr = bg->GetComponent<Transform>();

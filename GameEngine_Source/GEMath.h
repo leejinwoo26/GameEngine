@@ -49,8 +49,14 @@ struct Vector2
 		return v1.x * v2.y - v1.y * v2.x;
 	}
 
-
-	
+	Vector2 operator-()
+	{
+		return Vector2(-x, -y);
+	}
+	bool operator==(Vector2 v)
+	{
+		return (x == v.x) && (y == v.y);
+	}
 	Vector2 operator+(Vector2 other)
 	{
 		return Vector2(x + other.x, y + other.y);
@@ -61,6 +67,22 @@ struct Vector2
 	{
 		x += other.x;
 		y += other.y;
+	}
+	void operator-=(Vector2 other)
+	{
+		x -= other.x;
+		y -= other.y;
+	}
+	void operator*=(Vector2 other)
+	{
+		x *= other.x;
+		y *= other.y;
+	}
+
+	void operator*=(float other)
+	{
+		x *= other;
+		y *= other;
 	}
 
 	Vector2 operator-(Vector2 other)

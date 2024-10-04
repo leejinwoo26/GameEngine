@@ -140,6 +140,7 @@
       <Filter>Collision</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TileRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RigidBody.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
@@ -216,5 +217,6 @@
       <Filter>Collision</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TileRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RigidBody.cpp" />
   </ItemGroup>
 </Project>
