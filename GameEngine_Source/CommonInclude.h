@@ -10,6 +10,8 @@
 #include "GEEnums.h"
 #include <mmsystem.h>
 #include <bitset>
+#include <queue>
+#include <stack>
 #include <unordered_map>
 #include <dinput.h>
 #pragma comment(lib, "Msimg32.lib")

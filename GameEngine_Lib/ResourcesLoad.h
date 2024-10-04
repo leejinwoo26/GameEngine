@@ -9,6 +9,7 @@ namespace GE
 		Resources::Load<Texture>(L"BG", L"..\\Resource\\CloudOcean.png");
 		Resources::Load<Texture>(L"Cat", L"..\\Resource\\ChickenAlpha.bmp");
 		Resources::Load<Texture>(L"SpringFloor", L"..\\Resource\\SpringFloor.bmp");
+		Resources::Load<Texture>(L"HPBAR", L"..\\Resource\\HPBAR.bmp");
 	}
 }
 

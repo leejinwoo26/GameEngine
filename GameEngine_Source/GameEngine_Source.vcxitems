@@ -44,6 +44,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TileRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Time.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UiBase.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIButton.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIHUD.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UiManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Animation.cpp" />
@@ -73,5 +77,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TileRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Time.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UiBase.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIButton.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIHUD.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UiManager.cpp" />
   </ItemGroup>
 </Project>

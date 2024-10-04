@@ -141,6 +141,10 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TileRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RigidBody.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UiBase.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UiManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIHUD.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIButton.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
@@ -218,5 +222,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TileRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RigidBody.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UiBase.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UiManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIHUD.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIButton.cpp" />
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
 #include "..\\GameEngine_Source\\Object.h"
 #include "..\\GameEngine_Source\\Renderer.h"
 #include "..\\GameEngine_Source\\RigidBody.h"
+#include "..\\GameEngine_Source\\UiManager.h"
 
 namespace GE
 {
@@ -101,6 +102,10 @@ namespace GE
 		if (Input::GetKeyDown(eKeyCode::Q))
 		{
 			mainCamera->SetTarget(this->GetOwner());
+		}
+		if (Input::GetKeyDown(eKeyCode::Z))
+		{
+			UiManager::Push(eUIType::HPBAR);
 		}
 	}
 

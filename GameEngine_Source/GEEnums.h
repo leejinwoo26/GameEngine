@@ -32,5 +32,12 @@ namespace GE
 		PREFAB,
 		END
 	};
+
+	enum class eUIType
+	{
+		HPBAR,
+		BUTTON,
+		END
+	};
 }
 

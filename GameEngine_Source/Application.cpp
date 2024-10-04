@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "Resources.h"
 #include "CollisionManager.h"
+#include "UiManager.h"
 
 namespace GE
 {
@@ -25,6 +26,7 @@ namespace GE
 	{
 		SceneManager::Release();
 		Resources::Release();
+		UiManager::Release();
 	}
 	void Application::Destroy()
 	{
@@ -39,6 +41,7 @@ namespace GE
 		Time::Initialize();
 		SceneManager::Initialize();
 		CollisionManager::Initialize();
+		UiManager::Initialize();
 	}
 	void Application::CreateBackBuffer(HWND hwnd,UINT width, UINT height)
 	{
@@ -78,12 +81,14 @@ namespace GE
 		Time::Update();
 		SceneManager::Update();
 		CollisionManager::Update();
+		UiManager::Update();
 	}
 
 	void Application::LateUpdate()
 	{
 		SceneManager::LateUpdate();
 		CollisionManager::LateUpdate();
+		UiManager::LateUpdate();
 	}
 
 	void Application::Render()
@@ -93,6 +98,7 @@ namespace GE
 		SceneManager::Render(mBackHdc);
 		CollisionManager::Render(mBackHdc);
 		Time::Render(mBackHdc);
+		UiManager::Render(mBackHdc);
 
 		CopyHighSpeed();
 	}
