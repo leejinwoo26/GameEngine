@@ -60,6 +60,5 @@ namespace GE
 	}
 	void UIButton::ButtonClick()
 	{
-		int a = 0;
 	}
 }
