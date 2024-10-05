@@ -6,6 +6,7 @@
 #include "Resources.h"
 #include "CollisionManager.h"
 #include "UiManager.h"
+#include "Fmod.h"
 
 namespace GE
 {
@@ -37,6 +38,7 @@ namespace GE
 	{
 		CreateBackBuffer(hwnd,width, height);
 
+		Fmod::Initialize();
 		Input::Initialize();
 		Time::Initialize();
 		SceneManager::Initialize();

@@ -55,6 +55,12 @@
     <Filter Include="Collision">
       <UniqueIdentifier>{53b359b8-4bef-4918-af0e-3927ed9f07b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fmod">
+      <UniqueIdentifier>{131283b9-9598-454c-b00b-6e3b3ac45669}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{ce14fa4f-43ba-4138-9be5-8543734ddf61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h">
@@ -141,10 +147,21 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TileRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RigidBody.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)UiBase.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)UiManager.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)UIHUD.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)UIButton.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Fmod.h">
+      <Filter>Fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UiBase.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIButton.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UIHUD.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UiManager.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
@@ -222,9 +239,20 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TileRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RigidBody.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)UiBase.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)UiManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)UIHUD.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)UIButton.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Fmod.cpp">
+      <Filter>Fmod</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)UiBase.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIButton.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)UIHUD.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)UiManager.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
