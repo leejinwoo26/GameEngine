@@ -162,6 +162,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UiManager.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioListener.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioSource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioClip.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Debug_Text.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
@@ -254,5 +258,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)UiManager.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioListener.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioSource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioClip.cpp" />
   </ItemGroup>
 </Project>

@@ -15,6 +15,9 @@
 //#include "Collider.h"
 #include "CollisionManager.h"
 #include "RigidBody.h"
+#include "AudioClip.h"
+#include "AudioListener.h"
+#include "AudioSource.h"
 
 
 namespace GE
@@ -41,12 +44,15 @@ namespace GE
 		otherCatCol->SetOffset(Vector2(17.5f, 27.5));
 		otherCatCol->SetRadius(50);
 		//otherCatCol->SetBoxCollsionSize(Vector2(35, 40));
-
+		AudioSource* as = otherCat->AddComponent<AudioSource>();
 		//camera->AddComponent<PlayerScript>();
 
 		bg = Instantiate<Player>(eLayerType::PLAYER,Vector2(800,500));
 		Rigidbody* playerRigid = bg->AddComponent<Rigidbody>();
+		playerRigid->SetGround(true);
 		cameraComp->SetTarget(bg);
+
+		bg->AddComponent<AudioListener>();
 
 		playerTr = bg->GetComponent<Transform>();
 		playerTr->SetScale(Vector2(2.f, 2.f));
@@ -97,6 +103,10 @@ namespace GE
 
 		//animator->GetCompleteEvent(L"SitDown") = std::bind(&PlayerScript::Attack, ps);
 
+		AudioClip* ac = Resources::Load<AudioClip>(L"BGsound", L"..\\Resource\\Sound\\smw_bonus_game_end.wav");
+		as->SetClip(ac);
+
+		as->Play();
 
 		Scene::Initialize();
 	}

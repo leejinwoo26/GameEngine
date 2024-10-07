@@ -17,13 +17,13 @@ namespace GE
 	}
 	void UiManager::Initialize()
 	{
-		UIHUD* hud = new UIHUD();
-		mUIs.insert(std::make_pair(eUIType::HPBAR, hud));
-		UiManager::Push(eUIType::HPBAR);
+		//UIHUD* hud = new UIHUD();
+		//mUIs.insert(std::make_pair(eUIType::HPBAR, hud));
+		//UiManager::Push(eUIType::HPBAR);
 
-		UIButton* button = new UIButton();
-		mUIs.insert(std::make_pair(eUIType::BUTTON, button));
-		UiManager::Push(eUIType::BUTTON);
+		//UIButton* button = new UIButton();
+		//mUIs.insert(std::make_pair(eUIType::BUTTON, button));
+		//UiManager::Push(eUIType::BUTTON);
     }
 	void UiManager::OnLoad(eUIType type)
 	{

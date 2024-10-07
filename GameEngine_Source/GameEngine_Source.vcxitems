@@ -17,6 +17,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Animation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Animator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioClip.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioListener.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BoxCollider2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CircleCollider2D.h" />
@@ -24,6 +27,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Component.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Debug_Text.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Entity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Fmod.h" />
@@ -54,6 +58,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Animation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Animator.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioClip.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioListener.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BoxCollider2D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Camera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CircleCollider2D.cpp" />

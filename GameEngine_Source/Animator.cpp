@@ -70,6 +70,7 @@ namespace GE
 			return;
 
 		animation = new Animation();
+
 		animation->CreateAnimation(name, spriteSheet,
 			leftTop, size, offset, spriteLeghth, duration);
 		animation->SetAnimator(this);

@@ -2,7 +2,7 @@
 #include "Transform.h"
 #include "GameObject.h"
 #include "Renderer.h"
-
+#include "Debug_Text.h"
 namespace GE
 {
 	SpriteRenderer::SpriteRenderer()
@@ -35,10 +35,37 @@ namespace GE
 
 		HDC texHdc = mTexture->GetHdc();
 
-		if (mainCamera->GetTarget())
+		if (mainCamera != nullptr)
 		{
-			pos = mainCamera->CalculatePosition(pos);
+			pos = mainCamera->CalculatePosition(pos);	
 		}
+
+		float width = mTexture->GetWidth() * mSize.x * scale.x;
+		float height = mTexture->GetHeight() * mSize.y * scale.y;
+
+		// 카메라의 뷰 포트
+		float cameraX = mainCamera->GetCameraPosition().x;
+		float cameraY = mainCamera->GetCameraPosition().y;
+		float cameraWidth = 1600;
+		float cameraHeight = 900;
+
+		Print_Text(hdc, L"pos.x", pos.x, Vector2(0, 150));
+		Print_Text(hdc, L"pos.y", pos.y, Vector2(0, 200));
+		
+		bool culling = false;
+
+		Print_Text(hdc, L"Culling ",culling, Vector2(0, 250));
+
+		if (pos.x + width < 0 || pos.x > cameraWidth - 325 ||
+			pos.y + height < 0 || pos.y > cameraHeight - 200)
+		{
+			culling = true;
+			Print_Text(hdc, L"Culling ",culling, Vector2(0, 250));
+			return;
+		}
+
+
+
 
 
 		if (mTexture->GetTextureType() == Texture::eTextureType::BMP)
@@ -92,8 +119,8 @@ namespace GE
 			graphcis.DrawImage(mTexture->GetImage()
 				, Gdiplus::Rect
 				(
-					pos.x - ((mTexture->GetWidth() * mSize.x )/2),
-					pos.y - ((mTexture->GetHeight() * mSize.y )/2)
+					pos.x,
+					pos.y
 					, mTexture->GetWidth() * mSize.x * scale.x
 					, mTexture->GetHeight() * mSize.y * scale.y
 				)

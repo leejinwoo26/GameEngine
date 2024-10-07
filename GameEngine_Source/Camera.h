@@ -27,7 +27,6 @@ namespace GE
 		Vector2 GetCameraPosition();
 
 	private:
-		//std::vector<GameObject*> mGameObj;
 		Vector2 mDistance;
 		Vector2 mResolution;
 		Vector2 mLookPosition;

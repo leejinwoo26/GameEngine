@@ -20,5 +20,6 @@ namespace GE
 		void OnCollisionExit(class Collider* other) override;
 
 	private:
+		float mSpeed;
 	};
 }

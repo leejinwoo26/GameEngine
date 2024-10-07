@@ -10,6 +10,8 @@ namespace GE
 		ANIMATOR,
 		SCRIPT,
 		CAMERA,
+		AUDIOLISTENER,
+		AUDIOSOURCE,
 		END
 	};
 

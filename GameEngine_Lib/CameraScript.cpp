@@ -3,10 +3,11 @@
 #include "..\\GameEngine_Source\\Transform.h"
 #include "..\\GameEngine_Source\\GameObject.h"
 #include "..\\GameEngine_Source\\Time.h"
+#include "..\\GameEngine_Source\\Debug_Text.h"
 
 namespace GE
 {
-	CameraScript::CameraScript()
+	CameraScript::CameraScript() : mSpeed(500)
 	{
 	}
 	CameraScript::~CameraScript()
@@ -22,20 +23,29 @@ namespace GE
 
 		if (Input::GetKey(eKeyCode::RIGHT))
 		{
-			pos.x += 1000.f * Time::DeltaTime();
+			pos.x += mSpeed* Time::DeltaTime();
 		}
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
-			pos.x -= 1000.f * Time::DeltaTime();
+			pos.x -= mSpeed * Time::DeltaTime();
 		}
 		if (Input::GetKey(eKeyCode::UP))
 		{
-			pos.y -= 1000.f * Time::DeltaTime();
+			pos.y -= mSpeed * Time::DeltaTime();
 		}
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
-			pos.y += 1000.f * Time::DeltaTime();
+			pos.y += mSpeed * Time::DeltaTime();
 		}
+		if (Input::GetKeyDown(eKeyCode::O))
+		{
+			mSpeed += 100.f;
+		}
+		if (Input::GetKeyDown(eKeyCode::P))
+		{
+			mSpeed -= 100.f;
+		}
+		
 
 		tr->SetPos(pos);
 	}
@@ -44,6 +54,7 @@ namespace GE
 	}
 	void CameraScript::Render(HDC hdc)
 	{
+		Print_Text(hdc, L"Speed", mSpeed, Vector2(0, 350));
 	}
 	void CameraScript::OnCollisionEnter(Collider* other)
 	{

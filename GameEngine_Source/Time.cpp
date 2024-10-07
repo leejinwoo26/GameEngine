@@ -1,4 +1,5 @@
 #include "Time.h"
+#include "Debug_Text.h"
 
 namespace GE
 {
@@ -32,5 +33,6 @@ namespace GE
 		int len = wcsnlen_s(str, 50);
 
 		TextOut(hdc, 0, 0, str, len);
+		static Vector2 Pos(100, 100);
 	}
 }
