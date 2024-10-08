@@ -8,12 +8,12 @@ namespace GE
 {
 	void LoadScenes()
 	{
-		//SceneManager::CreateScene<PlayScene>(L"PlayScene");
+		SceneManager::CreateScene<PlayScene>(L"PlayScene");
 		//SceneManager::CreateScene<ToolScene>(L"ToolScene");
-		SceneManager::CreateScene<CullingScene>(L"CullingScene");
+		//SceneManager::CreateScene<CullingScene>(L"CullingScene");
 
 
-		SceneManager::LoadScene(L"CullingScene");
+		SceneManager::LoadScene(L"PlayScene");
 	}
 }
 

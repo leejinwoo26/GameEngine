@@ -50,6 +50,13 @@ namespace GE
 		Animation* FindAnimation(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop = true);
 
+		Animation* GetActiveAnimation()
+		{
+			if (mActiveAnimation == nullptr)
+				return nullptr;
+			return mActiveAnimation;
+		}
+
 		Events* FindEvent(const std::wstring& name);
 
 		std::function<void()>& GetStartEvent(const std::wstring& name);

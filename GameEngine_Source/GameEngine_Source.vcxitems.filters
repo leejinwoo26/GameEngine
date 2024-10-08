@@ -61,6 +61,9 @@
     <Filter Include="UI">
       <UniqueIdentifier>{ce14fa4f-43ba-4138-9be5-8543734ddf61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\RigidBody">
+      <UniqueIdentifier>{0e71d922-357d-478d-b5a8-8c80f37a0148}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h">
@@ -146,7 +149,6 @@
       <Filter>Collision</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TileRenderer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)RigidBody.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Fmod.h">
       <Filter>Fmod</Filter>
     </ClInclude>
@@ -162,10 +164,22 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UiManager.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)AudioListener.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)AudioSource.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)AudioClip.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Debug_Text.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioSource.h">
+      <Filter>Fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioClip.h">
+      <Filter>Fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioListener.h">
+      <Filter>Fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)RigidBody.h">
+      <Filter>Components\RigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PixelCollider.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
@@ -242,7 +256,6 @@
       <Filter>Collision</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TileRenderer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)RigidBody.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Fmod.cpp">
       <Filter>Fmod</Filter>
     </ClCompile>
@@ -258,8 +271,20 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)UiManager.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)AudioListener.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)AudioSource.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)AudioClip.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioClip.cpp">
+      <Filter>Fmod</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioListener.cpp">
+      <Filter>Fmod</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioSource.cpp">
+      <Filter>Fmod</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)RigidBody.cpp">
+      <Filter>Components\RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PixelCollider.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

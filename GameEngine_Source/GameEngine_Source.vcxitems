@@ -37,6 +37,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GEMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Layer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Object.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PixelCollider.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Renderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Resource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Resources.h" />
@@ -74,6 +75,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Input.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Layer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Math.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PixelCollider.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Renderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Resource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Resources.cpp" />

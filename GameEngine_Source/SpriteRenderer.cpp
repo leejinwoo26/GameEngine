@@ -48,20 +48,20 @@ namespace GE
 		float cameraWidth = 1600;
 		float cameraHeight = 900;
 
-		Print_Text(hdc, L"pos.x", pos.x, Vector2(0, 150));
+		/*Print_Text(hdc, L"pos.x", pos.x, Vector2(0, 150));
 		Print_Text(hdc, L"pos.y", pos.y, Vector2(0, 200));
 		Print_Text(hdc, L"cameraX", cameraX, Vector2(0, 250));
-		Print_Text(hdc, L"cameraY", cameraY, Vector2(0, 300));
+		Print_Text(hdc, L"cameraY", cameraY, Vector2(0, 300));*/
 		
 		bool culling = false;
 
-		Print_Text(hdc, L"Culling ",culling, Vector2(0, 350));
+		//Print_Text(hdc, L"Culling ",culling, Vector2(0, 350));
 
 		if (pos.x + width < 0 || pos.x > cameraWidth||
 			pos.y + height < 0 || pos.y > cameraHeight)
 		{
 			culling = true;
-			Print_Text(hdc, L"Culling ",culling, Vector2(0, 350));
+			//Print_Text(hdc, L"Culling ",culling, Vector2(0, 350));
 			return;
 		}
 

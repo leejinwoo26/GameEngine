@@ -83,6 +83,7 @@ namespace GE
 
 		Sprite sprite = mAnimationSheet[mIndex];
 		Texture::eTextureType textureType = mTexture->GetTextureType();
+
 		if (textureType == Texture::eTextureType::BMP)
 		{
 			HDC imgHdc = mTexture->GetHdc();

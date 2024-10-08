@@ -34,9 +34,10 @@ namespace GE
 		Camera* cameraComp = camera->AddComponent<Camera>();
 		camera->AddComponent<CameraScript>();
 		mainCamera = cameraComp;
-		cameraComp->SetTarget(camera);
+		//cameraComp->SetTarget(camera);
 
 		GameObject* back = Instantiate<GameObject>(eLayerType::NONE,Vector2(0,0));
+		//back->AddComponent<CameraScript>();
 		SpriteRenderer* backSr = back->AddComponent<SpriteRenderer>();
 		backSr->SetTexture(Resources::Find<Texture>(L"PixelMap"));
 		Scene::Initialize();

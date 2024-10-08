@@ -42,6 +42,9 @@ namespace GE
 		bool IsComplete() { return mbComplete; }
 		void SetAnimator(class Animator* animator) { mAnimator = animator; }
 
+		int GetIndex() { return mIndex; }
+		std::vector<Sprite>& GetSprite() { return mAnimationSheet; }
+
 	private:
 		class Animator* mAnimator;
 		Texture* mTexture;

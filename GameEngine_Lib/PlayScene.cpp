@@ -18,6 +18,7 @@
 #include "AudioClip.h"
 #include "AudioListener.h"
 #include "AudioSource.h"
+#include "PixelCollider.h"
 
 
 namespace GE
@@ -53,14 +54,16 @@ namespace GE
 		cameraComp->SetTarget(bg);
 
 		bg->AddComponent<AudioListener>();
+		PixelCollider* bgPixelCol = bg->AddComponent<PixelCollider>();
+
 
 		playerTr = bg->GetComponent<Transform>();
 		playerTr->SetScale(Vector2(2.f, 2.f));
 
 		//BoxCollider2D* boxCol = bg->AddComponent<BoxCollider2D>();
-		CircleCollider2D* boxCol = bg->AddComponent<CircleCollider2D>();
+		/*CircleCollider2D* boxCol = bg->AddComponent<CircleCollider2D>();
 		boxCol->SetOffset(Vector2(17.5, 27.5));
-		boxCol->SetRadius(50);
+		boxCol->SetRadius(50);*/
 		//boxCol->SetBoxCollsionSize(Vector2(160, 40));
 
 		PlayerScript* ps = bg->AddComponent<PlayerScript>();
@@ -105,8 +108,13 @@ namespace GE
 
 		AudioClip* ac = Resources::Load<AudioClip>(L"BGsound", L"..\\Resource\\Sound\\smw_bonus_game_end.wav");
 		as->SetClip(ac);
+		//as->Play();
 
-		as->Play();
+
+		GameObject* back = Instantiate<GameObject>(eLayerType::NONE, Vector2(0, 0));
+		SpriteRenderer* backSr = back->AddComponent<SpriteRenderer>();
+		backSr->SetTexture(Resources::Find<Texture>(L"PixelMap"));
+		bgPixelCol->SetPixelMap(Resources::Find<Texture>(L"PixelMap"));
 
 		Scene::Initialize();
 	}

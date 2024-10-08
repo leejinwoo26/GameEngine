@@ -180,36 +180,6 @@ namespace GE
 				return true;
 			}
 		}
-		else if (left->GetState() == Collider::eCollisionState::BOX2D
-			&& right->GetState() == Collider::eCollisionState::CIRCLE2D)
-		{
-			BoxCollider2D* boxLeft = left->GetOwner()->GetComponent<BoxCollider2D>();
-			CircleCollider2D* boxRight = right->GetOwner()->GetComponent<CircleCollider2D>();
-
-			Vector2 LeftBoxSize = boxLeft->GetBoxCollsionSize();
-			float RightCircleRad = boxRight->GetRadius();
-			float RightCircleRad_Half = RightCircleRad / 2;
-			Vector2 RightCircleSize = Vector2(RightCircleRad, RightCircleRad);
-
-
-
-			Vector2 leftPos = leftTr->GetPosition() + boxLeft->GetOffset();//³×¸ð
-			Vector2 rightPos = rightTr->GetPosition() + boxRight->GetOffset(); //¿ø
-
-			float distance = (leftPos - rightPos).length();
-
-			if (((rightPos.x >= leftPos.x) && (rightPos.x <= leftPos.x + LeftBoxSize.x)))
-			{
-				if (((rightPos.y >= leftPos.y) && (rightPos.y <= leftPos.y + LeftBoxSize.y)))
-				{
-					int a = 0;
-				}
-				else
-				{
-					int a = 0;
-				}
-			}
-		}
 		return false;
 	}
 }

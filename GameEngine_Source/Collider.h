@@ -10,7 +10,8 @@ namespace GE
 		{
 			NONE,
 			BOX2D,
-			CIRCLE2D
+			CIRCLE2D,
+			Pixel2D
 		};
 
 		Collider();
