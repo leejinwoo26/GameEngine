@@ -26,7 +26,8 @@ namespace GE
 		return E_NOTIMPL;
 	}
 
-	void Animation::CreateAnimation(const std::wstring& name, Texture* spriteSheet, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLeghth, float duration)
+	void Animation::CreateAnimation(const std::wstring& name, Texture* spriteSheet,
+		Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLeghth, float duration)
 	{
 		mTexture = spriteSheet;
 

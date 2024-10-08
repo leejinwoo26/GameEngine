@@ -10,6 +10,8 @@
 #include "GEMath.h"
 #include "GEEnums.h"
 #include <mmsystem.h>
+#include <wingdi.h>
+#include <filesystem>
 #include <bitset>
 #include <queue>
 #include <stack>

@@ -34,10 +34,11 @@ namespace GE
 		Camera* cameraComp = camera->AddComponent<Camera>();
 		camera->AddComponent<CameraScript>();
 		mainCamera = cameraComp;
+		cameraComp->SetTarget(camera);
 
-		GameObject* back = Instantiate<GameObject>(eLayerType::NONE);
+		GameObject* back = Instantiate<GameObject>(eLayerType::NONE,Vector2(0,0));
 		SpriteRenderer* backSr = back->AddComponent<SpriteRenderer>();
-		backSr->SetTexture(Resources::Find<Texture>(L"SpringFloor"));
+		backSr->SetTexture(Resources::Find<Texture>(L"BG"));
 		Scene::Initialize();
 	}
 	void CullingScene::Update()

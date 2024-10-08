@@ -25,6 +25,8 @@ namespace GE
 		HBITMAP GetBitMap() { return mBitmap; }
 		bool GetAlpha() { return mbAlpha; }
 
+		COLORREF GetPixel(int x, int y);
+
 	private:
 		Gdiplus::Image* mImage;
 		HBITMAP mBitmap;

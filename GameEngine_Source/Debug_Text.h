@@ -24,6 +24,7 @@ static void Print_Text(HDC hdc, const std::wstring& text, T explain, Vector2 pos
 	int len = wcsnlen_s(str, 100);
 	TextOut(hdc, pos.x, pos.y, str, len);
 }
+
 static void Print_Text(HDC hdc, const std::wstring& text,  Vector2 pos)
 {
 	wchar_t str[100] = L"";
@@ -31,3 +32,4 @@ static void Print_Text(HDC hdc, const std::wstring& text,  Vector2 pos)
 	int len = wcsnlen_s(str, 100);
 	TextOut(hdc, pos.x, pos.y, str, len);
 }
+
