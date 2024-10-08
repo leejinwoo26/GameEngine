@@ -12,6 +12,7 @@ namespace GE
 			PNG,
 			NONE
 		};
+
 		Texture();
 		~Texture();
 
@@ -20,11 +21,10 @@ namespace GE
 		UINT GetWidth() { return mWidth; }
 		UINT GetHeight() { return mHeight; }
 		HDC GetHdc() { return mHdc; }
+		HBITMAP GetBitMap() { return mBitmap; }
 		eTextureType GetTextureType() { return mType; }
 		Gdiplus::Image* GetImage() { return mImage; }
-		HBITMAP GetBitMap() { return mBitmap; }
 		bool GetAlpha() { return mbAlpha; }
-
 		COLORREF GetPixel(int x, int y);
 
 	private:

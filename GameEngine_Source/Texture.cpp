@@ -5,6 +5,7 @@ extern GE::Application app;
 
 namespace GE
 {
+
 	Texture::Texture() :
 		Resource(eResourceType::TEXTURE),
 		mbAlpha(false)
@@ -61,5 +62,4 @@ namespace GE
 	{
 		return ::GetPixel(mHdc, x, y);
 	}
-
 }

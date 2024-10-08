@@ -57,16 +57,16 @@ namespace GE
 
 		Print_Text(hdc, L"Culling ",culling, Vector2(0, 350));
 
-		if (pos.x + width < 0 || pos.x > cameraWidth - 325 ||
-			pos.y + height < 0 || pos.y > cameraHeight - 200)
+		if (pos.x + width < 0 || pos.x > cameraWidth||
+			pos.y + height < 0 || pos.y > cameraHeight)
 		{
 			culling = true;
 			Print_Text(hdc, L"Culling ",culling, Vector2(0, 350));
 			return;
 		}
 
-
-
+		HRGN clipRegion = CreateRectRgn(0, 0, (int)cameraWidth, (int)cameraHeight);
+		SelectClipRgn(hdc, clipRegion);
 
 		if (mTexture->GetTextureType() == Texture::eTextureType::BMP)
 		{
@@ -91,7 +91,6 @@ namespace GE
 			}
 			else
 			{
-				//https://blog.naver.com/power2845/50147965306
 				TransparentBlt(hdc
 					, pos.x, pos.y
 					, mTexture->GetWidth() * mSize.x * scale.x
@@ -102,10 +101,6 @@ namespace GE
 					, mTexture->GetHeight()
 					, RGB(255, 0, 255));
 			}
-			/*TransparentBlt(hdc, pos.x - ((mTexture->GetWidth() * mSize.x) / 2), pos.y - ((mTexture->GetHeight() * mSize.y) / 2)
-				, mTexture->GetWidth() * mSize.x * scale.x, mTexture->GetHeight() * mSize.y * scale.y
-				, mTexture->GetHdc(), 0, 0, mTexture->GetWidth(), mTexture->GetHeight()
-				, RGB(255, 0, 255));*/
 		}
 		else if (mTexture->GetTextureType() == Texture::eTextureType::PNG)
 		{
@@ -129,5 +124,7 @@ namespace GE
 				, Gdiplus::UnitPixel
 				, nullptr/*&imgAtt*/);
 		}
+		SelectClipRgn(hdc, NULL);
+		DeleteObject(clipRegion);
 	}
 }

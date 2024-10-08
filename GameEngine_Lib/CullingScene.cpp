@@ -38,7 +38,7 @@ namespace GE
 
 		GameObject* back = Instantiate<GameObject>(eLayerType::NONE,Vector2(0,0));
 		SpriteRenderer* backSr = back->AddComponent<SpriteRenderer>();
-		backSr->SetTexture(Resources::Find<Texture>(L"BG"));
+		backSr->SetTexture(Resources::Find<Texture>(L"PixelMap"));
 		Scene::Initialize();
 	}
 	void CullingScene::Update()
