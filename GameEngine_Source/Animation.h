@@ -33,7 +33,9 @@ namespace GE
 			Vector2 offset,
 			UINT spriteLeghth,
 			float duration);
-
+		void CreateAnimation(const std::wstring& name,
+			Texture* spriteSheet,
+			float duration);
 		void Update();
 		void Render(HDC hdc);
 
@@ -50,6 +52,7 @@ namespace GE
 		Texture* mTexture;
 
 		std::vector<Sprite> mAnimationSheet;
+
 		int mIndex;
 		float mTime;
 		bool mbComplete;

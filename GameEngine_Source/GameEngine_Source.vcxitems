@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Animation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AnimationMananger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Animator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AudioClip.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Fmod.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GEEnums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Init.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Input.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GEMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Layer.h" />
@@ -57,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Animation.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AnimationMananger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Animator.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AudioClip.cpp" />

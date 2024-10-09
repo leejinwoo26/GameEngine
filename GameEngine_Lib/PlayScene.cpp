@@ -19,6 +19,7 @@
 #include "AudioListener.h"
 #include "AudioSource.h"
 #include "PixelCollider.h"
+#include "AnimationMananger.h"
 
 
 namespace GE
@@ -32,6 +33,7 @@ namespace GE
 	}
 	void PlayScene::Initialize()
 	{
+		AnimationMananger::Initialize();
 
 		GameObject* camera = Instantiate<GameObject>(eLayerType::NONE);
 		Camera* cameraComp  = camera->AddComponent<Camera>();
@@ -113,8 +115,11 @@ namespace GE
 
 		GameObject* back = Instantiate<GameObject>(eLayerType::NONE, Vector2(0, 0));
 		SpriteRenderer* backSr = back->AddComponent<SpriteRenderer>();
-		backSr->SetTexture(Resources::Find<Texture>(L"PixelMap"));
-		bgPixelCol->SetPixelMap(Resources::Find<Texture>(L"PixelMap"));
+		backSr->SetTexture(Resources::Find<Texture>(L"SpringFloor"));
+		bgPixelCol->SetPixelMap(Resources::Find<Texture>(L"SpringFloor"));
+
+		GameObject* GhostPlayer = Instantiate<GameObject>(eLayerType::NONE, Vector2(900, 500));
+		Animator* GhostAnimator = GhostPlayer->AddComponent<Animator>();
 
 		Scene::Initialize();
 	}

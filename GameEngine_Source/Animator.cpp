@@ -82,6 +82,23 @@ namespace GE
 		mAnimations.insert(std::make_pair(name, animation));
 	}
 
+	void Animator::CreateAnimation(const std::wstring& name, Texture* spriteSheet, float duration)
+	{
+		Animation* animation = nullptr;
+		animation = FindAnimation(name);
+		if (animation != nullptr)
+			return;
+
+		animation = new Animation();
+		animation->CreateAnimation(name, spriteSheet, duration);
+		animation->SetAnimator(this);
+		animation->SetName(name);
+
+		Events* events = new Events();
+		mEvents.insert(std::make_pair(name, events));
+		mAnimations.insert(std::make_pair(name, animation));
+	}
+
 	void Animator::CreateAnimationByFolder(const std::wstring& name, const std::wstring& path, Vector2 offset, float duration)
 	{
 		//Animation* animation = nullptr;

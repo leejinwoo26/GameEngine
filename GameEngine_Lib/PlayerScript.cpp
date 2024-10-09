@@ -25,29 +25,35 @@ namespace GE
 	}
 	void PlayerScript::Update()
 	{
-		if (mAnimator == nullptr)
+	
+		if (Input::GetKey(eKeyCode::A))
 		{
-			mAnimator = GetOwner()->GetComponent<Animator>();
+			Transform* tr = GetOwner()->GetComponent<Transform>();
+			Vector2 pos = tr->GetPosition();
+			pos.x -= 500 * Time::DeltaTime();
+			tr->SetPos(pos);
 		}
-
-		switch (mState)
+		if (Input::GetKey(eKeyCode::D))
 		{
-		case PlayerScript::eState::SitDown:
-			sitDown();
-			break;
-		case PlayerScript::eState::Walk:
-			move();
-			break;
-		case PlayerScript::eState::Sleep:
-			break;
-		case PlayerScript::eState::Attack:
-			Attack();
-			break;
-		default:
-			break;
+			Transform* tr = GetOwner()->GetComponent<Transform>();
+			Vector2 pos = tr->GetPosition();
+			pos.x += 500 * Time::DeltaTime();
+			tr->SetPos(pos);
 		}
-
-
+		if (Input::GetKey(eKeyCode::W))
+		{
+			Transform* tr = GetOwner()->GetComponent<Transform>();
+			Vector2 pos = tr->GetPosition();
+			pos.y -= 500 * Time::DeltaTime();
+			tr->SetPos(pos);
+		}
+		if (Input::GetKey(eKeyCode::S))
+		{
+			Transform* tr = GetOwner()->GetComponent<Transform>();
+			Vector2 pos = tr->GetPosition();
+			pos.y += 500 * Time::DeltaTime();
+			tr->SetPos(pos);
+		}
 	}
 	void PlayerScript::LateUpdate()
 	{

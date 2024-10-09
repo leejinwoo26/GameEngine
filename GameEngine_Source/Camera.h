@@ -8,8 +8,13 @@ namespace GE
 	class Camera : public Component
 	{
 	public:
+		enum class eInterpolationType
+		{
+			EXPONENTIALLERP,
+			END
+		};
 		Vector2 CalculatePosition(Vector2 pos) { return pos- mDistance; }
-
+		
 
 		Camera();
 		~Camera();

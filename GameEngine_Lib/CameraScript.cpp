@@ -54,7 +54,7 @@ namespace GE
 	}
 	void CameraScript::Render(HDC hdc)
 	{
-		Print_Text(hdc, L"Speed", mSpeed, Vector2(0, 400));
+		//Print_Text(hdc, L"Speed", mSpeed, Vector2(0, 400));
 	}
 	void CameraScript::OnCollisionEnter(Collider* other)
 	{

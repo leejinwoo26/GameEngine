@@ -29,6 +29,27 @@ struct Vector2
 	{
 	}
 
+
+	static Vector2 ExponentialLerp(const Vector2& current,
+		const Vector2& target, float t, float lambda)
+	{
+		return current + (target - current) * (1.0f - expf(-lambda * t));
+	}
+
+	static Vector2 SpringLerp(Vector2& position, Vector2& velocity,
+		const Vector2& target, float damping, float stiffness, float deltaTime) {
+		Vector2 force = (target - position) * stiffness;  // 목표 위치로의 힘
+		Vector2 dampingForce = velocity * damping;        // 감쇠
+		Vector2 acceleration = force - dampingForce;      // 가속도 계산
+
+		velocity = velocity + acceleration * deltaTime;   // 속도 갱신
+		position = position + velocity * deltaTime;       // 위치 갱신
+		return position;
+	}
+
+
+
+
 	static Vector2 Rotate(Vector2 vector, float degree)
 	{
 		float radian = (degree / 180.f) * PI;
@@ -110,6 +131,16 @@ struct Vector2
 		y = v.y;
 		return *this;
 	}
+	Vector2 operator+(const Vector2& other) const {
+		return { x + other.x, y + other.y };
+	}
+
+	// 벡터 간 뺄셈
+	Vector2 operator-(const Vector2& other) const {
+		return { x - other.x, y - other.y };
+	}
+
+
 
 	void clear()
 	{
@@ -130,4 +161,7 @@ struct Vector2
 
 		return *this;
 	}
+
+
+	
 };

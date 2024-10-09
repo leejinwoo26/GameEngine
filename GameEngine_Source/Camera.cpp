@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Application.h"
+#include "Time.h"
 
 extern GE::Application app;
 
@@ -32,7 +33,7 @@ namespace GE
 				|| mTarget->GetState() == GameObject::eState::PAUSE)
 			{
 				Transform* tr = mTarget->GetComponent<Transform>();
-				mLookPosition = tr->GetPosition();
+				mLookPosition = Vector2::ExponentialLerp(mLookPosition, tr->GetPosition(), Time::DeltaTime(), 3.5f);
 			}
 		}
 		else

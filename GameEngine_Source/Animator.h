@@ -44,6 +44,9 @@ namespace GE
 			Vector2 offset,
 			UINT spriteLeghth,
 			float duration);
+		void CreateAnimation(const std::wstring& name,
+			Texture* spriteSheet,
+			float duration);
 		void CreateAnimationByFolder(const std::wstring& name,
 			const std::wstring& path, Vector2 offset, float duration);
 		

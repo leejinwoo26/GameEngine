@@ -7,6 +7,7 @@
 #include <assert.h>
 #include <functional>
 #include <algorithm>
+#include <memory>
 #include "GEMath.h"
 #include "GEEnums.h"
 #include <mmsystem.h>

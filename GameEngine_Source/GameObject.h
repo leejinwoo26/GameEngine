@@ -15,6 +15,7 @@ namespace GE
 			END
 		};
 
+
 		virtual void Initialize();
 		virtual void Update();
 		virtual void LateUpdate();
@@ -60,10 +61,13 @@ namespace GE
 		void SetLayerType(eLayerType type) { mLayerType = type; }
 		eLayerType GetLayerType() { return mLayerType; }
 
+		void SetTarget(GameObject* target) { mtarget = target; }
+
 	private:
 		eState mState;
 		std::vector<Component*> mComponents;
 		eLayerType mLayerType;
+		GameObject* mtarget;
 	};
 }
 

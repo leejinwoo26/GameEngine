@@ -180,6 +180,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PixelCollider.h">
       <Filter>Collision</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Init.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AnimationMananger.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
@@ -285,6 +289,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)PixelCollider.cpp">
       <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AnimationMananger.cpp">
+      <Filter>Animation</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

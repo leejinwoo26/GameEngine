@@ -4,10 +4,12 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Renderer.h"
+#include "AnimationMananger.h"
 
 
 namespace GE
 {
+
 	Animation::Animation():
 		Resource(eResourceType::ANIMATION),
 		mAnimator(nullptr),
@@ -31,6 +33,7 @@ namespace GE
 	{
 		mTexture = spriteSheet;
 
+
 		for (size_t i = 0; i < spriteLeghth; i++)
 		{
 			Sprite sprite = {};
@@ -43,12 +46,33 @@ namespace GE
 			mAnimationSheet.push_back(sprite);
 		}
 	}
+	void Animation::CreateAnimation(const std::wstring& name, Texture* spriteSheet, float duration)
+	{
+		mTexture = spriteSheet;
 
+		auto animSprites = AnimationMananger::GetAnimSprites();
+
+		auto iter = animSprites.find(name);
+
+		if (iter->second.size()<=0)
+			return;
+
+		for (size_t i = 0; i < iter->second.size(); i++)
+		{
+			Sprite sprite = {};
+			sprite.leftTop.x = iter->second[i].LeftTop.x;
+			sprite.leftTop.y = iter->second[i].LeftTop.y;
+			sprite.Size = iter->second[i].SpriteSize;
+			sprite.Offset = iter->second[i].Offset;
+			sprite.duration = duration;
+
+			mAnimationSheet.push_back(sprite);
+		}
+	}
 	void Animation::Update()
 	{
 		if (mbComplete)
 			return;
-
 		mTime += Time::DeltaTime();
 
 		if (mAnimationSheet[mIndex].duration < mTime)
@@ -84,6 +108,8 @@ namespace GE
 		Sprite sprite = mAnimationSheet[mIndex];
 		Texture::eTextureType textureType = mTexture->GetTextureType();
 
+
+
 		if (textureType == Texture::eTextureType::BMP)
 		{
 			HDC imgHdc = mTexture->GetHdc();
@@ -109,19 +135,48 @@ namespace GE
 			}
 			else
 			{
+				//HDC memDC = CreateCompatibleDC(hdc);
+
+				//HBITMAP memBitmap = CreateCompatibleBitmap(hdc, sprite.Size.x * scale.x, sprite.Size.y * scale.y);
+				//SelectObject(memDC, memBitmap);
+				//StretchBlt(memDC,
+				//	0, 0,  // 메모리 DC의 시작 위치
+				//	sprite.Size.x * scale.x,   // 메모리 DC에 출력할 크기
+				//	sprite.Size.y * scale.y,
+				//	imgHdc,
+				//	sprite.leftTop.x + sprite.Size.x - 1,  // 원본 이미지의 오른쪽 끝에서 시작
+				//	sprite.leftTop.y,
+				//	-sprite.Size.x,   // 너비를 음수로 설정하여 반전
+				//	sprite.Size.y,
+				//	SRCCOPY);
+
+				//TransparentBlt(hdc,
+				//	pos.x - (sprite.Size.x / 2.0f) + sprite.Offset.x,
+				//	pos.y - (sprite.Size.y / 2.0f) + sprite.Offset.y,
+				//	sprite.Size.x * scale.x,
+				//	sprite.Size.y * scale.y,
+				//	memDC,
+				//	0, 0,  // 메모리 DC의 시작 위치
+				//	sprite.Size.x * scale.x,
+				//	sprite.Size.y * scale.y,
+				//	BLACK); // 투명색으로 처리할 색상
+				//DeleteObject(memBitmap);
+				//DeleteDC(memDC);
+
 				TransparentBlt(hdc
-					, pos.x - ((sprite.Size.x /** scale.x*/) / 2.0f) + sprite.Offset.x
-					, pos.y - ((sprite.Size.y /** scale.y*/) / 2.0f) + sprite.Offset.y
+					, pos.x - (sprite.Size.x / 2.0f) + sprite.Offset.x
+					, pos.y - (sprite.Size.y / 2.0f) + sprite.Offset.y
 					, sprite.Size.x * scale.x
 					, sprite.Size.y * scale.y
 					, imgHdc
-					, sprite.leftTop.x
+					, sprite.leftTop.x 
 					, sprite.leftTop.y
 					, sprite.Size.x
 					, sprite.Size.y
-					, RGB(255, 0, 255));
+					, BLACK);
+
+
 			}
-			//Rectangle(hdc, pos.x, pos.y, pos.x + 10, pos.y + 10);
 		}
 		else if (textureType == Texture::eTextureType::PNG)
 		{
