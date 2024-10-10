@@ -52,6 +52,10 @@ namespace GE
 		
 		Animation* FindAnimation(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop = true);
+		void PlayAnimation_Tool(Animation* anim);
+
+		void SetActiveAnimation(Animation* anim) { mActiveAnimation = anim; }
+		void SetLoop(bool loop) { mbLoop = loop; }
 
 		Animation* GetActiveAnimation()
 		{
@@ -65,7 +69,6 @@ namespace GE
 		std::function<void()>& GetStartEvent(const std::wstring& name);
 		std::function<void()>& GetCompleteEvent(const std::wstring& name);
 		std::function<void()>& GetEndEvent(const std::wstring& name);
-
 
 	private:
 		std::map<std::wstring, Animation*> mAnimations;

@@ -50,6 +50,8 @@ namespace GE
 		}*/
 		//pos = mainCamera->CalculatePosition(pos);
 
+		if (mainCamera == nullptr)
+			return;
 		float width = mTexture->GetWidth() * mSize.x * scale.x;
 		float height = mTexture->GetHeight() * mSize.y * scale.y;
 

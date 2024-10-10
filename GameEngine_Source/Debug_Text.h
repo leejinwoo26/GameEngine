@@ -22,7 +22,7 @@ static void Print_Text(HDC hdc, const std::wstring& text, T explain, Vector2 pos
 		swprintf_s(str, 100, L"%s: %s", text.c_str(), explain);
 	}
 	int len = wcsnlen_s(str, 100);
-	TextOut(hdc, pos.x, pos.y, str, len);
+	TextOut(hdc, pos.x, pos.y, str, wcslen(str));
 }
 
 static void Print_Text(HDC hdc, const std::wstring& text,  Vector2 pos)

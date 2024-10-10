@@ -53,8 +53,6 @@ namespace GE
 		GameObject* PlayerHair = Instantiate<GameObject>(eLayerType::ANIMAL, Vector2(450, 425));
 		Animator* hairAnimator = PlayerHair->AddComponent<Animator>();
 		Texture* hairTex = Resources::Find<Texture>(L"cloth");
-		PlayerHair->SetTarget(Player);
-
 
 
 		playerAnimator->CreateAnimation(L"Idle_Right", boyTex, 0.2);

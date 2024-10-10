@@ -1,4 +1,6 @@
 #include "Layer.h"
+#include "Debug_Text.h"
+
 namespace GE
 {
 	Layer::Layer() : mGameObjs{}
@@ -59,6 +61,7 @@ namespace GE
 				continue;
 			gameObj->Render(hdc);
 		}
+
 	}
 	void Layer::Destroy()
 	{
@@ -81,6 +84,15 @@ namespace GE
 			iter = nullptr;
 		}
 	}	
+	void Layer::Clear_AnimClip()
+	{
+		if (mGameObjs.size() == 0)
+			return;
+		for (auto iter = mGameObjs.begin(); iter != mGameObjs.end();)
+		{
+			iter = mGameObjs.erase(iter);
+		}
+	}
 	void Layer::AddGameObject(GameObject* gameObj)
 	{
 		if (gameObj == nullptr)

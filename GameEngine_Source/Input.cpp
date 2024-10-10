@@ -105,11 +105,11 @@ namespace GE
 
         mMousePosition = Vector2(-1.f, -1.f);
 
-        if (mousePos.x < width && mousePos.x > 0)
+        if (mousePos.x < width && mousePos.x >= 0)
         {
             mMousePosition.x = mousePos.x;
         }
-        if (mousePos.y < height && mousePos.y > 0)
+        if (mousePos.y < height && mousePos.y >= 0)
         {
             mMousePosition.y = mousePos.y;
         }

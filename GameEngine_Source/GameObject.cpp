@@ -40,17 +40,6 @@ namespace GE
 				continue;
 			comp->Update();
 		}
-		if (mtarget)
-		{
-			Transform* tr = GetComponent<Transform>();
-
-			Transform* targetTr = mtarget->GetComponent<Transform>();
-			Vector2 targetPos = targetTr->GetPosition();
-
-			Vector2 offset1(-2.5, 15); 
-			Vector2 newPos = targetPos + offset1;
-			tr->SetPos(newPos);
-		}
 	}
 
 	void GameObject::LateUpdate()

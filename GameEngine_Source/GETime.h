@@ -3,11 +3,11 @@
 
 namespace GE
 {
-	
-
 	class Time
 	{
 	public:
+		Time();
+		~Time();
 		static void Initialize();
 		static void Update();
 		static void Render(HDC hdc);

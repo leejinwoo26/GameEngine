@@ -15,6 +15,7 @@ namespace GE
 		void LateUpdate();
 		void Render(HDC hdc);
 		void Destroy();
+		void Clear_AnimClip();
 
 		void AddGameObject(GameObject* gameObj);
 		void EraseGameObject(GameObject* gameObj);

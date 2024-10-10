@@ -22,6 +22,9 @@
     <ClInclude Include="CullingScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp" />
@@ -39,6 +42,9 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="CullingScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>

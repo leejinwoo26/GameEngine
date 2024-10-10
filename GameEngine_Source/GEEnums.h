@@ -18,9 +18,12 @@ namespace GE
 	enum class eLayerType
 	{
 		NONE,
+		CAMERA,
 		BACKGROUND,
 		TILE,
 		PLAYER,
+		ANIMATOR,
+		ANIMATIONCLIP,
 		ANIMAL,
 		PARTICLE,
 		MAX = 16

@@ -1,6 +1,6 @@
 #include "Animation.h"
 #include "Animator.h"
-#include "Time.h"
+#include "GETime.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include "Renderer.h"
@@ -73,8 +73,10 @@ namespace GE
 	{
 		if (mbComplete)
 			return;
-		mTime += Time::DeltaTime();
+		if (mIndex < 0)
+			return;
 
+		mTime += Time::DeltaTime();
 		if (mAnimationSheet[mIndex].duration < mTime)
 		{
 			mTime = 0;
@@ -95,6 +97,8 @@ namespace GE
 			return;
 
 		GameObject* gameObj = mAnimator->GetOwner();
+		if (gameObj == nullptr)
+			return;
 		Transform* tr = gameObj->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
 		float rot = tr->GetRotation();
@@ -135,34 +139,6 @@ namespace GE
 			}
 			else
 			{
-				//HDC memDC = CreateCompatibleDC(hdc);
-
-				//HBITMAP memBitmap = CreateCompatibleBitmap(hdc, sprite.Size.x * scale.x, sprite.Size.y * scale.y);
-				//SelectObject(memDC, memBitmap);
-				//StretchBlt(memDC,
-				//	0, 0,  // 메모리 DC의 시작 위치
-				//	sprite.Size.x * scale.x,   // 메모리 DC에 출력할 크기
-				//	sprite.Size.y * scale.y,
-				//	imgHdc,
-				//	sprite.leftTop.x + sprite.Size.x - 1,  // 원본 이미지의 오른쪽 끝에서 시작
-				//	sprite.leftTop.y,
-				//	-sprite.Size.x,   // 너비를 음수로 설정하여 반전
-				//	sprite.Size.y,
-				//	SRCCOPY);
-
-				//TransparentBlt(hdc,
-				//	pos.x - (sprite.Size.x / 2.0f) + sprite.Offset.x,
-				//	pos.y - (sprite.Size.y / 2.0f) + sprite.Offset.y,
-				//	sprite.Size.x * scale.x,
-				//	sprite.Size.y * scale.y,
-				//	memDC,
-				//	0, 0,  // 메모리 DC의 시작 위치
-				//	sprite.Size.x * scale.x,
-				//	sprite.Size.y * scale.y,
-				//	BLACK); // 투명색으로 처리할 색상
-				//DeleteObject(memBitmap);
-				//DeleteDC(memDC);
-
 				TransparentBlt(hdc
 					, pos.x - (sprite.Size.x / 2.0f) + sprite.Offset.x
 					, pos.y - (sprite.Size.y / 2.0f) + sprite.Offset.y
@@ -174,8 +150,6 @@ namespace GE
 					, sprite.Size.x
 					, sprite.Size.y
 					, BLACK);
-
-
 			}
 		}
 		else if (textureType == Texture::eTextureType::PNG)

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationScene.h" />
     <ClInclude Include="CameraScript.h" />
     <ClInclude Include="CullingScene.h" />
     <ClInclude Include="LoadScene.h" />
@@ -30,6 +31,7 @@
     <ClInclude Include="ToolScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationScene.cpp" />
     <ClCompile Include="CameraScript.cpp" />
     <ClCompile Include="CullingScene.cpp" />
     <ClCompile Include="Player.cpp" />

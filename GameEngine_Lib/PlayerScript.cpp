@@ -1,7 +1,7 @@
 #include "PlayerScript.h"
 #include "..\\GameEngine_Source\\Input.h"
 #include "..\\GameEngine_Source\\Transform.h"
-#include "..\\GameEngine_Source\\Time.h"
+#include "..\\GameEngine_Source\\GETime.h"
 #include "..\\GameEngine_Source\\GameObject.h"
 #include "..\\GameEngine_Source\\Animator.h"
 #include "..\\GameEngine_Source\\Object.h"

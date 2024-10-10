@@ -47,6 +47,9 @@ namespace GE
 		int GetIndex() { return mIndex; }
 		std::vector<Sprite>& GetSprite() { return mAnimationSheet; }
 
+		void SetAnimationSheet(std::vector<Sprite>& spriteSheet) { mAnimationSheet = spriteSheet; }
+		void SetTexture(Texture* texture) { mTexture = texture; }
+		Texture* GetTexture() { return mTexture; }
 	private:
 		class Animator* mAnimator;
 		Texture* mTexture;

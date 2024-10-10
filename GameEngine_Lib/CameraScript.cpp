@@ -2,7 +2,7 @@
 #include "..\\GameEngine_Source\\Input.h"
 #include "..\\GameEngine_Source\\Transform.h"
 #include "..\\GameEngine_Source\\GameObject.h"
-#include "..\\GameEngine_Source\\Time.h"
+#include "..\\GameEngine_Source\\GETime.h"
 #include "..\\GameEngine_Source\\Debug_Text.h"
 
 namespace GE
@@ -37,11 +37,11 @@ namespace GE
 		{
 			pos.y += mSpeed * Time::DeltaTime();
 		}
-		if (Input::GetKeyDown(eKeyCode::O))
+		if (Input::GetKeyDown(eKeyCode::Q))
 		{
 			mSpeed += 100.f;
 		}
-		if (Input::GetKeyDown(eKeyCode::P))
+		if (Input::GetKeyDown(eKeyCode::W))
 		{
 			mSpeed -= 100.f;
 		}
@@ -54,7 +54,10 @@ namespace GE
 	}
 	void CameraScript::Render(HDC hdc)
 	{
-		//Print_Text(hdc, L"Speed", mSpeed, Vector2(0, 400));
+		//디버그 나중에 삭제
+		Print_Text(hdc, L"Speed", mSpeed, Vector2(1400, 600));
+		Print_Text(hdc, L"스피드업 : Q " ,Vector2(1400, 650));
+		Print_Text(hdc, L"스피드다운 : W ", Vector2(1400, 700));
 	}
 	void CameraScript::OnCollisionEnter(Collider* other)
 	{

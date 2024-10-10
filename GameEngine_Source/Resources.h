@@ -44,6 +44,7 @@ namespace GE
 				iter.second = nullptr;
 			}
 		}
+		static std::map<std::wstring, Resource*> GetResources() { return mResources; }
 
 	private:
 		static std::map<std::wstring, Resource*> mResources;

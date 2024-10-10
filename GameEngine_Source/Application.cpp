@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "GameObject.h"
 #include "Input.h"
-#include "Time.h"
+#include "GETime.h"
 #include "SceneManager.h"
 #include "Resources.h"
 #include "CollisionManager.h"
@@ -113,12 +113,18 @@ namespace GE
 	}
 	void Application::ClearBitmap()
 	{
-		Vector2 pos = mainCamera->GetCameraPosition();
-
-		BitBlt(mBackHdc, 0, 0, 1600, 900, mBackTileHdc, (int)pos.x, (int)pos.y, SRCCOPY);
-
-		Print_Text(mBackHdc, L"카메라 x ", pos.x, Vector2(0, 100));
-		Print_Text(mBackHdc, L"카메라 y ", pos.y, Vector2(0, 150));
+		if (mainCamera)
+		{
+			Vector2 pos = mainCamera->GetCameraPosition();
+			//BitBlt(mBackHdc, 0, 0, 1600, 900, mBackTileHdc, (int)pos.x, (int)pos.y, SRCCOPY);
+			Rectangle(mBackHdc, -1, -1, 1600, 900);
+			Print_Text(mBackHdc, L"카메라 x ", pos.x, Vector2(0, 100));
+			Print_Text(mBackHdc, L"카메라 y ", pos.y, Vector2(0, 150));
+		}
+		else
+		{
+			Rectangle(mBackHdc, 0, 0, 1600, 900);
+		}
 	}
 	void Application::ChangeTileBuffer(Gdiplus::Size size)
 	{

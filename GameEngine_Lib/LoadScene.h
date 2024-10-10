@@ -3,6 +3,7 @@
 #include "PlayScene.h"	
 #include "ToolScene.h"
 #include "CullingScene.h"
+#include "AnimationScene.h"
 
 namespace GE
 {
@@ -10,10 +11,11 @@ namespace GE
 	{
 		//SceneManager::CreateScene<PlayScene>(L"PlayScene");
 		//SceneManager::CreateScene<ToolScene>(L"ToolScene");
-		SceneManager::CreateScene<CullingScene>(L"CullingScene");
+		SceneManager::CreateScene<AnimationScene>(L"AnimationScene");
+		//SceneManager::CreateScene<CullingScene>(L"CullingScene");
 
 
-		SceneManager::LoadScene(L"CullingScene");
+		SceneManager::LoadScene(L"AnimationScene");
 	}
 }
 

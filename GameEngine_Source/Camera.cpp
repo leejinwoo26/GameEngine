@@ -2,9 +2,9 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Application.h"
-#include "Time.h"
+#include "GETime.h"
 #include "Debug_Text.h"
-
+#include "SceneManager.h"
 extern GE::Application app;
 
 namespace GE
@@ -34,7 +34,15 @@ namespace GE
 				|| mTarget->GetState() == GameObject::eState::PAUSE)
 			{
 				Transform* tr = mTarget->GetComponent<Transform>();
-				mLookPosition = Vector2::ExponentialLerp(mLookPosition, tr->GetPosition() - (mResolution / 2.f), Time::DeltaTime(), 3.5f);
+				Vector2 pos = tr->GetPosition();
+				if (SceneManager::GetActiveScene()->GetName() == L"AnimationScene")
+				{
+					mLookPosition = pos;
+				}
+				else
+				{
+					mLookPosition = Vector2::ExponentialLerp(mLookPosition, pos - (mResolution / 2.f), Time::DeltaTime(), 3.5f);
+				}
 			}
 		}
 		else
@@ -42,6 +50,7 @@ namespace GE
 			Transform* cameraTr = GetOwner()->GetComponent<Transform>();
 			mLookPosition = cameraTr->GetPosition();
 		}
+
 		GetOwner()->GetComponent<Transform>()->SetPos(mLookPosition);
 		mDistance = mLookPosition;// -(mResolution / 2.f);
 	}

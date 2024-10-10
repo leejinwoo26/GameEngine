@@ -26,7 +26,7 @@ namespace GE
 	void SpriteRenderer::Render(HDC hdc)
 	{
 		if (mTexture == nullptr)
-			assert(false);
+			return;
 
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();

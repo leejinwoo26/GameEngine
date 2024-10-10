@@ -120,7 +120,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Input.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Time.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)GETime.h">
       <Filter>Time</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h">
@@ -183,6 +183,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)AnimationMananger.h">
       <Filter>Animation</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AnimCut.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
@@ -230,7 +231,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Input.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Time.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)GETime.cpp">
       <Filter>Time</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Camera.cpp">
@@ -292,5 +293,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)AnimationMananger.cpp">
       <Filter>Animation</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AnimCut.cpp" />
   </ItemGroup>
 </Project>

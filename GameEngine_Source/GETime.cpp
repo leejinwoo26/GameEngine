@@ -1,5 +1,6 @@
 #include "Time.h"
 #include "Debug_Text.h"
+#include "GETime.h"
 
 namespace GE
 {
@@ -7,6 +8,14 @@ namespace GE
 	LARGE_INTEGER Time::PrevFrequency = {};
 	LARGE_INTEGER Time::CurrentFrequency = {};
 	float Time::DeltaTimeValue = 0.f;
+
+	Time::Time()
+	{
+	}
+
+	Time::~Time()
+	{
+	}
 
 	void Time::Initialize()
 	{
