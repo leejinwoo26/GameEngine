@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "Renderer.h"
 #include "AnimationMananger.h"
+#include "Debug_Text.h"
 
 
 namespace GE
@@ -73,7 +74,7 @@ namespace GE
 	{
 		if (mbComplete)
 			return;
-		if (mIndex < 0)
+		if (mAnimationSheet.size()<=0)
 			return;
 
 		mTime += Time::DeltaTime();
@@ -108,11 +109,13 @@ namespace GE
 			pos = mainCamera->CalculatePosition(pos);
 
 
-
+		if (mAnimationSheet.size() <= 0)
+			return;
 		Sprite sprite = mAnimationSheet[mIndex];
 		Texture::eTextureType textureType = mTexture->GetTextureType();
 
 
+		Print_Text(hdc, L"¿Œµ¶Ω∫ ", mIndex, Vector2(1400, 50));
 
 		if (textureType == Texture::eTextureType::BMP)
 		{

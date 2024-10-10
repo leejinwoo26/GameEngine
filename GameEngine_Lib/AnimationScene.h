@@ -22,9 +22,10 @@ namespace GE
 		void Save();
 		void CreateAnimation();
 		void AddFrame_Animation();
-		void SetAnimation_Animator();
 		void PlayAnimation_Animator();
 		void ActiveAnimationClear();
+		void ClearClips();
+
 	private:
 		void TextureInit();
 		void CameraInit();

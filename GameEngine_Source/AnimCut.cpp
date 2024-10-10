@@ -1,4 +1,7 @@
 #include "AnimCut.h"
+#include "Renderer.h"
+
+
 namespace GE
 {
 	AnimCut::AnimCut()
@@ -30,7 +33,12 @@ namespace GE
 		HPEN greenPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
 		HPEN oldPen = (HPEN)SelectObject(hdc, greenPen);
 
-		Rectangle(hdc, originPos.x, originPos.y, secondPos.x, secondPos.y);
+		Vector2 cameraPos = mainCamera->GetCameraPosition();
+		Rectangle(hdc,
+			originPos.x - cameraPos.x,
+			originPos.y - cameraPos.y,
+			secondPos.x - cameraPos.x,
+			secondPos.y - cameraPos.y);
 
 		SelectObject(hdc, oldBrush);
 		SelectObject(hdc, oldPen);

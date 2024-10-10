@@ -52,16 +52,13 @@ namespace GE
 	{
 		Scene::Render(hdc);
 
+		Print_Text(hdc, L"총 게임오브젝트 갯수 ", (int)AnimationScene::GetLayer(eLayerType::ANIMATIONCLIP)->GetGameObjects().size()
+			, Vector2(1400, 300));
+		Print_Text(hdc, L"마우스 Y ",Input::GetMousePosition().y, Vector2(1400, 500));
+		Print_Text(hdc, L"마우스 X ",Input::GetMousePosition().x, Vector2(1400, 550));
 		Print_Text(hdc, L"텍스처 인덱스 ", (int)mTextureIndex, Vector2(1400, 750));
 		Print_Text(hdc, L"인덱스 업 : O ", Vector2(1400, 800));
 		Print_Text(hdc, L"인덱스 다운 : P ", Vector2(1400, 850));
-		Print_Text(hdc, L"마우스 Y ",Input::GetMousePosition().y, Vector2(1400, 500));
-		Print_Text(hdc, L"마우스 X ",Input::GetMousePosition().x, Vector2(1400, 550));
-
-
-		
-		Print_Text(hdc, L"총 게임오브젝트 갯수 ", (int)AnimationScene::GetLayer(eLayerType::ANIMATIONCLIP)->GetGameObjects().size()
-			, Vector2(1400, 300));
 
 	}
 	void AnimationScene::OnEnter()
@@ -99,42 +96,46 @@ namespace GE
 	}
 	void AnimationScene::CreateAnimation()
 	{
+		if (mAnimCuts.size() <= 0)
+			return;
+
 		Texture* mTexture = mTextures[mTextureIndex];
 
 		Vector2 cameraPos =  mainCamera->GetCameraPosition();
 		for (int i = 0; i < mAnimCuts.size(); i++)
 		{
 			Animation::Sprite sprite = {};
-			sprite.leftTop.x = mAnimCuts[i]->GetOriginPos().x + cameraPos.x;
-			sprite.leftTop.y = mAnimCuts[i]->GetOriginPos().y + cameraPos.y;
+			sprite.leftTop.x = mAnimCuts[i]->GetOriginPos().x;
+			sprite.leftTop.y = mAnimCuts[i]->GetOriginPos().y;
 			sprite.Size = mAnimCuts[i]->GetCutSize();
 			sprite.Offset = Vector2(0,0);
-			sprite.duration = 0.2;
+			sprite.duration = 0.3;
 
-			mAnimationSheet.push_back(sprite);
+			mActiveAnimation->GetSprite().push_back(sprite);
 		}
 
+		mAnimCuts.clear();
+		ClearClips();
 	}
 	void AnimationScene::AddFrame_Animation()
 	{
 		Vector2 cameraPos = mainCamera->GetCameraPosition();
 		
 		Animation::Sprite sprite = {};
-		sprite.leftTop.x = ActiveAnimCut->GetOriginPos().x + cameraPos.x;
-		sprite.leftTop.y = ActiveAnimCut->GetOriginPos().y + cameraPos.y;
+		sprite.leftTop.x = ActiveAnimCut->GetOriginPos().x;
+		sprite.leftTop.y = ActiveAnimCut->GetOriginPos().y;
 		sprite.Size = ActiveAnimCut->GetCutSize();
 		sprite.Offset = Vector2(0, 0);
 		sprite.duration = 0.2;
 		mActiveAnimation->GetSprite().push_back(sprite);
 
-	}
-	void AnimationScene::SetAnimation_Animator()
-	{
-		mAnimator->SetActiveAnimation(mActiveAnimation);
+		mAnimCuts.clear();
+		ClearClips();
 	}
 
 	void AnimationScene::PlayAnimation_Animator()
 	{
+		mAnimator->SetActiveAnimation(mActiveAnimation);
 		mActiveAnimation->SetTexture(mTextures[mTextureIndex]);
 		mActiveAnimation->SetAnimator(mAnimator);
 		mAnimator->SetLoop(true);
@@ -143,10 +144,13 @@ namespace GE
 
 	void AnimationScene::ActiveAnimationClear()
 	{
-		delete mActiveAnimation;
-		mActiveAnimation = nullptr;
-		delete mAnimator;
-		mAnimator = nullptr;
+		mActiveAnimation->GetSprite().clear();
+		mActiveAnimation->Reset();
+	}
+
+	void AnimationScene::ClearClips()
+	{
+		AnimationScene::GetLayer(eLayerType::ANIMATIONCLIP)->Clear_AnimClip();
 	}
 
 
@@ -212,18 +216,22 @@ namespace GE
 		{
 			Save();
 		}
+
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
 			AddFrame_Animation();
 		}
-		if (Input::GetKeyDown(eKeyCode::V))
+
+		if (Input::GetKeyDown(eKeyCode::Z))
 		{
-			SetAnimation_Animator();
+			CreateAnimation();
 		}
-		if (Input::GetKeyDown(eKeyCode::B))
+
+		if (Input::GetKeyDown(eKeyCode::V))
 		{
 			PlayAnimation_Animator();
 		}
+		
 
 		if (Input::GetKeyDown(eKeyCode::N))
 		{
@@ -235,18 +243,20 @@ namespace GE
 
 		if (Input::GetKeyDown(eKeyCode::C))
 		{
-			AnimationScene::GetLayer(eLayerType::ANIMATIONCLIP)->Clear_AnimClip();
+			ClearClips();
 		}
 
 		if (Input::GetKeyDown(eKeyCode::LBUTTON))
 		{
 			ActiveAnimCut = Instantiate<AnimCut>(eLayerType::ANIMATIONCLIP);
-			ActiveAnimCut->SetOriginPos(Input::GetMousePosition());
-			ActiveAnimCut->SetSecondPos(Input::GetMousePosition());
+			Vector2 cameraPos = mainCamera->GetCameraPosition();
+			ActiveAnimCut->SetOriginPos(Input::GetMousePosition() + cameraPos);
+			ActiveAnimCut->SetSecondPos(Input::GetMousePosition() + cameraPos);
 		}
 		if (Input::GetKey(eKeyCode::LBUTTON))
 		{
-			ActiveAnimCut->SetSecondPos(Input::GetMousePosition());
+			Vector2 cameraPos = mainCamera->GetCameraPosition();
+			ActiveAnimCut->SetSecondPos(Input::GetMousePosition() + cameraPos);
 		}
 		if (Input::GetKeyUp(eKeyCode::LBUTTON))
 		{
