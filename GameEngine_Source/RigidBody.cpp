@@ -94,7 +94,7 @@ namespace GE
 	}
 	void Rigidbody::Render(HDC hdc)
 	{
-		wchar_t str[50] = L"";
+	/*	wchar_t str[50] = L"";
 
 		swprintf_s(str, 50, L"Velocity_X : %f", mVelocity.x);
 		int len = wcsnlen_s(str, 50);
@@ -106,6 +106,6 @@ namespace GE
 
 		swprintf_s(str, 50, L"mAccelation : %f , %f", mAccelation.x, mAccelation.y);
 		len = wcsnlen_s(str, 50);
-		TextOut(hdc, 0, 200, str, len);
+		TextOut(hdc, 0, 200, str, len);*/
 	}
 }

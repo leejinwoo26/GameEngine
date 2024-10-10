@@ -14,7 +14,7 @@ namespace GE
 		void Render();
 		void Release();
 		void Destroy();
-
+		void ChangeTileBuffer(Gdiplus::Size size);
 		Application();
 		~Application();
 
@@ -22,8 +22,10 @@ namespace GE
 		HDC GetHdc() { return mHdc; }
 		UINT GetWidth() { return mWidth; }
 		UINT GetHeight() { return mHeight; }
-	private:
+		HDC GetBackTileHdc() { return mBackTileHdc; }
+		HBITMAP GetBackTileBuffer() { return mBackTileBuffer; }
 		void ClearBitmap();
+	private:
 		void CopyHighSpeed();
 		void CreateBackBuffer(HWND hwnd,UINT width, UINT height);
 	private:
@@ -32,6 +34,9 @@ namespace GE
 
 		HBITMAP mBackBuffer;
 		HDC mBackHdc;
+
+		HBITMAP mBackTileBuffer;
+		HDC mBackTileHdc;
 
 		UINT mWidth;
 		UINT mHeight;

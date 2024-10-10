@@ -34,7 +34,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Fmod.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GEEnums.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Init.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Input.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GEMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Layer.h" />

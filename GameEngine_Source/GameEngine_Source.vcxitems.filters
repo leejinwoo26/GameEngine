@@ -180,7 +180,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PixelCollider.h">
       <Filter>Collision</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Init.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AnimationMananger.h">
       <Filter>Animation</Filter>
     </ClInclude>

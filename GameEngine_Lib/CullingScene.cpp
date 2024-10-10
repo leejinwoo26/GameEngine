@@ -46,7 +46,7 @@ namespace GE
 		Scene::Initialize();
 
 
-		GameObject* Player = Instantiate<GameObject>(eLayerType::PLAYER, Vector2(500, 500));
+		GameObject* Player = Instantiate<GameObject>(eLayerType::PLAYER, Vector2(0, 0));
 		Animator* playerAnimator = Player->AddComponent<Animator>();
 		Texture* boyTex = Resources::Find<Texture>(L"Boy_Right");
 		Player->AddComponent<PlayerScript>();
@@ -54,6 +54,8 @@ namespace GE
 		Animator* hairAnimator = PlayerHair->AddComponent<Animator>();
 		Texture* hairTex = Resources::Find<Texture>(L"cloth");
 		PlayerHair->SetTarget(Player);
+
+
 
 		playerAnimator->CreateAnimation(L"Idle_Right", boyTex, 0.2);
 		playerAnimator->CreateAnimation(L"Walk_Right", boyTex, 0.2);
@@ -73,13 +75,15 @@ namespace GE
 		playerAnimator->CreateAnimation(L"Dead_Right", boyTex, 1);
 		playerAnimator->CreateAnimation(L"Anger_Right", boyTex, 1);
 
+
+
 		hairAnimator->CreateAnimation(L"cloth", hairTex, 0.2);
 		hairAnimator->PlayAnimation(L"cloth");
 		
 		playerAnimator->PlayAnimation(L"Idle_Right");
 
 
-		cameraComp->SetTarget(Player);
+		mainCamera->SetTarget(Player);
 
 	}
 	void CullingScene::Update()

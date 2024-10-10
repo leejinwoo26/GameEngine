@@ -35,7 +35,7 @@ namespace GE
 	{
 		AnimationMananger::Initialize();
 
-		GameObject* camera = Instantiate<GameObject>(eLayerType::NONE);
+		GameObject* camera = Instantiate<GameObject>(eLayerType::NONE,Vector2(0,0));
 		Camera* cameraComp  = camera->AddComponent<Camera>();
 		mainCamera = cameraComp;
 
@@ -50,7 +50,7 @@ namespace GE
 		AudioSource* as = otherCat->AddComponent<AudioSource>();
 		//camera->AddComponent<PlayerScript>();
 
-		bg = Instantiate<Player>(eLayerType::PLAYER,Vector2(800,500));
+		bg = Instantiate<Player>(eLayerType::PLAYER,Vector2(0,0));
 		Rigidbody* playerRigid = bg->AddComponent<Rigidbody>();
 		playerRigid->SetGround(true);
 		cameraComp->SetTarget(bg);
@@ -138,6 +138,8 @@ namespace GE
 	void PlayScene::OnEnter()
 	{
 		CollisionManager::CollisionLayerCheck(eLayerType::PLAYER, eLayerType::ANIMAL, true);
+		Scene::OnEnter();
+
 	}
 	void PlayScene::OnExit()
 	{

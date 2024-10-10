@@ -7,6 +7,8 @@
 #include "CollisionManager.h"
 #include "UiManager.h"
 #include "Fmod.h"
+#include "Renderer.h"
+#include "Debug_Text.h"
 
 namespace GE
 {
@@ -16,7 +18,9 @@ namespace GE
 		mWidth(0),
 		mHeight(0),
 		mBackBuffer(NULL),
-		mBackHdc(NULL)
+		mBackHdc(NULL),
+		mBackTileBuffer(NULL),
+		mBackTileHdc(NULL)
 	{
 	}
 	Application::~Application()
@@ -65,6 +69,10 @@ namespace GE
 
 		HBITMAP oldBitmap = (HBITMAP)SelectObject(mBackHdc, mBackBuffer);
 		DeleteObject(oldBitmap);
+
+		mBackTileHdc = CreateCompatibleDC(mBackHdc);
+
+		
 	}
 
 
@@ -96,7 +104,6 @@ namespace GE
 	void Application::Render()
 	{
 		ClearBitmap();
-
 		SceneManager::Render(mBackHdc);
 		CollisionManager::Render(mBackHdc);
 		Time::Render(mBackHdc);
@@ -106,8 +113,20 @@ namespace GE
 	}
 	void Application::ClearBitmap()
 	{
-		Rectangle(mBackHdc, -1, -1, 1600, 900);
+		Vector2 pos = mainCamera->GetCameraPosition();
+
+		BitBlt(mBackHdc, 0, 0, 1600, 900, mBackTileHdc, (int)pos.x, (int)pos.y, SRCCOPY);
+
+		Print_Text(mBackHdc, L"카메라 x ", pos.x, Vector2(0, 100));
+		Print_Text(mBackHdc, L"카메라 y ", pos.y, Vector2(0, 150));
 	}
+	void Application::ChangeTileBuffer(Gdiplus::Size size)
+	{
+		mBackTileBuffer = CreateCompatibleBitmap(mBackHdc, size.Width, size.Height);
+		HBITMAP oldbitmap = (HBITMAP)SelectObject(mBackTileHdc, mBackTileBuffer);
+		DeleteObject(oldbitmap);
+	}
+
 	void Application::CopyHighSpeed()
 	{
 		BitBlt(mHdc, 0, 0, mWidth, mHeight, mBackHdc, 0, 0, SRCCOPY);

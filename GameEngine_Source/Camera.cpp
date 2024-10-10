@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Application.h"
 #include "Time.h"
+#include "Debug_Text.h"
 
 extern GE::Application app;
 
@@ -33,7 +34,7 @@ namespace GE
 				|| mTarget->GetState() == GameObject::eState::PAUSE)
 			{
 				Transform* tr = mTarget->GetComponent<Transform>();
-				mLookPosition = Vector2::ExponentialLerp(mLookPosition, tr->GetPosition(), Time::DeltaTime(), 3.5f);
+				mLookPosition = Vector2::ExponentialLerp(mLookPosition, tr->GetPosition() - (mResolution / 2.f), Time::DeltaTime(), 3.5f);
 			}
 		}
 		else
@@ -41,13 +42,17 @@ namespace GE
 			Transform* cameraTr = GetOwner()->GetComponent<Transform>();
 			mLookPosition = cameraTr->GetPosition();
 		}
-		mDistance = mLookPosition - (mResolution / 2.f);
+		GetOwner()->GetComponent<Transform>()->SetPos(mLookPosition);
+		mDistance = mLookPosition;// -(mResolution / 2.f);
 	}
 	void Camera::LateUpdate()
 	{
 	}
 	void Camera::Render(HDC hdc)
 	{
+		Transform* cameraTr = GetOwner()->GetComponent<Transform>();
+		Vector2 pos = cameraTr->GetPosition();
+
 	}
 	Vector2 Camera::GetCameraPosition()
 	{

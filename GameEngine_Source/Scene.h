@@ -16,16 +16,24 @@ namespace GE
 		virtual void LateUpdate();
 		virtual void Destroy();
 		virtual void Render(HDC hdc);
+		void CreateTileBuffer(Gdiplus::Size tileCount);
+		void RenderTiles();
 
 		virtual void OnEnter();
 		virtual void OnExit();
 
-		void AddGameObject(GameObject* gameObj,eLayerType type);
+		void AddGameObject(GameObject* gameObj, eLayerType type);
 		void EraseGameObject(GameObject* gameObj);
 
+
+		const std::vector<std::vector<class Tile*>>& GetTiles() { return mTiles; }
 		Layer* GetLayer(eLayerType type) { return mLayers[(UINT)type]; }
 
 	private:
+		std::vector<std::vector<class Tile*>> mTiles;
+		Gdiplus::Size mSize;
+		Gdiplus::Size mTileCount;
+
 		std::vector<Layer*> mLayers;
 	};
 }
