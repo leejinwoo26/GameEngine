@@ -26,7 +26,7 @@ namespace GE
 		Gdiplus::Image* GetImage() { return mImage; }
 		bool GetAlpha() { return mbAlpha; }
 		COLORREF GetPixel(int x, int y);
-
+		const std::wstring& GetFilePath() { return mFilePath; }
 	private:
 		Gdiplus::Image* mImage;
 		HBITMAP mBitmap;
@@ -36,5 +36,6 @@ namespace GE
 		UINT mWidth;
 		UINT mHeight;
 		bool mbAlpha;
+		std::wstring mFilePath;
 	};
 }

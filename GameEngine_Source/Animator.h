@@ -57,6 +57,7 @@ namespace GE
 		void SetActiveAnimation(Animation* anim) { mActiveAnimation = anim; }
 		void SetLoop(bool loop) { mbLoop = loop; }
 
+
 		Animation* GetActiveAnimation()
 		{
 			if (mActiveAnimation == nullptr)

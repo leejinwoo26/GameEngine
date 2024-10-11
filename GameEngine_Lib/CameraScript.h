@@ -19,7 +19,9 @@ namespace GE
 		void OnCollisionStay(class Collider* other) override;
 		void OnCollisionExit(class Collider* other) override;
 
+		void SetEnable(bool enable) { mEnable = enable; }
 	private:
 		float mSpeed;
+		bool mEnable;
 	};
 }

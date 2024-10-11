@@ -7,7 +7,7 @@
 
 namespace GE
 {
-	CameraScript::CameraScript() : mSpeed(500)
+	CameraScript::CameraScript() : mSpeed(500), mEnable(true)
 	{
 	}
 	CameraScript::~CameraScript()
@@ -21,22 +21,26 @@ namespace GE
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
 
-		if (Input::GetKey(eKeyCode::RIGHT))
+		if (mEnable)
 		{
-			pos.x += mSpeed* Time::DeltaTime();
+			if (Input::GetKey(eKeyCode::RIGHT))
+			{
+				pos.x += mSpeed * Time::DeltaTime();
+			}
+			if (Input::GetKey(eKeyCode::LEFT))
+			{
+				pos.x -= mSpeed * Time::DeltaTime();
+			}
+			if (Input::GetKey(eKeyCode::UP))
+			{
+				pos.y -= mSpeed * Time::DeltaTime();
+			}
+			if (Input::GetKey(eKeyCode::DOWN))
+			{
+				pos.y += mSpeed * Time::DeltaTime();
+			}
 		}
-		if (Input::GetKey(eKeyCode::LEFT))
-		{
-			pos.x -= mSpeed * Time::DeltaTime();
-		}
-		if (Input::GetKey(eKeyCode::UP))
-		{
-			pos.y -= mSpeed * Time::DeltaTime();
-		}
-		if (Input::GetKey(eKeyCode::DOWN))
-		{
-			pos.y += mSpeed * Time::DeltaTime();
-		}
+		
 		if (Input::GetKeyDown(eKeyCode::Q))
 		{
 			mSpeed += 100.f;

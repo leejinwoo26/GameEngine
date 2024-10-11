@@ -17,6 +17,7 @@ namespace GE
 	HRESULT Texture::Load(const std::wstring& path)
 	{
 		std::wstring ext = path.substr(path.find_last_of(L".") + 1);
+		mFilePath = path;
 
 		if (ext == L"bmp")
 		{
@@ -43,6 +44,8 @@ namespace GE
 			mHdc = CreateCompatibleDC(mainDC);
 
 			HBITMAP oldBitmap = (HBITMAP)SelectObject(mHdc, mBitmap);
+			GetObject(mBitmap, sizeof(BITMAP), &info);
+
 			DeleteObject(oldBitmap);
 		}
 		else if (ext == L"png")

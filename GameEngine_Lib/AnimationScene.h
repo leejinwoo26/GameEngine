@@ -20,6 +20,7 @@ namespace GE
 		void OnExit() override;
 
 		void Save();
+		static void Load();
 		void CreateAnimation();
 		void AddFrame_Animation();
 		void PlayAnimation_Animator();
@@ -39,6 +40,9 @@ namespace GE
 		class AnimCut* ActiveAnimCut;
 		std::vector<class AnimCut*> mAnimCuts;
 
+		static std::vector<Animation*> mAnimations;
+
+		class CameraScript* cameraScript;
 		Animation* mActiveAnimation;
 		class Animator* mAnimator;
 		std::vector<Animation::Sprite> mAnimationSheet;

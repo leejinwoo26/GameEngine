@@ -11,14 +11,15 @@
 namespace GE
 {
 
-	Animation::Animation():
+	Animation::Animation() :
 		Resource(eResourceType::ANIMATION),
 		mAnimator(nullptr),
 		mTexture(nullptr),
 		mAnimationSheet{},
 		mIndex(-1),
 		mTime(0.f),
-		mbComplete(false)
+		mbComplete(false),
+		toolMode(false)
 	{
 	}
 	Animation::~Animation()
@@ -76,6 +77,9 @@ namespace GE
 			return;
 		if (mAnimationSheet.size()<=0)
 			return;
+		if (toolMode == true)
+			return;
+
 
 		mTime += Time::DeltaTime();
 		if (mAnimationSheet[mIndex].duration < mTime)
@@ -114,8 +118,21 @@ namespace GE
 		Sprite sprite = mAnimationSheet[mIndex];
 		Texture::eTextureType textureType = mTexture->GetTextureType();
 
-
-		Print_Text(hdc, L"인덱스 ", mIndex, Vector2(1400, 50));
+		if (mAnimator)
+		{
+			Transform* animatorTr = mAnimator->GetOwner()->GetComponent<Transform>();
+			if (animatorTr)
+			{
+				Vector2 pos = animatorTr->GetPosition();
+				Vector2 cameraPos = mainCamera->GetCameraPosition();
+				Print_Text(hdc, L"인덱스 ", mIndex, Vector2(pos.x - 50, pos.y + 60) - cameraPos);
+				Print_Text(hdc, L"오프셋 x ", mAnimationSheet[mIndex].Offset.x, Vector2(pos.x - 50, pos.y + 80) - cameraPos);
+				Print_Text(hdc, L"오프셋 y ", mAnimationSheet[mIndex].Offset.y, Vector2(pos.x - 50, pos.y + 100) - cameraPos);
+				Print_Text(hdc, L"LeftTop x ", mAnimationSheet[mIndex].leftTop.x, Vector2(pos.x - 50, pos.y + 120) - cameraPos);
+				Print_Text(hdc, L"LeftTop y ", mAnimationSheet[mIndex].leftTop.y, Vector2(pos.x - 50, pos.y + 140) - cameraPos);
+			}
+		}
+		
 
 		if (textureType == Texture::eTextureType::BMP)
 		{
@@ -148,11 +165,22 @@ namespace GE
 					, sprite.Size.x * scale.x
 					, sprite.Size.y * scale.y
 					, imgHdc
-					, sprite.leftTop.x 
+					, sprite.leftTop.x
 					, sprite.leftTop.y
 					, sprite.Size.x
 					, sprite.Size.y
 					, BLACK);
+				/*StretchBlt(hdc 
+					, pos.x - (sprite.Size.x / 2.0f) + sprite.Offset.x
+					, pos.y - (sprite.Size.y / 2.0f) + sprite.Offset.y
+					, sprite.Size.x * scale.x
+					, sprite.Size.y * scale.y
+					, imgHdc
+					, sprite.leftTop.x
+					, sprite.leftTop.y
+					, sprite.Size.x
+					, sprite.Size.y
+					, SRCCOPY);*/
 			}
 		}
 		else if (textureType == Texture::eTextureType::PNG)

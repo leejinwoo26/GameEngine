@@ -50,6 +50,12 @@ namespace GE
 		void SetAnimationSheet(std::vector<Sprite>& spriteSheet) { mAnimationSheet = spriteSheet; }
 		void SetTexture(Texture* texture) { mTexture = texture; }
 		Texture* GetTexture() { return mTexture; }
+
+		void SetToolMode(bool toolMode) { this->toolMode = toolMode; }
+		const bool& GetToolMode() { return toolMode; }
+		int& GetAnimIndex() { return mIndex; }
+		void SetAnimIndex(int index) { mIndex = index; }
+
 	private:
 		class Animator* mAnimator;
 		Texture* mTexture;
@@ -59,5 +65,7 @@ namespace GE
 		int mIndex;
 		float mTime;
 		bool mbComplete;
+
+		bool toolMode;
 	};
 }

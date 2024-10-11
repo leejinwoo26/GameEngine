@@ -19,6 +19,7 @@ namespace GE
 		GameObject::Update();
 		CutSize.x = std::fabsf(secondPos.x - originPos.x);
 		CutSize.y = std::fabsf(secondPos.y - originPos.y);
+
 	}
 	void AnimCut::LateUpdate()
 	{

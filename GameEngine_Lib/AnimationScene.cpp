@@ -16,6 +16,8 @@
 
 namespace GE 
 {
+	std::vector<Animation*> AnimationScene::mAnimations = {};
+
 	AnimationScene::AnimationScene():
 		mTextureIndex(0),
 		mTextures{},
@@ -53,9 +55,11 @@ namespace GE
 		Scene::Render(hdc);
 
 		Print_Text(hdc, L"총 게임오브젝트 갯수 ", (int)AnimationScene::GetLayer(eLayerType::ANIMATIONCLIP)->GetGameObjects().size()
-			, Vector2(1400, 300));
-		Print_Text(hdc, L"마우스 Y ",Input::GetMousePosition().y, Vector2(1400, 500));
-		Print_Text(hdc, L"마우스 X ",Input::GetMousePosition().x, Vector2(1400, 550));
+			, Vector2(1400, 450));
+		Vector2 cameraPos = mainCamera->GetCameraPosition();
+
+		Print_Text(hdc, L"마우스 Y ",Input::GetMousePosition().y /*+ cameraPos.y*/, Vector2(1400, 500));
+		Print_Text(hdc, L"마우스 X ",Input::GetMousePosition().x /*+ cameraPos.x*/, Vector2(1400, 550));
 		Print_Text(hdc, L"텍스처 인덱스 ", (int)mTextureIndex, Vector2(1400, 750));
 		Print_Text(hdc, L"인덱스 업 : O ", Vector2(1400, 800));
 		Print_Text(hdc, L"인덱스 다운 : P ", Vector2(1400, 850));
@@ -71,28 +75,125 @@ namespace GE
 	}
 	void AnimationScene::Save()
 	{
-		std::ofstream outFile("animCuts.bin", std::ios::binary | std::ios::app); // 이진 모드로 파일 열기 , 덮어씌우기
+		OPENFILENAME ofn = {};
+		wchar_t szFilePath[256] = {};
+		ZeroMemory(&ofn, sizeof(ofn));
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = NULL;
+		ofn.lpstrFile = szFilePath;
+		ofn.lpstrFile[0] = '\0';
+		ofn.nMaxFile = sizeof(szFilePath);
+		ofn.lpstrFilter = L"Binary Files\0*.bin\0";
+		ofn.nFilterIndex = 1;
+		ofn.lpstrFileTitle = NULL;
+		ofn.nMaxFileTitle = 0;
+		ofn.lpstrInitialDir = NULL;
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT;
 
-		if (!outFile) {
-			// 파일 열기 실패 처리
-			return;
-		}
+		if (GetSaveFileName(&ofn)) {
+			std::ofstream outFile(szFilePath, std::ios::binary);
 
-		// mAnimCuts의 각 AnimCut 정보를 저장
-		size_t count = mAnimCuts.size();
-		outFile.write(reinterpret_cast<const char*>(&count), sizeof(count)); // AnimCut 개수 저장
-
-		for (const auto& animCut : mAnimCuts) {
-			if (animCut) { // nullptr 체크
-				// AnimCut 정보를 이진 형식으로 저장
-				outFile.write(reinterpret_cast<const char*>(&animCut->GetOriginPos()), sizeof(Vector2));
-				outFile.write(reinterpret_cast<const char*>(&animCut->GetSecondPos()), sizeof(Vector2));
-				outFile.write(reinterpret_cast<const char*>(&animCut->GetCutSize()), sizeof(Vector2));
+			if (!outFile) {
+				// 파일 열기 실패 처리
+				return;
 			}
+
+			// mAnimCuts의 각 AnimCut 정보를 저장
+			size_t count = mActiveAnimation->GetSprite().size();
+			outFile.write(reinterpret_cast<const char*>(&count), sizeof(count)); // AnimCut 개수 저장
+
+			std::wstring texturePath = mActiveAnimation->GetTexture()->GetFilePath(); // GetFilePath() 메서드 필요
+			size_t pathLength = texturePath.length();
+			outFile.write(reinterpret_cast<const char*>(&pathLength), sizeof(pathLength)); // 경로 길이 저장
+			outFile.write(reinterpret_cast<const char*>(texturePath.c_str()), pathLength * sizeof(wchar_t)); // wchar_t로 경로 저장
+
+			for (const auto& animCut : mActiveAnimation->GetSprite()) 
+			{
+				outFile.write(reinterpret_cast<const char*>(&animCut.leftTop), sizeof(Vector2));
+				outFile.write(reinterpret_cast<const char*>(&animCut.Size), sizeof(Vector2));
+				outFile.write(reinterpret_cast<const char*>(&animCut.Offset), sizeof(Vector2));
+				outFile.write(reinterpret_cast<const char*>(&animCut.duration), sizeof(float));
+			}
+			outFile.close(); // 파일 닫기
 		}
 
-		outFile.close(); // 파일 닫기
+	}
+	void AnimationScene::Load()
+	{
+		OPENFILENAME ofn = {};
+		wchar_t szFilePath[256] = {};
+		ZeroMemory(&ofn, sizeof(ofn));
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = NULL;
+		ofn.lpstrFile = szFilePath;
+		ofn.lpstrFile[0] = '\0';
+		ofn.nMaxFile = sizeof(szFilePath);
+		ofn.lpstrFilter = L"Binary Files\0*.bin\0";
+		ofn.nFilterIndex = 1;
+		ofn.lpstrFileTitle = NULL;
+		ofn.nMaxFileTitle = 0;
+		ofn.lpstrInitialDir = NULL;
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
+		if (GetOpenFileName(&ofn)) {
+			std::ifstream inFile(szFilePath, std::ios::binary);
+
+			if (!inFile) {
+				// 파일 열기 실패 처리
+				return;
+			}
+
+			// AnimCut 개수 읽기
+			size_t count = 0;
+			inFile.read(reinterpret_cast<char*>(&count), sizeof(count));
+
+			std::wstring fullPath(szFilePath);
+			std::wstring fileName = fullPath.substr(fullPath.find_last_of(L"\\") + 1);
+
+			size_t dotIndex = fileName.find_last_of(L".");
+			if (dotIndex != std::wstring::npos) {
+				fileName = fileName.substr(0, dotIndex); // 확장자 앞까지 잘라냄
+			}
+
+
+			Animation* animation = new Animation();
+
+			size_t pathLength;
+			inFile.read(reinterpret_cast<char*>(&pathLength), sizeof(pathLength));
+			std::wstring texturePath(pathLength, L'\0'); // 텍스처 경로를 위한 공간
+			inFile.read(reinterpret_cast<char*>(&texturePath[0]), pathLength * sizeof(wchar_t)); // wchar_t로 읽기
+
+			// 텍스처 생성
+			Texture* texture = new Texture();
+			texture->Load(texturePath); // 경로를 통해 텍스처 로드
+			animation->SetTexture(texture);
+
+			for (size_t i = 0; i < count; ++i) {
+				AnimCut* animCut = new AnimCut(); // 새로운 AnimCut 객체 생성
+
+				// AnimCut 정보 읽기
+				Vector2 leftTop;
+				Vector2 size;
+				Vector2 offSet;
+				float Duration;
+
+				inFile.read(reinterpret_cast<char*>(&leftTop), sizeof(Vector2));
+				inFile.read(reinterpret_cast<char*>(&size), sizeof(Vector2));
+				inFile.read(reinterpret_cast<char*>(&offSet), sizeof(Vector2));
+				inFile.read(reinterpret_cast<char*>(&Duration), sizeof(float));
+
+				Animation::Sprite sprite = {};
+				sprite.leftTop = leftTop;
+				sprite.Size = size;
+				sprite.Offset = offSet;
+				sprite.duration = Duration;
+
+				animation->GetSprite().push_back(sprite);
+			}
+			animation->SetName(fileName);
+			mAnimations.push_back(animation);
+			inFile.close(); // 파일 닫기
+		}
 	}
 	void AnimationScene::CreateAnimation()
 	{
@@ -107,6 +208,8 @@ namespace GE
 			Animation::Sprite sprite = {};
 			sprite.leftTop.x = mAnimCuts[i]->GetOriginPos().x;
 			sprite.leftTop.y = mAnimCuts[i]->GetOriginPos().y;
+			sprite.leftTop.y = min(79, max(sprite.leftTop.y, 1));
+
 			sprite.Size = mAnimCuts[i]->GetCutSize();
 			sprite.Offset = Vector2(0,0);
 			sprite.duration = 0.3;
@@ -178,7 +281,7 @@ namespace GE
 		//이걸 카메라로 셋팅
 
 		GameObject* camera2 = Instantiate<GameObject>(eLayerType::CAMERA, Vector2(0, 0));
-		camera2->AddComponent<CameraScript>();
+		cameraScript = camera2->AddComponent<CameraScript>();
 		mainCamera->SetTarget(camera2);
 	}
 	void AnimationScene::AnimatorInit()
@@ -191,57 +294,124 @@ namespace GE
 	}
 	void AnimationScene::InputUpdate()
 	{
-		if (Input::GetKeyDown(eKeyCode::I))
+
+		if (mActiveAnimation->GetToolMode() == true)
 		{
-			mSpriteRenderer->SetTexture(mTextures[mTextureIndex]);
-		}
-		if (Input::GetKeyDown(eKeyCode::P))
-		{
-			if (mTextureIndex < mTextures.size() - 1)
+			if (Input::GetKey(eKeyCode::K))
 			{
-				mTextureIndex++;
-				mSpriteRenderer->SetTexture(mTextures[mTextureIndex]);
+				++mActiveAnimation->GetSprite()[0].leftTop.y;
+			}
+
+			if (Input::GetKey(eKeyCode::L))
+			{
+				--mActiveAnimation->GetSprite()[0].leftTop.y;
+			}
+
+			if (Input::GetKeyDown(eKeyCode::P))
+			{
+				int activeIndex = mActiveAnimation->GetAnimIndex();
+				int animSize = mActiveAnimation->GetSprite().size() - 1;
+				if (activeIndex >= animSize)
+					return;
+				activeIndex++;
+				mActiveAnimation->SetAnimIndex(activeIndex);
+			}
+			if (Input::GetKeyDown(eKeyCode::O))
+			{
+				int activeIndex = mActiveAnimation->GetAnimIndex();
+				if (activeIndex<=0)
+					return;
+				activeIndex--;
+				mActiveAnimation->SetAnimIndex(activeIndex);
+			}
+			if (Input::GetKeyDown(eKeyCode::RIGHT))
+			{
+				int activeIndex = mActiveAnimation->GetAnimIndex();
+				float offsetX = mActiveAnimation->GetSprite()[activeIndex].Offset.x;
+				offsetX++;
+				mActiveAnimation->GetSprite()[activeIndex].Offset.x = offsetX;
+			}
+			if (Input::GetKeyDown(eKeyCode::LEFT))
+			{
+				int activeIndex = mActiveAnimation->GetAnimIndex();
+				float offsetX = mActiveAnimation->GetSprite()[activeIndex].Offset.x;
+				offsetX--;
+				mActiveAnimation->GetSprite()[activeIndex].Offset.x = offsetX;
+			}
+			if (Input::GetKeyDown(eKeyCode::UP))
+			{
+				int activeIndex = mActiveAnimation->GetAnimIndex();
+				float offsetY = mActiveAnimation->GetSprite()[activeIndex].Offset.y;
+				offsetY--;
+				mActiveAnimation->GetSprite()[activeIndex].Offset.y = offsetY;
+			}
+			if (Input::GetKeyDown(eKeyCode::DOWN))
+			{
+				int activeIndex = mActiveAnimation->GetAnimIndex();
+				float offsetY = mActiveAnimation->GetSprite()[activeIndex].Offset.y;
+				offsetY++;
+				mActiveAnimation->GetSprite()[activeIndex].Offset.y = offsetY;
 			}
 		}
-		if (Input::GetKeyDown(eKeyCode::O))
+		else
 		{
-			if (mTextureIndex > 0)
+			if (Input::GetKeyDown(eKeyCode::P))
 			{
-				mTextureIndex--;
-				mSpriteRenderer->SetTexture(mTextures[mTextureIndex]);
+				if (mTextureIndex < mTextures.size() - 1)
+				{
+					mTextureIndex++;
+					mSpriteRenderer->SetTexture(mTextures[mTextureIndex]);
+				}
+			}
+			if (Input::GetKeyDown(eKeyCode::O))
+			{
+				if (mTextureIndex > 0)
+				{
+					mTextureIndex--;
+					mSpriteRenderer->SetTexture(mTextures[mTextureIndex]);
+				}
 			}
 		}
+		
 
 		if (Input::GetKeyDown(eKeyCode::S))
 		{
 			Save();
 		}
-
-		if (Input::GetKeyDown(eKeyCode::A))
-		{
-			AddFrame_Animation();
-		}
-
-		if (Input::GetKeyDown(eKeyCode::Z))
+		if (Input::GetKeyDown(eKeyCode::Z))//애니메이션 제작
 		{
 			CreateAnimation();
 		}
-
-		if (Input::GetKeyDown(eKeyCode::V))
+		if (Input::GetKeyDown(eKeyCode::V))//보기
 		{
 			PlayAnimation_Animator();
 		}
-		
-
-		if (Input::GetKeyDown(eKeyCode::N))
+		if (Input::GetKeyDown(eKeyCode::N))//애니메이션 클리어
 		{
 			ActiveAnimationClear();
 		}
+		if (Input::GetKeyDown(eKeyCode::L))//로드
+		{
+			AnimationScene::Load();
+		}
+		
 
 
+		if (Input::GetKeyDown(eKeyCode::M))//편집 모드
+		{
+			if (mActiveAnimation->GetToolMode() == true)
+			{
+				cameraScript->SetEnable(true);
+				mActiveAnimation->SetToolMode(false);//편집모드 취소
+			}
+			else
+			{
+				cameraScript->SetEnable(false);
+				mActiveAnimation->SetToolMode(true);
+			}
+		}
 
-
-		if (Input::GetKeyDown(eKeyCode::C))
+		if (Input::GetKeyDown(eKeyCode::C))//렉트 클립 클리어
 		{
 			ClearClips();
 		}
