@@ -19,7 +19,6 @@ namespace GE
 		virtual void OnExit() override;
 
 		void Save();
-		void Load();
 	private:
 		//std::vector<Tile*> mTiles;
 

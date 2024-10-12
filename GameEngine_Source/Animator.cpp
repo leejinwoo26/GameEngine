@@ -1,6 +1,8 @@
 #include "Animator.h"
 #include "Texture.h"
 #include "Resources.h"
+#include "..\\GameEngine_Lib\\AnimationScene.h"
+#include "AnimCut.h"
 
 namespace GE
 {
@@ -101,6 +103,101 @@ namespace GE
 
 	void Animator::CreateAnimationByFolder(const std::wstring& name, const std::wstring& path, Vector2 offset, float duration)
 	{
+	}
+
+	void Animator::AddAnimation(const std::wstring& name)
+	{
+		const auto& animations_map =  AnimationScene::GetAnimations_Map();
+
+		auto iter = animations_map.find(name);
+		if (iter == animations_map.end())
+			return;
+
+		iter->second->SetAnimator(this);
+		mAnimations.insert({ name,iter->second });
+
+		Events* events = new Events();
+		mEvents.insert(std::make_pair(name, events));
+	}
+
+	void Animator::AddAnimation_Bulk(const std::wstring& path)
+	{
+		WIN32_FIND_DATA findFileData;
+		HANDLE hFind = FindFirstFile((path + L"\\*.bin").c_str(), &findFileData);
+
+		if (hFind == INVALID_HANDLE_VALUE) {
+			std::wcerr << L"Error: No .bin files found in the directory." << std::endl;
+			return;
+		}
+
+		do {
+			if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+				std::wstring filePath = path + L"\\" + findFileData.cFileName;
+
+				std::wcout << L"Loading: " << filePath << std::endl;
+				std::ifstream inFile(filePath, std::ios::binary);
+				if (!inFile) {
+					std::wcerr << L"Error: Could not open file " << findFileData.cFileName << std::endl;
+					continue; 
+				}
+
+				// AnimCut 개수 읽기
+				size_t count = 0;
+				inFile.read(reinterpret_cast<char*>(&count), sizeof(count));
+
+				std::wstring fullPath(filePath);
+				std::wstring fileName = fullPath.substr(fullPath.find_last_of(L"\\") + 1);
+
+				size_t dotIndex = fileName.find_last_of(L".");
+				if (dotIndex != std::wstring::npos) {
+					fileName = fileName.substr(0, dotIndex); // 확장자 앞까지 잘라냄
+				}
+
+				Animation* animation = new Animation();
+
+				size_t pathLength;
+				inFile.read(reinterpret_cast<char*>(&pathLength), sizeof(pathLength));
+				std::wstring texturePath(pathLength, L'\0');
+				inFile.read(reinterpret_cast<char*>(&texturePath[0]), pathLength * sizeof(wchar_t));
+
+				// 텍스처 생성
+				Texture* texture = new Texture();
+				texture->Load(texturePath);
+				animation->SetTexture(texture);
+
+
+				for (size_t i = 0; i < count; ++i) {
+					//AnimCut* animCut = new AnimCut(); // 새로운 AnimCut 객체 생성
+
+					// AnimCut 정보 읽기
+					Vector2 leftTop;
+					Vector2 size;
+					Vector2 offSet;
+					float Duration;
+
+					inFile.read(reinterpret_cast<char*>(&leftTop), sizeof(Vector2));
+					inFile.read(reinterpret_cast<char*>(&size), sizeof(Vector2));
+					inFile.read(reinterpret_cast<char*>(&offSet), sizeof(Vector2));
+					inFile.read(reinterpret_cast<char*>(&Duration), sizeof(float));
+
+					Animation::Sprite sprite = {};
+					sprite.leftTop = leftTop;
+					sprite.Size = size;
+					sprite.Offset = offSet;
+					sprite.duration = Duration;
+
+					animation->GetSprite().push_back(sprite);
+				}
+
+				animation->SetName(fileName);
+				animation->SetAnimator(this);
+				mAnimations.insert({ fileName, animation });
+				inFile.close(); // 파일 닫기
+			}
+
+		} while (FindNextFile(hFind, &findFileData) != 0);
+
+		FindClose(hFind);
 	}
 
 	Animation* Animator::FindAnimation(const std::wstring& name)

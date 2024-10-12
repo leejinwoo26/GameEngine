@@ -20,7 +20,7 @@ namespace GE
 		void SetSize(Vector2 size) { mSize = size; }
 		void SetIndex(Vector2 index) { mIndex = index; }
 		Texture* GetTexture() { return mTexture; }
-		static Vector2 GetTileSize() { return TileSize; }
+		static const Vector2& GetTileSize() { return TileSize; }
 
 		Vector2 GetIndex() { return mIndex; }
 
@@ -30,10 +30,9 @@ namespace GE
 		static Vector2 SelectedIndex;
 
 	private:
-
-		Texture* mTexture;
-		Vector2 mSize;
-		Vector2 mIndex;
 		Vector2 mTileSize;
+		Vector2 mSize;
+		Texture* mTexture;
+		Vector2 mIndex;
 	};
 }

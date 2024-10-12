@@ -24,6 +24,8 @@ namespace GE
 	}
 	Animation::~Animation()
 	{
+		delete mTexture;
+		mTexture = nullptr;
 	}
 	HRESULT Animation::Load(const std::wstring& path)
 	{

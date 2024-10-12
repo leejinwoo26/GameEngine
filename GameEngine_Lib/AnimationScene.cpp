@@ -16,7 +16,7 @@
 
 namespace GE 
 {
-	std::vector<Animation*> AnimationScene::mAnimations = {};
+	std::map<std::wstring, Animation*> AnimationScene::mAnimations_map = {};
 
 	AnimationScene::AnimationScene():
 		mTextureIndex(0),
@@ -27,6 +27,8 @@ namespace GE
 	}
 	AnimationScene::~AnimationScene()
 	{
+		delete mActiveAnimation;
+		//delete mAnimator;
 	}
 	void AnimationScene::Initialize()
 	{
@@ -34,6 +36,11 @@ namespace GE
 		TextureInit();
 		AnimatorInit();
 
+		GameObject* pl = Instantiate<GameObject>(eLayerType::PLAYER,Vector2(400,400));
+		Animator* plAnimator = pl->AddComponent<Animator>();
+
+		plAnimator->AddAnimation_Bulk(L"..\\Resource\\Anim");
+		plAnimator->PlayAnimation(L"Idle");
 
 
 		Scene::Initialize();
@@ -41,8 +48,6 @@ namespace GE
 	void AnimationScene::Update()
 	{
 		Scene::Update();
-
-
 
 		InputUpdate();
 	}
@@ -58,8 +63,8 @@ namespace GE
 			, Vector2(1400, 450));
 		Vector2 cameraPos = mainCamera->GetCameraPosition();
 
-		Print_Text(hdc, L"마우스 Y ",Input::GetMousePosition().y /*+ cameraPos.y*/, Vector2(1400, 500));
-		Print_Text(hdc, L"마우스 X ",Input::GetMousePosition().x /*+ cameraPos.x*/, Vector2(1400, 550));
+		Print_Text(hdc, L"마우스 Y ",Input::GetMousePosition().y , Vector2(1400, 500));
+		Print_Text(hdc, L"마우스 X ",Input::GetMousePosition().x , Vector2(1400, 550));
 		Print_Text(hdc, L"텍스처 인덱스 ", (int)mTextureIndex, Vector2(1400, 750));
 		Print_Text(hdc, L"인덱스 업 : O ", Vector2(1400, 800));
 		Print_Text(hdc, L"인덱스 다운 : P ", Vector2(1400, 850));
@@ -116,7 +121,6 @@ namespace GE
 			}
 			outFile.close(); // 파일 닫기
 		}
-
 	}
 	void AnimationScene::Load()
 	{
@@ -191,9 +195,88 @@ namespace GE
 				animation->GetSprite().push_back(sprite);
 			}
 			animation->SetName(fileName);
-			mAnimations.push_back(animation);
+			mAnimations_map.insert({ fileName, animation });
 			inFile.close(); // 파일 닫기
 		}
+	}
+	void AnimationScene::LoadAllFromFolder(const std::wstring& folderPath)
+	{
+		WIN32_FIND_DATA findFileData;
+		HANDLE hFind = FindFirstFile((folderPath + L"\\*.bin").c_str(), &findFileData);
+
+		if (hFind == INVALID_HANDLE_VALUE) {
+			std::wcerr << L"Error: No .bin files found in the directory." << std::endl;
+			return;
+		}
+
+		do {
+			if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+				std::wstring filePath = folderPath + L"\\" + findFileData.cFileName;
+
+				std::wcout << L"Loading: " << filePath << std::endl;
+				std::ifstream inFile(filePath, std::ios::binary);
+
+				if (!inFile) {
+					std::wcerr << L"Error: Could not open file " << findFileData.cFileName << std::endl;
+					continue; // Skip this file and continue to the next one
+				}
+
+				// AnimCut 개수 읽기
+				size_t count = 0;
+				inFile.read(reinterpret_cast<char*>(&count), sizeof(count));
+
+				std::wstring fullPath(filePath);
+				std::wstring fileName = fullPath.substr(fullPath.find_last_of(L"\\") + 1);
+
+				size_t dotIndex = fileName.find_last_of(L".");
+				if (dotIndex != std::wstring::npos) {
+					fileName = fileName.substr(0, dotIndex); // 확장자 앞까지 잘라냄
+				}
+
+				Animation* animation = new Animation();
+
+				size_t pathLength;
+				inFile.read(reinterpret_cast<char*>(&pathLength), sizeof(pathLength));
+				std::wstring texturePath(pathLength, L'\0');
+				inFile.read(reinterpret_cast<char*>(&texturePath[0]), pathLength * sizeof(wchar_t));
+
+				// 텍스처 생성
+				Texture* texture = new Texture();
+				texture->Load(texturePath);
+				animation->SetTexture(texture);
+
+				for (size_t i = 0; i < count; ++i) {
+					AnimCut* animCut = new AnimCut(); // 새로운 AnimCut 객체 생성
+
+					// AnimCut 정보 읽기
+					Vector2 leftTop;
+					Vector2 size;
+					Vector2 offSet;
+					float Duration;
+
+					inFile.read(reinterpret_cast<char*>(&leftTop), sizeof(Vector2));
+					inFile.read(reinterpret_cast<char*>(&size), sizeof(Vector2));
+					inFile.read(reinterpret_cast<char*>(&offSet), sizeof(Vector2));
+					inFile.read(reinterpret_cast<char*>(&Duration), sizeof(float));
+
+					Animation::Sprite sprite = {};
+					sprite.leftTop = leftTop;
+					sprite.Size = size;
+					sprite.Offset = offSet;
+					sprite.duration = Duration;
+
+					animation->GetSprite().push_back(sprite);
+				}
+
+				animation->SetName(fileName);
+				mAnimations_map.insert({ fileName, animation });
+				//mAnimations.push_back(animation);
+				inFile.close(); // 파일 닫기
+			}
+
+		} while (FindNextFile(hFind, &findFileData) != 0);
+
+		FindClose(hFind);
 	}
 	void AnimationScene::CreateAnimation()
 	{
@@ -208,7 +291,6 @@ namespace GE
 			Animation::Sprite sprite = {};
 			sprite.leftTop.x = mAnimCuts[i]->GetOriginPos().x;
 			sprite.leftTop.y = mAnimCuts[i]->GetOriginPos().y;
-			sprite.leftTop.y = min(79, max(sprite.leftTop.y, 1));
 
 			sprite.Size = mAnimCuts[i]->GetCutSize();
 			sprite.Offset = Vector2(0,0);
@@ -256,10 +338,9 @@ namespace GE
 		AnimationScene::GetLayer(eLayerType::ANIMATIONCLIP)->Clear_AnimClip();
 	}
 
-
 	void AnimationScene::TextureInit()
 	{
-		auto resources = Resources::GetResources();
+		const auto& resources = Resources::GetResources();
 		mTextures.reserve(resources.size());
 
 		for (auto iter = resources.begin(); iter != resources.end(); iter++)
@@ -327,30 +408,22 @@ namespace GE
 			if (Input::GetKeyDown(eKeyCode::RIGHT))
 			{
 				int activeIndex = mActiveAnimation->GetAnimIndex();
-				float offsetX = mActiveAnimation->GetSprite()[activeIndex].Offset.x;
-				offsetX++;
-				mActiveAnimation->GetSprite()[activeIndex].Offset.x = offsetX;
+				mActiveAnimation->GetSprite()[activeIndex].Offset.x++;
 			}
 			if (Input::GetKeyDown(eKeyCode::LEFT))
 			{
 				int activeIndex = mActiveAnimation->GetAnimIndex();
-				float offsetX = mActiveAnimation->GetSprite()[activeIndex].Offset.x;
-				offsetX--;
-				mActiveAnimation->GetSprite()[activeIndex].Offset.x = offsetX;
+				mActiveAnimation->GetSprite()[activeIndex].Offset.x--;
 			}
 			if (Input::GetKeyDown(eKeyCode::UP))
 			{
 				int activeIndex = mActiveAnimation->GetAnimIndex();
-				float offsetY = mActiveAnimation->GetSprite()[activeIndex].Offset.y;
-				offsetY--;
-				mActiveAnimation->GetSprite()[activeIndex].Offset.y = offsetY;
+				mActiveAnimation->GetSprite()[activeIndex].Offset.y--;
 			}
 			if (Input::GetKeyDown(eKeyCode::DOWN))
 			{
 				int activeIndex = mActiveAnimation->GetAnimIndex();
-				float offsetY = mActiveAnimation->GetSprite()[activeIndex].Offset.y;
-				offsetY++;
-				mActiveAnimation->GetSprite()[activeIndex].Offset.y = offsetY;
+				mActiveAnimation->GetSprite()[activeIndex].Offset.y++;
 			}
 		}
 		else
@@ -432,7 +505,5 @@ namespace GE
 		{
 			mAnimCuts.push_back(ActiveAnimCut);
 		}
-
-
 	}
 }

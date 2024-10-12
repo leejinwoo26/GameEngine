@@ -23,12 +23,14 @@ namespace GE
 	}
 	void ToolScene::Initialize()
 	{
-		GameObject* camera = Instantiate<GameObject>(eLayerType::NONE, Vector2(800, 450));
+		GameObject* camera = Instantiate<GameObject>(eLayerType::NONE, Vector2(0, 0));
 		Camera* cameraComp = camera->AddComponent<Camera>();
 		camera->AddComponent<CameraScript>();
 		mainCamera = cameraComp;
 
+		Scene::CreateTileBuffer({ 10, 10 });
 
+		//Scene::LoadTileMap(L"..\\Resource\\Map", L"grass");
 
 		Scene::Initialize();
 	}
@@ -57,7 +59,7 @@ namespace GE
 		}
 		if (Input::GetKeyDown(eKeyCode::R))
 		{
-			Load();
+			Scene::Load();
 		}
 
 	}
@@ -111,145 +113,47 @@ namespace GE
 		ofn.lpstrFileTitle = NULL;
 		ofn.nMaxFileTitle = 0;
 		ofn.lpstrInitialDir = NULL;
-		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT; // 파일 덮어쓰기 확인
+
 		if (false == GetSaveFileName(&ofn))
 			return;
 
-		FILE* pFile = nullptr;
-		_wfopen_s(&pFile, szFilePath, L"wb");
+		// std::fstream 사용하여 파일 열기
+		std::fstream file(szFilePath, std::ios::out | std::ios::binary);
+		if (!file.is_open()) {
+			std::wcerr << L"Error: Could not open file for writing: " << szFilePath << std::endl;
+			return;
+		}
+
 		int tileCountX = GetTiles()[0].size();
 		int tileCountY = GetTiles().size();
 
-		fwrite(&tileCountX, sizeof(int), 1, pFile);
-		fwrite(&tileCountY, sizeof(int), 1, pFile);
+		// 타일 개수 저장
+		file.write(reinterpret_cast<char*>(&tileCountX), sizeof(int));
+		file.write(reinterpret_cast<char*>(&tileCountY), sizeof(int));
 
-		for (auto& tilesX : GetTiles())
+		for (const auto& tilesX : GetTiles())
 		{
-			for (auto& tile : tilesX)
+			for (const auto& tile : tilesX)
 			{
 				TileRenderer* tmr = tile->GetComponent<TileRenderer>();
 				Transform* tr = tile->GetComponent<Transform>();
 
-				Vector2 sourceIndex;
-				sourceIndex = tmr->GetIndex();
+				Vector2 sourceIndex = tmr->GetIndex();
+				Vector2 position = tr->GetPosition();
 
-				Vector2 position;
-				position = tr->GetPosition();
+				// 인덱스와 위치를 파일에 저장
+				int x = static_cast<int>(sourceIndex.x);
+				int y = static_cast<int>(sourceIndex.y);
+				file.write(reinterpret_cast<char*>(&x), sizeof(int));
+				file.write(reinterpret_cast<char*>(&y), sizeof(int));
 
-				int x = sourceIndex.x;
-				fwrite(&x, sizeof(int), 1, pFile);
-				int y = sourceIndex.y;
-				fwrite(&y, sizeof(int), 1, pFile);
-
-				x = position.x;
-				fwrite(&x, sizeof(int), 1, pFile);
-				y = position.y;
-				fwrite(&y, sizeof(int), 1, pFile);
+				x = static_cast<int>(position.x);
+				y = static_cast<int>(position.y);
+				file.write(reinterpret_cast<char*>(&x), sizeof(int));
+				file.write(reinterpret_cast<char*>(&y), sizeof(int));
 			}
 		}
-		/*for (Tile* tile : mTiles)
-		{
-			TileRenderer* tmr = tile->GetComponent<TileRenderer>();
-			Transform* tr = tile->GetComponent<Transform>();
-
-			Vector2 sourceIndex;
-			sourceIndex = tmr->GetIndex();
-
-			Vector2 position;
-			position = tr->GetPosition();
-
-			int x = sourceIndex.x;
-			fwrite(&x, sizeof(int), 1, pFile);
-			int y = sourceIndex.y;
-			fwrite(&y, sizeof(int), 1, pFile);
-
-			x = position.x;
-			fwrite(&x, sizeof(int), 1, pFile);
-			y = position.y;
-			fwrite(&y, sizeof(int), 1, pFile);
-		}*/
-		fclose(pFile);
-
-	}
-	void ToolScene::Load()
-	{
-		OPENFILENAME ofn = {};
-		wchar_t szFilePath[256] = {};
-		ZeroMemory(&ofn, sizeof(ofn));
-		ofn.lStructSize = sizeof(ofn);
-		ofn.hwndOwner = NULL;
-		ofn.lpstrFile = szFilePath;
-		ofn.lpstrFile[0] = '\0';
-		ofn.nMaxFile = 256;
-		ofn.lpstrFilter = L"All\0*.*\0Text\0*.TXT\0";
-		ofn.nFilterIndex = 1;
-		ofn.lpstrFileTitle = NULL;
-		ofn.nMaxFileTitle = 0;
-		ofn.lpstrInitialDir = NULL;
-		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
-		if (false == GetOpenFileName(&ofn))
-			return;
-		FILE* pFile = nullptr;
-		_wfopen_s(&pFile, szFilePath, L"rb");
-		if (pFile == nullptr)
-			return;
-
-		int tileCountX;
-		int tileCountY;
-		fread(&tileCountX, sizeof(int), 1, pFile);
-		fread(&tileCountY, sizeof(int), 1, pFile);
-
-
-		for (int y = 0; y < tileCountY; y++)
-		{
-			for (int x = 0; x < tileCountX; x++)
-			{
-				int idxX = 0;
-				int idxY = 0;
-				int posX = 0;
-				int posY = 0;
-
-				if (fread(&idxX, sizeof(int), 1, pFile) != 1)
-					break;
-				if (fread(&idxY, sizeof(int), 1, pFile) != 1)
-					break;
-				if (fread(&posX, sizeof(int), 1, pFile) != 1)
-					break;
-				if (fread(&posY, sizeof(int), 1, pFile) != 1)
-					break;
-
-				GetTiles()[y][x]->GetComponent<TileRenderer>()->SetIndex({ (float)idxX, (float)idxY });
-				GetTiles()[y][x]->GetComponent<Transform>()->SetPos({ (float)posX , (float)posY });
-				GetTiles()[y][x]->GetComponent<TileRenderer>()->Render(app.GetBackTileHdc());
-			}
-		}
-		//while (true)
-		//{
-		//	int idxX = 0;
-		//	int idxY = 0;
-		//	int posX = 0;
-		//	int posY = 0;
-
-
-		//	if (fread(&idxX, sizeof(int), 1, pFile) != 1)
-		//		break;
-		//	if (fread(&idxY, sizeof(int), 1, pFile) != 1)
-		//		break;
-		//	if (fread(&posX, sizeof(int), 1, pFile) != 1)
-		//		break;
-		//	if (fread(&posY, sizeof(int), 1, pFile) != 1)
-		//		break;
-
-
-		//	Tile* tile = Instantiate<Tile>(eLayerType::TILE,Vector2(posX,posY));
-		//	TileRenderer* tileRenderer = tile->AddComponent<TileRenderer>();
-		//	Texture* tileTex = Resources::Find<Texture>(L"SpringFloor");
-		//	tileRenderer->SetTexture(tileTex);
-		//	tileRenderer->SetIndex(Vector2(idxX,idxY));
-
-		//	//mTiles.push_back(tile);
-		//}
-
-		fclose(pFile);
+		file.close(); // 파일 닫기
 	}
 }

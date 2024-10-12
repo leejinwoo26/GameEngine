@@ -14,7 +14,7 @@ namespace GE
 		void Render();
 		void Release();
 		void Destroy();
-		void ChangeTileBuffer(Gdiplus::Size size);
+		void ChangeTileBuffer(const Vector2& size);
 		Application();
 		~Application();
 

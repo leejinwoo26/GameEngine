@@ -116,7 +116,7 @@ namespace GE
 		if (mainCamera)
 		{
 			Vector2 pos = mainCamera->GetCameraPosition();
-			//BitBlt(mBackHdc, 0, 0, 1600, 900, mBackTileHdc, (int)pos.x, (int)pos.y, SRCCOPY);
+			//BitBlt(mBackHdc, 0, 0, GetWidth(), GetHeight(), mBackTileHdc, pos.x, pos.y, SRCCOPY);
 			Rectangle(mBackHdc, -1, -1, 1600, 900);
 			Print_Text(mBackHdc, L"카메라 x ", pos.x, Vector2(0, 100));
 			Print_Text(mBackHdc, L"카메라 y ", pos.y, Vector2(0, 150));
@@ -126,9 +126,9 @@ namespace GE
 			Rectangle(mBackHdc, 0, 0, 1600, 900);
 		}
 	}
-	void Application::ChangeTileBuffer(Gdiplus::Size size)
+	void Application::ChangeTileBuffer(const Vector2& size)
 	{
-		mBackTileBuffer = CreateCompatibleBitmap(mBackHdc, size.Width, size.Height);
+		mBackTileBuffer = CreateCompatibleBitmap(mBackHdc, size.x, size.y);
 		HBITMAP oldbitmap = (HBITMAP)SelectObject(mBackTileHdc, mBackTileBuffer);
 		DeleteObject(oldbitmap);
 	}

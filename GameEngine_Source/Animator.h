@@ -58,6 +58,9 @@ namespace GE
 		void SetLoop(bool loop) { mbLoop = loop; }
 
 
+		void AddAnimation(const std::wstring& name);
+		void AddAnimation_Bulk(const std::wstring& path);
+
 		Animation* GetActiveAnimation()
 		{
 			if (mActiveAnimation == nullptr)

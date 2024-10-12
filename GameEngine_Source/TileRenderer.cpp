@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "GameObject.h"
 #include "Renderer.h"
+#include "Debug_Text.h"
 
 namespace GE
 {
@@ -44,39 +45,17 @@ namespace GE
 
 		HDC texHdc = mTexture->GetHdc();
 
-		/*if (mainCamera->GetTarget())
+		if (mainCamera->GetTarget() != nullptr)
 		{
 			pos = mainCamera->CalculatePosition(pos);
-		}*/
-		//pos = mainCamera->CalculatePosition(pos);
+		}
 
 		if (mainCamera == nullptr)
 			return;
-		float width = mTexture->GetWidth() * mSize.x * scale.x;
-		float height = mTexture->GetHeight() * mSize.y * scale.y;
 
-		float cameraX = mainCamera->GetCameraPosition().x;
-		float cameraY = mainCamera->GetCameraPosition().y;
-		float cameraWidth = 1600;
-		float cameraHeight = 900;
 
-		/*Print_Text(hdc, L"pos.x", pos.x, Vector2(0, 150));
-		Print_Text(hdc, L"pos.y", pos.y, Vector2(0, 200));
-		Print_Text(hdc, L"cameraX", cameraX, Vector2(0, 250));
-		Print_Text(hdc, L"cameraY", cameraY, Vector2(0, 300));*/
-
-		bool culling = false;
-
-		//Print_Text(hdc, L"Culling ",culling, Vector2(0, 350));
-
-		if (pos.x + width < 0 || pos.x > cameraWidth ||
-			pos.y + height < 0 || pos.y > cameraHeight)
-		{
-			culling = true;
-			//Print_Text(hdc, L"Culling ",culling, Vector2(0, 350));
-			return;
-		}
-
+		
+	
 		if (mTexture->GetTextureType() == Texture::eTextureType::BMP)
 		{
 			if (mTexture->GetAlpha())
@@ -109,10 +88,6 @@ namespace GE
 					, mTileSize.y
 					, RGB(255, 0, 255));
 			}
-			/*TransparentBlt(hdc, pos.x - ((mTexture->GetWidth() * mSize.x) / 2), pos.y - ((mTexture->GetHeight() * mSize.y) / 2)
-				, mTexture->GetWidth() * mSize.x * scale.x, mTexture->GetHeight() * mSize.y * scale.y
-				, mTexture->GetHdc(), 0, 0, mTexture->GetWidth(), mTexture->GetHeight()
-				, RGB(255, 0, 255));*/
 		}
 		//else if (mTexture->GetTextureType() == Texture::eTextureType::PNG)
 		//{

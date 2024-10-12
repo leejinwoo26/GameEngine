@@ -4,6 +4,7 @@
 #include "..\\GameEngine_Source\\Animation.h"
 #include "..\\GameEngine_Source\\Animator.h"
 
+
 namespace GE
 {
 	class AnimationScene : public Scene
@@ -15,17 +16,25 @@ namespace GE
 		void Update() override;
 		void LateUpdate() override;
 		void Render(HDC hdc) override;
-
 		void OnEnter() override;
 		void OnExit() override;
 
+	public:
 		void Save();
 		static void Load();
+		static void LoadAllFromFolder(const std::wstring& folderPath);
+
+
+	public:
 		void CreateAnimation();
 		void AddFrame_Animation();
 		void PlayAnimation_Animator();
 		void ActiveAnimationClear();
 		void ClearClips();
+
+
+	public:
+		static const std::map<std::wstring, Animation*>& GetAnimations_Map() { return mAnimations_map; }
 
 	private:
 		void TextureInit();
@@ -33,20 +42,23 @@ namespace GE
 		void AnimatorInit();
 		void InputUpdate();
 	private:
+		static std::map<std::wstring, Animation*> mAnimations_map;
+		std::vector<class AnimCut*> mAnimCuts;
+		std::vector<Animation::Sprite> mAnimationSheet;
+		Animation* mActiveAnimation;
+	private:
+		class AnimCut* ActiveAnimCut;
+		class Animator* mAnimator;
+	private:
+		GameObject* animator;
+		GameObject* mTexObj;
+	private:
 		std::vector<class Texture*> mTextures;
 		SpriteRenderer* mSpriteRenderer;
-		GameObject* mTexObj;
-		UINT mTextureIndex;
-		class AnimCut* ActiveAnimCut;
-		std::vector<class AnimCut*> mAnimCuts;
-
-		static std::vector<Animation*> mAnimations;
-
+	private:
 		class CameraScript* cameraScript;
-		Animation* mActiveAnimation;
-		class Animator* mAnimator;
-		std::vector<Animation::Sprite> mAnimationSheet;
-		GameObject* animator;
+	private:
+		UINT mTextureIndex;
 	};
 
 }
