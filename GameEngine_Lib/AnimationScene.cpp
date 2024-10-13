@@ -368,7 +368,7 @@ namespace GE
 	void AnimationScene::AnimatorInit()
 	{
 		mActiveAnimation = new Animation();
-		mAnimator = new Animator();
+		mAnimator = std::make_shared<Animator>().get();
 
 		animator = Instantiate<GameObject>(eLayerType::ANIMATOR, Vector2(500, 500));
 		mAnimator = animator->AddComponent<Animator>();
