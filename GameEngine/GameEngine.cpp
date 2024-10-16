@@ -144,8 +144,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
        CW_USEDEFAULT, 0, width, height, nullptr, nullptr, hInstance, nullptr);
 
 
-   app.Initialize(hWnd,width,height);
    app.SetParticleHwnd(AnimationHWnd);
+   app.Initialize(hWnd,width,height);
 
 
    if (!hWnd)
@@ -327,8 +327,7 @@ LRESULT CALLBACK AnimationProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
     case WM_PAINT:
     {
         PAINTSTRUCT ps;
-        HDC partHdc = app.GetParticleHdc();
-        partHdc = BeginPaint(hWnd, &ps);
+        HDC hdc = BeginPaint(hWnd, &ps);
         //if (hBitmap)
         //{
         //    // BMP 그리기
@@ -345,6 +344,7 @@ LRESULT CALLBACK AnimationProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
         //    Gdiplus::Graphics graphics(ParticleHdc);
         //    graphics.DrawImage(pngBitmap, 10, 10);
         //}
+        
         EndPaint(hWnd, &ps);
     }
     break;

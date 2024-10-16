@@ -1,5 +1,4 @@
 #pragma once
-#include "CommonInclude.h"
 #include "GameObject.h"
 
 namespace GE
@@ -7,28 +6,22 @@ namespace GE
 	class Particle : public GameObject
 	{
 	public:
-		struct Particle_Struct
+		struct Particle_ST
 		{
-			Vector2 startPos;
-			Vector2 direction;
-			Vector2 size;
-
+			Vector2 velocity;
 			float speed;
-			float duration;
-			float lifetime;
-			bool Looping;
-
-			COLORREF color;
+			Vector2 gravity;
 		};
 
 		Particle();
 		~Particle();
-		void Initialize() override;
-		void Update() override;
-		void LateUpdate() override;
-		void Render(HDC hdc) override;
+		virtual void Initialize() override;
+		virtual void Update() override;
+		virtual void LateUpdate() override;
+		virtual void Render(HDC hdc) override;
+		Particle_ST& GetParticleInfo() { return mParticleInfo; }
+		void SetParticleInfo(Particle_ST& info) { mParticleInfo = info; }
 	private:
-		Particle_Struct particleInfo;
-		int y;
+		Particle_ST mParticleInfo;
 	};
 }

@@ -69,7 +69,7 @@ namespace GE
 		mBackHdc = CreateCompatibleDC(mHdc);
 
 		mParticleHdc = GetDC(mParticleHwnd);
-		mParticleBackBuffer = CreateCompatibleBitmap(mParticleHdc, 1600, 900);
+		mParticleBackBuffer = CreateCompatibleBitmap(mParticleHdc, width, height);
 		mParticleBackHdc = CreateCompatibleDC(mParticleHdc);
 		HBITMAP oldParticleBitmap = (HBITMAP)SelectObject(mParticleBackHdc, mParticleBackBuffer);
 		DeleteObject(oldParticleBitmap);
@@ -112,6 +112,7 @@ namespace GE
 	void Application::Render()
 	{
 		ClearBitmap();
+
 		SceneManager::Render(mBackHdc);
 		CollisionManager::Render(mBackHdc);
 		Time::Render(mBackHdc);
@@ -132,8 +133,8 @@ namespace GE
 		else
 		{
 			Rectangle(mBackHdc, -1, -1, 1600, 900);
-			Rectangle(mParticleBackHdc, -1, -1, 1600, 900);
 		}
+		Rectangle(mParticleBackHdc, -1, -1, 1600, 900);
 	}
 	void Application::ChangeTileBuffer(const Vector2& size)
 	{
@@ -145,7 +146,6 @@ namespace GE
 	void Application::CopyHighSpeed()
 	{
 		BitBlt(mHdc, 0, 0, mWidth, mHeight, mBackHdc, 0, 0, SRCCOPY);
-
 		BitBlt(mParticleHdc, 0, 0, mWidth, mHeight, mParticleBackHdc, 0, 0, SRCCOPY);
 	}
 }

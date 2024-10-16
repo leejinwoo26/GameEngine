@@ -1,24 +1,22 @@
 #include "pch.h"
 #include "Particle.h"
-#include "GETime.h"
-#include "..\\GameEngine_Lib\\ParticleScene.h"
+#include "Debug_Text.h"
 #include "Application.h"
+#include "Object.h"
+#include "GameObject.h"
+#include "Transform.h"
+#include "GETime.h"
+#include "Debug_Text.h"
 
 extern GE::Application app;
 
 namespace GE
 {
-	Particle::Particle()  
+	Particle::Particle()
 	{
-		GameObject::SetLayerType(eLayerType::PARTICLE);
-		particleInfo.color = BLACK;
-		particleInfo.duration = 3.0f;
-		particleInfo.lifetime = 2.0f;
-		particleInfo.Looping = true;
-		particleInfo.size = Vector2(20,20);
-		particleInfo.direction = Vector2(0,10);
-		particleInfo.speed = 10.f;
-		particleInfo.startPos = Vector2(500, 350);
+		mParticleInfo.speed = 10.f;
+		mParticleInfo.velocity = Vector2(0, 1);
+		mParticleInfo.gravity = Vector2(0, 1);
 	}
 	Particle::~Particle()
 	{
@@ -28,18 +26,28 @@ namespace GE
 	}
 	void Particle::Update()
 	{
-		y -= 100.f * Time::DeltaTime();
+		Transform* tr = this->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+		pos += mParticleInfo.velocity * mParticleInfo.speed * Time::DeltaTime();
+		mParticleInfo.velocity += mParticleInfo.gravity * Time::DeltaTime();;
+		int a = 0;
+
+		tr->SetPos(pos);
+
 	}
 	void Particle::LateUpdate()
 	{
 	}
 	void Particle::Render(HDC hdc)
 	{
-		HDC backDc = app.GetParticleBackHdc();
-		Ellipse(backDc
-			, particleInfo.startPos.x
-			, particleInfo.startPos.y + y
-			, particleInfo.startPos.x + particleInfo.size.x
-			, particleInfo.startPos.y + particleInfo.size.y + y);
+		HDC back = app.GetParticleBackHdc();
+		Transform* tr = this->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+
+		Ellipse(back,
+			pos.x + 100,
+			pos.y + 100,
+			pos.x + 125,
+			pos.y + 125 );
 	}
 }

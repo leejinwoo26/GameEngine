@@ -10,6 +10,7 @@
 #include "Resources.h"
 #include "Debug_Text.h"
 #include "..\\GameEngine_Source\\AnimCut.h"
+#include "..\\GameEngine_Source\\Particle.h"
 
 
 
@@ -43,6 +44,7 @@ namespace GE
 		plAnimator->AddAnimation_Bulk(L"..\\Resource\\Anim");
 		plAnimator->PlayAnimation(L"Idle");
 
+		Particle* pt = Instantiate<Particle>(eLayerType::PARTICLE);
 
 		Scene::Initialize();
 	}

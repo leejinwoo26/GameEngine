@@ -17,10 +17,8 @@ namespace GE
 
 		void OnEnter() override;
 		void OnExit() override;
-		static HDC GetParticleHdc() { return particleHdc; }
 
 	private:
-		static HDC particleHdc;
 	};
 }
 

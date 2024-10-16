@@ -1,15 +1,16 @@
 #include "pch.h"
 #include "ParticleScene.h"
 #include "..\\GameEngine_Source\\Application.h"
-#include "..\\GameEngine_Source\\Particle.h"
 #include "..\\GameEngine_Source\\Object.h"
+#include "..\\GameEngine_Source\\ParticleSystem.h"
+#include "..\\GameEngine_Source\\Particle.h"
+
 
 
 extern GE::Application app;
 
 namespace GE
 {
-	HDC ParticleScene::particleHdc = nullptr;
 
 	ParticleScene::ParticleScene()
 	{
@@ -20,7 +21,9 @@ namespace GE
 	void ParticleScene::Initialize()
 	{
 		Scene::Initialize();
-		Instantiate<Particle>(eLayerType::PARTICLE);
+		GameObject* player = Instantiate<GameObject>(eLayerType::PLAYER,Vector2(800,500));
+		ParticleSystem* playerPS = player->AddComponent<ParticleSystem>();
+
 	}
 	void ParticleScene::Update()
 	{
