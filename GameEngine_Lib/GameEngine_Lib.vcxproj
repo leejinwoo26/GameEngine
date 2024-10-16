@@ -23,6 +23,7 @@
     <ClInclude Include="CameraScript.h" />
     <ClInclude Include="CullingScene.h" />
     <ClInclude Include="LoadScene.h" />
+    <ClInclude Include="ParticleScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerScript.h" />
     <ClInclude Include="PlayScene.h" />
@@ -34,6 +35,7 @@
     <ClCompile Include="AnimationScene.cpp" />
     <ClCompile Include="CameraScript.cpp" />
     <ClCompile Include="CullingScene.cpp" />
+    <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
     <ClCompile Include="PlayScene.cpp" />

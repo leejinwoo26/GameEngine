@@ -4,6 +4,7 @@
 #include "ToolScene.h"
 #include "CullingScene.h"
 #include "AnimationScene.h"
+#include "ParticleScene.h"
 
 namespace GE
 {
@@ -11,11 +12,12 @@ namespace GE
 	{
 		//SceneManager::CreateScene<PlayScene>(L"PlayScene");
 		//SceneManager::CreateScene<ToolScene>(L"ToolScene");
-		SceneManager::CreateScene<AnimationScene>(L"AnimationScene");
+		//SceneManager::CreateScene<AnimationScene>(L"AnimationScene");
+		SceneManager::CreateScene<ParticleScene>(L"ParticleScene");
 		//SceneManager::CreateScene<CullingScene>(L"CullingScene");
 
 
-		SceneManager::LoadScene(L"AnimationScene");
+		SceneManager::LoadScene(L"ParticleScene");
 	}
 }
 

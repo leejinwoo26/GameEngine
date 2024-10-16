@@ -187,6 +187,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Particle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
@@ -300,5 +301,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Particle.cpp" />
   </ItemGroup>
 </Project>

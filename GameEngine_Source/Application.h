@@ -18,6 +18,13 @@ namespace GE
 		Application();
 		~Application();
 
+		void SetParticleHwnd(HWND particleHwnd) { mParticleHwnd = particleHwnd; };
+		HWND GetParticleHwnd() { return mParticleHwnd; }
+
+		HDC& GetParticleBackHdc() { return mParticleBackHdc; }
+		HDC& GetParticleHdc() { return mParticleHdc; }
+
+
 		HWND GetHwnd() { return mHwnd; }
 		HDC GetHdc() { return mHdc; }
 		UINT GetWidth() { return mWidth; }
@@ -31,6 +38,11 @@ namespace GE
 	private:
 		HWND mHwnd;
 		HDC mHdc;
+
+		HWND mParticleHwnd;
+		HDC mParticleHdc;
+		HDC mParticleBackHdc;
+		HBITMAP mParticleBackBuffer;
 
 		HBITMAP mBackBuffer;
 		HDC mBackHdc;

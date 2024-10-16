@@ -24,6 +24,9 @@
     <ClInclude Include="GameEngine.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp">
@@ -40,6 +43,9 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="GameEngine.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="icon1.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
