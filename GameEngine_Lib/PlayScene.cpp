@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "PlayScene.h"
 #include "Player.h"
 #include "SpriteRenderer.h"

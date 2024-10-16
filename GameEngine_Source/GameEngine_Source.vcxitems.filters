@@ -184,6 +184,9 @@
       <Filter>Animation</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)AnimCut.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp">
@@ -294,5 +297,8 @@
       <Filter>Animation</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)AnimCut.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

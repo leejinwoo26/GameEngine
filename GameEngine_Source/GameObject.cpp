@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "GameObject.h"
 #include "Input.h"
 #include "Transform.h"

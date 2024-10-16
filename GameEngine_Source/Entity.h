@@ -1,6 +1,5 @@
 #pragma once
 #include "CommonInclude.h"
-
 namespace GE
 {
 	class Entity

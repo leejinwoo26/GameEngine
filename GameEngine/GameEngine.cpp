@@ -7,6 +7,7 @@
 #include "..\\GameEngine_Source\\Texture.h"
 #include "..\\GameEngine_Source\\Resources.h"
 #include "..\\GameEngine_Source\\TileRenderer.h"
+#include "..\\GameEngine_Source\\SceneManager.h"
 #include "..\\GameEngine_Lib\\LoadScene.h"
 #include "..\\GameEngine_Lib\\ResourcesLoad.h"
 
@@ -37,7 +38,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    _CrtSetBreakAlloc(606);
+    //_CrtSetBreakAlloc(606);
     // TODO: 여기에 코드를 입력합니다.
 
     // 전역 문자열을 초기화합니다.
@@ -153,19 +154,23 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    GE::LoadScenes();
 
 
-   //타일 윈도우 크기
-   GE::Texture* texture = GE::Resources::Find<GE::Texture>(L"SpringFloor");
+   if (GE::SceneManager::GetActiveScene()->GetName() == L"ToolScene")
+   {
+       //타일 윈도우 크기
+       GE::Texture* texture = GE::Resources::Find<GE::Texture>(L"SpringFloor");
 
-   RECT rc = { 0, 0, texture->GetWidth(), texture->GetHeight()};
+       RECT rc = { 0, 0, texture->GetWidth(), texture->GetHeight() };
 
-   UINT mWidth = rc.right - rc.left;
-   UINT mHeight = rc.bottom - rc.top;
+       UINT mWidth = rc.right - rc.left;
+       UINT mHeight = rc.bottom - rc.top;
 
-   AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
+       AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
 
-   SetWindowPos(ToolhWnd, nullptr, width, 0, mWidth, mHeight, 0);
-   ShowWindow(ToolhWnd, nCmdShow);
-   UpdateWindow(ToolhWnd);
+       SetWindowPos(ToolhWnd, nullptr, width, 0, mWidth, mHeight, 0);
+       ShowWindow(ToolhWnd, nCmdShow);
+       UpdateWindow(ToolhWnd);
+   }
+   
 
 
    return TRUE;

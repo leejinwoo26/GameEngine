@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "Script.h"
 namespace GE
 {

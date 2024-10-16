@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "AnimCut.h"
 #include "Renderer.h"
 

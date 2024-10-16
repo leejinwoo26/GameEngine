@@ -1,6 +1,5 @@
 #pragma once
 #include <cmath>
-#include "CommonInclude.h"
 #define PI 3.141592f
 
 

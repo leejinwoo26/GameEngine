@@ -2,7 +2,7 @@
 #include "Component.h"
 #include "Texture.h"
 #include "Entity.h"
-
+#include "CommonInclude.h"
 namespace GE
 {
 	class TileRenderer : public Component

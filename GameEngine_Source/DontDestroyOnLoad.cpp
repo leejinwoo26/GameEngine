@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "DontDestroyOnLoad.h"
 namespace GE
 {

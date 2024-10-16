@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "PixelCollider.h"
 #include "Transform.h"
 #include "GameObject.h"

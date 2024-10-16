@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "PlayerScript.h"
 #include "..\\GameEngine_Source\\Input.h"
 #include "..\\GameEngine_Source\\Transform.h"

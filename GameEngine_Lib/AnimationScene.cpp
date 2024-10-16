@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "AnimationScene.h"
 #include "GameObject.h"
 #include "Transform.h"
@@ -270,7 +271,6 @@ namespace GE
 
 				animation->SetName(fileName);
 				mAnimations_map.insert({ fileName, animation });
-				//mAnimations.push_back(animation);
 				inFile.close(); // ÆÄÀÏ ´Ý±â
 			}
 

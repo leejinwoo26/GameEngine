@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "Fmod.h"
 namespace GE
 {

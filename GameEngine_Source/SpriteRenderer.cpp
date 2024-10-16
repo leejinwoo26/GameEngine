@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "SpriteRenderer.h"
 #include "Transform.h"
 #include "GameObject.h"

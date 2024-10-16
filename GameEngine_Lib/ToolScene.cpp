@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "ToolScene.h"
 #include "..\\GameEngine_Source\\Object.h"
 #include "..\\GameEngine_Source\\GameObject.h"
