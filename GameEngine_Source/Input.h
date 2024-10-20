@@ -18,7 +18,15 @@ namespace GE
 		Z, X, C, V, B, N, M,
 		LEFT,RIGHT,DOWN,UP,
 		LBUTTON,MBUTTON,RBUTTON,
+		Wheel,
 		End,
+	};
+
+	enum class eWheelState
+	{
+		NONE,
+		UP,
+		DOWN
 	};
 
 	class Input
@@ -34,6 +42,7 @@ namespace GE
 			bool bPressed;
 		};
 
+
 		static void Initialize();
 		static void Update();
 
@@ -41,6 +50,12 @@ namespace GE
 		static bool GetKeyUp(eKeyCode keyCode) { return mKeys[(UINT)keyCode].state == eKeyState::UP; }
 		static bool GetKey(eKeyCode keyCode) { return mKeys[(UINT)keyCode].state == eKeyState::PRESSED; }
 		static Vector2 GetMousePosition() { return mMousePosition; }
+
+		static void SetWheelState(const eWheelState& wheelState)  { mWheelState = wheelState; }
+		static bool GetWheelDown() { return mWheelState == eWheelState::DOWN; }
+		static bool GetWheelUp() { return mWheelState == eWheelState::UP; }
+		static bool GetWheelNone() { return mWheelState == eWheelState::NONE; }
+		const static eWheelState& GetWheelState() { return mWheelState; }
 
 	private:
 		static void createKeys();
@@ -55,6 +70,7 @@ namespace GE
 	private:
 		static std::vector<Key> mKeys;
 		static Vector2 mMousePosition;
+		static eWheelState mWheelState;
 	};
 
 }

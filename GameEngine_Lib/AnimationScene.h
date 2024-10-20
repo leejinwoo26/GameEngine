@@ -59,6 +59,7 @@ namespace GE
 		class CameraScript* cameraScript;
 	private:
 		UINT mTextureIndex;
+		GameObject* pl;
 	};
 
 }

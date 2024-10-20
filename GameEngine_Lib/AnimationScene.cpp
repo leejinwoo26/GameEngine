@@ -38,19 +38,24 @@ namespace GE
 		TextureInit();
 		AnimatorInit();
 
-		GameObject* pl = Instantiate<GameObject>(eLayerType::PLAYER,Vector2(400,400));
+		pl = Instantiate<GameObject>(eLayerType::PLAYER,Vector2(900,-350));
 		Animator* plAnimator = pl->AddComponent<Animator>();
+		Transform* plTr = pl->GetComponent<Transform>();
 
 		plAnimator->AddAnimation_Bulk(L"..\\Resource\\Anim");
 		plAnimator->PlayAnimation(L"Idle");
 
-		Particle* pt = Instantiate<Particle>(eLayerType::PARTICLE);
+
+		GameObject* bg = Instantiate<GameObject>(eLayerType::BACKGROUND, Vector2(900, -350));
+		SpriteRenderer* bgSr = bg->AddComponent<SpriteRenderer>();
+		bgSr->SetTexture(Resources::Find<Texture>(L"SpringFloor"));
 
 		Scene::Initialize();
 	}
 	void AnimationScene::Update()
 	{
 		Scene::Update();
+		
 
 		InputUpdate();
 	}
@@ -286,7 +291,6 @@ namespace GE
 			return;
 
 		Texture* mTexture = mTextures[mTextureIndex];
-
 		Vector2 cameraPos =  mainCamera->GetCameraPosition();
 		for (int i = 0; i < mAnimCuts.size(); i++)
 		{
@@ -296,7 +300,7 @@ namespace GE
 
 			sprite.Size = mAnimCuts[i]->GetCutSize();
 			sprite.Offset = Vector2(0,0);
-			sprite.duration = 0.3;
+			sprite.duration = 0.1;
 
 			mActiveAnimation->GetSprite().push_back(sprite);
 		}
@@ -327,6 +331,8 @@ namespace GE
 		mActiveAnimation->SetAnimator(mAnimator);
 		mAnimator->SetLoop(true);
 		mAnimator->PlayAnimation_Tool(mActiveAnimation);
+		Transform* tr = mAnimator->GetOwner()->GetComponent<Transform>();
+		tr->SetPos(Vector2(700, -350));
 	}
 
 	void AnimationScene::ActiveAnimationClear()
@@ -380,14 +386,28 @@ namespace GE
 
 		if (mActiveAnimation->GetToolMode() == true)
 		{
-			if (Input::GetKey(eKeyCode::K))
+			if (Input::GetKeyDown(eKeyCode::K))
 			{
-				++mActiveAnimation->GetSprite()[0].leftTop.y;
+				int activeIndex = mActiveAnimation->GetAnimIndex();
+				++mActiveAnimation->GetSprite()[activeIndex].leftTop.y;
 			}
 
-			if (Input::GetKey(eKeyCode::L))
+			if (Input::GetKeyDown(eKeyCode::L))
 			{
-				--mActiveAnimation->GetSprite()[0].leftTop.y;
+				int activeIndex = mActiveAnimation->GetAnimIndex();
+				--mActiveAnimation->GetSprite()[activeIndex].leftTop.y;
+			}
+
+			if (Input::GetKeyDown(eKeyCode::H))
+			{
+				int activeIndex = mActiveAnimation->GetAnimIndex();
+				++mActiveAnimation->GetSprite()[activeIndex].leftTop.x;
+			}
+
+			if (Input::GetKeyDown(eKeyCode::J))
+			{
+				int activeIndex = mActiveAnimation->GetAnimIndex();
+				--mActiveAnimation->GetSprite()[activeIndex].leftTop.x;
 			}
 
 			if (Input::GetKeyDown(eKeyCode::P))
@@ -395,17 +415,41 @@ namespace GE
 				int activeIndex = mActiveAnimation->GetAnimIndex();
 				int animSize = mActiveAnimation->GetSprite().size() - 1;
 				if (activeIndex >= animSize)
-					return;
-				activeIndex++;
+				{
+					mActiveAnimation->GetAnimIndex() = 0;
+					activeIndex = 0;
+				}
+				else
+				{
+					activeIndex++;
+				}
 				mActiveAnimation->SetAnimIndex(activeIndex);
 			}
 			if (Input::GetKeyDown(eKeyCode::O))
 			{
 				int activeIndex = mActiveAnimation->GetAnimIndex();
-				if (activeIndex<=0)
+				int animSize = mActiveAnimation->GetSprite().size() - 1;
+				if (activeIndex <= 0)
+				{
+					mActiveAnimation->GetAnimIndex() = animSize;
+					activeIndex = animSize;
 					return;
-				activeIndex--;
+				}
+				else
+				{
+					activeIndex--;
+				}
 				mActiveAnimation->SetAnimIndex(activeIndex);
+			}
+			if (Input::GetKeyDown(eKeyCode::D))
+			{
+				int activeIndex = mActiveAnimation->GetAnimIndex();
+				mActiveAnimation->GetSprite()[activeIndex].duration +=0.1;
+			}
+			if (Input::GetKeyDown(eKeyCode::F))
+			{
+				int activeIndex = mActiveAnimation->GetAnimIndex();
+				mActiveAnimation->GetSprite()[activeIndex].duration -=0.1;
 			}
 			if (Input::GetKeyDown(eKeyCode::RIGHT))
 			{
@@ -447,6 +491,7 @@ namespace GE
 				}
 			}
 		}
+
 		
 
 		if (Input::GetKeyDown(eKeyCode::S))
@@ -469,8 +514,6 @@ namespace GE
 		{
 			AnimationScene::Load();
 		}
-		
-
 
 		if (Input::GetKeyDown(eKeyCode::M))//편집 모드
 		{

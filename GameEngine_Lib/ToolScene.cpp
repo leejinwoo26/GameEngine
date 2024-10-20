@@ -9,6 +9,7 @@
 #include "..\\GameEngine_Source\\Renderer.h"
 #include "..\\GameEngine_Source\\Input.h"
 #include "..\\GameEngine_Source\\Application.h"
+#include "..\\GameEngine_Source\\Animator.h"
 #include "Tile.h"
 #include "CameraScript.h"
 
@@ -29,9 +30,17 @@ namespace GE
 		camera->AddComponent<CameraScript>();
 		mainCamera = cameraComp;
 
-		Scene::CreateTileBuffer({ 10, 10 });
-
+		Scene::CreateTileBuffer({ 100, 100 });
 		//Scene::LoadTileMap(L"..\\Resource\\Map", L"grass");
+
+
+		GameObject* pl = Instantiate<GameObject>(eLayerType::PLAYER, Vector2(900, 350));
+		Animator* plAnimator = pl->AddComponent<Animator>();
+		Transform* plTr = pl->GetComponent<Transform>();
+
+		plAnimator->AddAnimation_Bulk(L"..\\Resource\\Anim");
+		plAnimator->PlayAnimation(L"Idle");
+		Scene::Initialize();
 
 		Scene::Initialize();
 	}
@@ -52,7 +61,6 @@ namespace GE
 				GetTiles()[idx_y][idx_x]->GetComponent<TileRenderer>()->SetIndex(TileRenderer::SelectedIndex);
 				GetTiles()[idx_y][idx_x]->GetComponent<TileRenderer>()->Render(app.GetBackTileHdc());
 			}
-
 		}
 		if (Input::GetKeyDown(eKeyCode::S))
 		{

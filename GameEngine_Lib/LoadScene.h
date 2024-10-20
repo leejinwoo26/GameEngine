@@ -12,12 +12,12 @@ namespace GE
 	{
 		//SceneManager::CreateScene<PlayScene>(L"PlayScene");
 		//SceneManager::CreateScene<ToolScene>(L"ToolScene");
-		//SceneManager::CreateScene<AnimationScene>(L"AnimationScene");
-		SceneManager::CreateScene<ParticleScene>(L"ParticleScene");
+		SceneManager::CreateScene<AnimationScene>(L"AnimationScene");
+		//SceneManager::CreateScene<ParticleScene>(L"ParticleScene");
 		//SceneManager::CreateScene<CullingScene>(L"CullingScene");
 
 
-		SceneManager::LoadScene(L"ParticleScene");
+		SceneManager::LoadScene(L"AnimationScene");
 	}
 }
 

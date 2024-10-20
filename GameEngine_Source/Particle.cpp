@@ -28,12 +28,12 @@ namespace GE
 	{
 		Transform* tr = this->GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
+
 		pos += mParticleInfo.velocity * mParticleInfo.speed * Time::DeltaTime();
 		mParticleInfo.velocity += mParticleInfo.gravity * Time::DeltaTime();;
-		int a = 0;
+
 
 		tr->SetPos(pos);
-
 	}
 	void Particle::LateUpdate()
 	{

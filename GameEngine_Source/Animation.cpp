@@ -7,6 +7,7 @@
 #include "Renderer.h"
 #include "AnimationMananger.h"
 #include "Debug_Text.h"
+#include "Input.h"
 
 
 namespace GE
@@ -20,7 +21,8 @@ namespace GE
 		mIndex(-1),
 		mTime(0.f),
 		mbComplete(false),
-		toolMode(false)
+		toolMode(false),
+		IsFlip(false)
 	{
 	}
 	Animation::~Animation()
@@ -76,14 +78,21 @@ namespace GE
 	}
 	void Animation::Update()
 	{
+		//애니메이션 뒤집기 테스트
+		if (Input::GetKeyDown(eKeyCode::T))
+		{
+			if (!IsFlip)
+				IsFlip = true;
+			else 
+				IsFlip = false;
+		}
+
 		if (mbComplete)
 			return;
 		if (mAnimationSheet.size()<=0)
 			return;
 		if (toolMode == true)
 			return;
-
-
 		mTime += Time::DeltaTime();
 		if (mAnimationSheet[mIndex].duration < mTime)
 		{
@@ -128,14 +137,14 @@ namespace GE
 			{
 				Vector2 pos = animatorTr->GetPosition();
 				Vector2 cameraPos = mainCamera->GetCameraPosition();
-				Print_Text(hdc, L"인덱스 ", mIndex, Vector2(pos.x - 50, pos.y + 60) - cameraPos);
-				Print_Text(hdc, L"오프셋 x ", mAnimationSheet[mIndex].Offset.x, Vector2(pos.x - 50, pos.y + 80) - cameraPos);
-				Print_Text(hdc, L"오프셋 y ", mAnimationSheet[mIndex].Offset.y, Vector2(pos.x - 50, pos.y + 100) - cameraPos);
-				Print_Text(hdc, L"LeftTop x ", mAnimationSheet[mIndex].leftTop.x, Vector2(pos.x - 50, pos.y + 120) - cameraPos);
-				Print_Text(hdc, L"LeftTop y ", mAnimationSheet[mIndex].leftTop.y, Vector2(pos.x - 50, pos.y + 140) - cameraPos);
+				Print_Text(hdc, L"인덱스 ", mIndex, Vector2(pos.x - 50, pos.y + 120) - cameraPos);
+				Print_Text(hdc, L"오프셋 x ", mAnimationSheet[mIndex].Offset.x, Vector2(pos.x - 50, pos.y + 140) - cameraPos);
+				Print_Text(hdc, L"오프셋 y ", mAnimationSheet[mIndex].Offset.y, Vector2(pos.x - 50, pos.y + 160) - cameraPos);
+				Print_Text(hdc, L"LeftTop x ", mAnimationSheet[mIndex].leftTop.x, Vector2(pos.x - 50, pos.y + 180) - cameraPos);
+				Print_Text(hdc, L"LeftTop y ", mAnimationSheet[mIndex].leftTop.y, Vector2(pos.x - 50, pos.y + 200) - cameraPos);
+				Print_Text(hdc, L"duration ", mAnimationSheet[mIndex].duration, Vector2(pos.x - 50, pos.y + 220) - cameraPos);
 			}
 		}
-		
 
 		if (textureType == Texture::eTextureType::BMP)
 		{
@@ -173,45 +182,55 @@ namespace GE
 					, sprite.Size.x
 					, sprite.Size.y
 					, BLACK);
-				/*StretchBlt(hdc 
-					, pos.x - (sprite.Size.x / 2.0f) + sprite.Offset.x
-					, pos.y - (sprite.Size.y / 2.0f) + sprite.Offset.y
-					, sprite.Size.x * scale.x
-					, sprite.Size.y * scale.y
-					, imgHdc
-					, sprite.leftTop.x
-					, sprite.leftTop.y
-					, sprite.Size.x
-					, sprite.Size.y
-					, SRCCOPY);*/
 			}
 		}
 		else if (textureType == Texture::eTextureType::PNG)
 		{
 			Gdiplus::ImageAttributes imgAtt = {};
 			// 투명화 시킬 픽셀의 색 범위
-			imgAtt.SetColorKey(Gdiplus::Color(230, 230, 230), Gdiplus::Color(255, 255, 255));
 			Gdiplus::Graphics graphics(hdc);
+			graphics.TranslateTransform(pos.x, pos.y); // 중심점을 이동
+			graphics.RotateTransform(rot); // 회전 적용
+			Gdiplus::ColorMatrix colorMatrix = 
+			{
+				1.0f, 0.0f, 0.0f, 0.0f, 0.2f,
+				0.0f, 1.0f, 0.0f, 0.0f, 0.2f,
+				0.0f, 0.0f, 1.0f, 0.0f, 0.2f,
+				0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+				0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+			};
+			// 반전 행렬 생성
+			Gdiplus::Matrix matrix;
+			if (IsFlip == true)
+			{
+				matrix.Scale(-1.0f, 1.0f); // 좌우 반전
+				colorMatrix.m[3][3] = 0.5f;  // Red 유지
+			}
+			else
+				matrix.Scale(1.0f, 1.0f); // 좌우 반전
 
-			graphics.RotateTransform(rot);
+			graphics.MultiplyTransform(&matrix); // 좌우 반전 적용
 
-			graphics.DrawImage(mTexture->GetImage()
-				, Gdiplus::Rect
-				(
-					pos.x - ((sprite.Size.x /** scale.x*/) / 2.0f)
-					, pos.y - ((sprite.Size.y /** scale.y*/) / 2.0f)
-					, sprite.Size.x * scale.x
-					, sprite.Size.y * scale.y
-				)
-				, sprite.leftTop.x
-				, sprite.leftTop.y
-				, sprite.Size.x
-				, sprite.Size.y
-				, Gdiplus::UnitPixel
-				, /*&imgAtt*/nullptr
+			imgAtt.SetColorMatrix(&colorMatrix);
+			
+			graphics.DrawImage(
+				mTexture->GetImage(),
+				Gdiplus::Rect(
+					-((sprite.Size.x /** scale.x*/) / 2.0f) + sprite.Offset.x, // 중심점에서 반전된 위치로 이동
+					-((sprite.Size.y /** scale.y*/) / 2.0f) + sprite.Offset.y,
+					sprite.Size.x * scale.x,
+					sprite.Size.y * scale.y
+				),
+				sprite.leftTop.x,
+				sprite.leftTop.y,
+				sprite.Size.x,
+				sprite.Size.y,
+				Gdiplus::UnitPixel,
+				&imgAtt // 투명한 색상 처리
 			);
+			
+			graphics.ResetTransform();
 		}
-		
 	}
 
 	void Animation::Reset()

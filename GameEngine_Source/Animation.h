@@ -65,7 +65,8 @@ namespace GE
 		int mIndex;
 		float mTime;
 		bool mbComplete;
-
 		bool toolMode;
+
+		bool IsFlip;
 	};
 }

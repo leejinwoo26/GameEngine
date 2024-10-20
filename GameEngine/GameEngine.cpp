@@ -10,6 +10,7 @@
 #include "..\\GameEngine_Source\\Resources.h"
 #include "..\\GameEngine_Source\\TileRenderer.h"
 #include "..\\GameEngine_Source\\SceneManager.h"
+#include "..\\GameEngine_Source\\Input.h"
 #include "..\\GameEngine_Lib\\LoadScene.h"
 #include "..\\GameEngine_Lib\\ResourcesLoad.h"
 #include "..\\GameEngine_Lib\\ParticleScene.h"
@@ -140,11 +141,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    HWND ToolhWnd = CreateWindowW(L"TILEWINDOW", L"TILEWINDOW", WS_OVERLAPPEDWINDOW,
        CW_USEDEFAULT, 0, width, height, nullptr, nullptr, hInstance, nullptr);
 
-   HWND AnimationHWnd = CreateWindowW(L"AnimationWINDOW", L"AnimationWINDOW", WS_OVERLAPPEDWINDOW,
-       CW_USEDEFAULT, 0, width, height, nullptr, nullptr, hInstance, nullptr);
+   /*HWND AnimationHWnd = CreateWindowW(L"AnimationWINDOW", L"AnimationWINDOW", WS_OVERLAPPEDWINDOW,
+       CW_USEDEFAULT, 0, width, height, nullptr, nullptr, hInstance, nullptr);*/
 
 
-   app.SetParticleHwnd(AnimationHWnd);
+   //app.SetParticleHwnd(AnimationHWnd);
    app.Initialize(hWnd,width,height);
 
 
@@ -156,8 +157,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
-   ShowWindow(AnimationHWnd, nCmdShow);
-   UpdateWindow(AnimationHWnd);
+   /*ShowWindow(AnimationHWnd, nCmdShow);
+   UpdateWindow(AnimationHWnd);*/
    
 
    Gdiplus::GdiplusStartup(&gpToken, &gpsi, NULL);
@@ -185,10 +186,44 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
+#define WHEEL_STOP_TIMEOUT 100
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    static UINT_PTR wheelTimerID = 1;
+    static BOOL isWheelMoving = FALSE;
+
     switch (message)
     {
+    case WM_MOUSEWHEEL:
+    {
+        int delta = GET_WHEEL_DELTA_WPARAM(wParam);
+
+        if (delta > 0)
+        {
+            GE::Input::SetWheelState(GE::eWheelState::UP);
+        }
+        else if (delta < 0)
+        {
+            GE::Input::SetWheelState(GE::eWheelState::DOWN);
+        }
+
+        isWheelMoving = TRUE;
+        SetTimer(hWnd, wheelTimerID, WHEEL_STOP_TIMEOUT, NULL); // 타이머 시작 또는 리셋
+
+        break;
+    }
+    case WM_TIMER:
+        if (wParam == wheelTimerID)
+        {
+            if (isWheelMoving)
+            {
+                isWheelMoving = FALSE;
+                KillTimer(hWnd, wheelTimerID);
+                GE::Input::SetWheelState(GE::eWheelState::NONE);
+            }
+        }
+        break;
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -326,26 +361,26 @@ LRESULT CALLBACK AnimationProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
     }
     case WM_PAINT:
     {
-        PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hWnd, &ps);
-        //if (hBitmap)
-        //{
-        //    // BMP 그리기
-        //    HDC hdcMem = CreateCompatibleDC(ParticleHdc);
-        //    SelectObject(hdcMem, hBitmap);
-        //    BITMAP bitmap;
-        //    GetObject(hBitmap, sizeof(BITMAP), &bitmap);
-        //    BitBlt(ParticleHdc, 10, 10, bitmap.bmWidth + 10, bitmap.bmHeight + 10, hdcMem, 0, 0, SRCCOPY);
-        //    DeleteDC(hdcMem);
-        //}
-        //else if (pngBitmap)
-        //{
-        //    // PNG 그리기 (GDI+ 사용)
-        //    Gdiplus::Graphics graphics(ParticleHdc);
-        //    graphics.DrawImage(pngBitmap, 10, 10);
-        //}
-        
-        EndPaint(hWnd, &ps);
+        //PAINTSTRUCT ps;
+        //HDC hdc = BeginPaint(hWnd, &ps);
+        ////if (hBitmap)
+        ////{
+        ////    // BMP 그리기
+        ////    HDC hdcMem = CreateCompatibleDC(ParticleHdc);
+        ////    SelectObject(hdcMem, hBitmap);
+        ////    BITMAP bitmap;
+        ////    GetObject(hBitmap, sizeof(BITMAP), &bitmap);
+        ////    BitBlt(ParticleHdc, 10, 10, bitmap.bmWidth + 10, bitmap.bmHeight + 10, hdcMem, 0, 0, SRCCOPY);
+        ////    DeleteDC(hdcMem);
+        ////}
+        ////else if (pngBitmap)
+        ////{
+        ////    // PNG 그리기 (GDI+ 사용)
+        ////    Gdiplus::Graphics graphics(ParticleHdc);
+        ////    graphics.DrawImage(pngBitmap, 10, 10);
+        ////}
+        //
+        //EndPaint(hWnd, &ps);
     }
     break;
     case WM_DESTROY:

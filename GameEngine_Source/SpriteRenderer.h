@@ -18,7 +18,7 @@ namespace GE
 		__forceinline void SetTexture(Texture* texture) { mTexture = texture; }
 		__forceinline void SetSize(Vector2 size) { mSize = size; }
 		Texture* GetTexture() { return mTexture; }
-
+		Vector2& GetSize() { return mSize; }
 	private:
 		Texture* mTexture;
 		Vector2 mSize;

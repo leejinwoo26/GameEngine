@@ -9,6 +9,7 @@ namespace GE
 {
     std::vector<Input::Key> Input::mKeys = {};
     Vector2 Input::mMousePosition = Vector2(0.f,0.f);
+    eWheelState Input::mWheelState = eWheelState::NONE;
 
     int ASCII[(UINT)eKeyCode::End] =
     {
@@ -16,7 +17,8 @@ namespace GE
         'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
         'Z', 'X', 'C', 'V', 'B', 'N', 'M', 
         VK_LEFT,VK_RIGHT,VK_DOWN,VK_UP,
-        VK_LBUTTON,VK_MBUTTON,VK_RBUTTON
+        VK_LBUTTON,VK_MBUTTON,VK_RBUTTON,
+        WM_MOUSEHWHEEL
     };
 
     GE::Input::Input()

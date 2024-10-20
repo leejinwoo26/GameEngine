@@ -5,7 +5,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Application.h"
-
+#include "Input.h"
 
 extern GE::Application app;
 
@@ -32,7 +32,6 @@ namespace GE
 			float randomX = static_cast<float>(rand() % 2001 - 1000) / 1000.0f; // -10.0 ~ 10.0
 			float randomY = static_cast<float>(rand() % 1001 - 500) / 500;   // -5.0 ~ 5.0
 			pST.velocity = Vector2(randomX, randomY);
-			pST.velocity = pST.velocity.normalize();
 			pST.gravity = Vector2(0, 1);
 			particle->SetParticleInfo(pST);
 			mParticles.push_back(particle);
@@ -40,6 +39,22 @@ namespace GE
 	}
 	void ParticleSystem::Update()
 	{
+		if (Input::GetKeyDown(eKeyCode::R))
+		{
+			for (int i = 0; i < mParticles.size(); i++)
+			{
+				Particle::Particle_ST p = {};
+				Transform* P_tr = mParticles[i]->GetComponent<Transform>();
+				P_tr->SetPos(Vector2(800, 500));
+				float randomX = static_cast<float>(rand() % 2001 - 1000) / 1000.0f; // -10.0 ~ 10.0
+				float randomY = static_cast<float>(rand() % 1001 - 500) / 500;   // -5.0 ~ 5.0
+				p.velocity = Vector2(randomX, randomY);
+				p.gravity = Vector2(0, 1);
+				p.speed = 500;
+				mParticles[i]->SetParticleInfo(p);
+			}
+		}
+
 		for (int i = 0; i < mParticles.size(); i++)
 		{
 			mParticles[i]->Update();

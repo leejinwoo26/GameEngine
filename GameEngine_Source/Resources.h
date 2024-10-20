@@ -38,11 +38,11 @@ namespace GE
 
 		static void Release()
 		{
-			for (auto& iter : mResources)
+			/*for (auto& iter : mResources)
 			{
 				delete iter.second;
 				iter.second = nullptr;
-			}
+			}*/
 		}
 		static std::map<std::wstring, Resource*> GetResources() { return mResources; }
 
